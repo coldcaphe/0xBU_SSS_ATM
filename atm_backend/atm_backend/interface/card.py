@@ -16,6 +16,7 @@ class Card(Psoc):
         self.CHECK_BAL = 1
         self.WITHDRAW = 2
         self.CHANGE_PIN = 3
+        self.SIGN_NONCE = 4
 
     def _authenticate(self, pin):
         """Requests authentication from the ATM card
@@ -81,24 +82,34 @@ class Card(Psoc):
         self._vp('Card sent response %s' % resp)
         return resp == 'SUCCESS'
 
-    def check_balance(self, pin):
-        """Requests for a balance to be checked
-
-        Args:
-            pin (str): Challenge PIN
+    def getCardID(self):
+        """checks the card balance
 
         Returns:
             str: UUID of ATM card on success
-            bool: False if PIN didn't match
         """
-        self._sync(False)
-
-        if not self._authenticate(pin):
-            return False
-
-        self._send_op(self.CHECK_BAL)
+        self._sync(False) #not sure if this should be true
 
         return self._get_uuid()
+
+    def signNonce(self, nonce, pin):
+        """signs the random nonce
+
+        Args:
+            nonce (str): random nonce
+            pin (str): Challenge PIN
+
+        Returns 
+            str: signed Nonce
+        """
+        self._sync(False) #not sure if this should be true
+        self._send_op(self.SIGN_NONCE) 
+        self._push_msg(pin + nonce + '\00') 
+        signedNonce = self._pull_msg()
+
+        return signedNonce
+
+
 
     def withdraw(self, pin):
         """Requests to withdraw from ATM

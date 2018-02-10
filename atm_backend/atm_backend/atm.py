@@ -10,6 +10,7 @@ class ATM(object):
         hsm (HSM or HSMEmulator): Interface to HSM
         card (Card or CardEmulator): Interface to ATM card
     """
+    
 
     def __init__(self, bank, hsm, card):
         self.bank = bank
@@ -20,7 +21,7 @@ class ATM(object):
         logging.info("Got hello request")
         return "hello"
 
-    def check_balance(self, pin):
+    def check_balance(self, pin):#secured
         """Tries to check the balance of the account associated with the
         connected ATM card
 
@@ -37,14 +38,17 @@ class ATM(object):
 
         try:
             logging.info('check_balance: Requesting card_id using inputted pin')
-            card_id = self.card.check_balance(pin)
+            card_id = self.card.get_cardID()
 
-            # get balance from bank if card accepted PIN
-            if card_id:
-                logging.info('check_balance: Requesting balance from Bank')
-                res = self.bank.check_balance(card_id)
-                if res:
-                    return res
+            # request nonce from server
+            if card_id is not None: #checks that its not none
+                logging.info('Requesting nonce')
+                nonce = self.bank.check_balance(card_id) #this nonce is encyrpted
+                #nonce = encrypt(nonce)
+                signed_nonce = self.card.signNonce(nonce,pin)
+                response = self.bank.verifyNonce(signed_nonce)
+                if response is not None:
+                    return response #returns bank balance
             logging.info('check_balance failed')
             return False
         except DeviceRemoved:
