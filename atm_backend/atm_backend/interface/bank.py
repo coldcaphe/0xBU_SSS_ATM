@@ -39,7 +39,18 @@ class Bank:
             return int(res[5:])
         logging.info('check_balance: Bank request failed %s', res)
         return False
+    
+    def hsm_sign_nonce(self, hsm_id, hsm_encrypted_data):
+        return 0
 
+    def get_nonce(self, card_id):
+        nonce = self.bank_rpc.get_nonce(card_id)
+        return nonce
+    
+    def verify_nonce(self, card_id, encrypted_data):
+        res = self.bank_rpc.verify_nonce(card_id, encrypted_data) #signed_nonce,transaction,extra_data
+        return res
+    
     def withdraw(self, hsm_id, card_id, amount):
         """Requests a withdrawal from the account associated with the card_id
 

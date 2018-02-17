@@ -40,6 +40,9 @@ class HSM(Psoc):
         self._vp('Received response %s from HSM' % resp)
 
         return resp == 'K'
+    
+    def get_nonce(self, response):
+        return 0
 
     def get_uuid(self):
         """Retrieves the UUID from the HSM
