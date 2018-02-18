@@ -16,6 +16,7 @@ class HSM(Psoc):
         Calls to get_uuid and withdraw must be alternated to remain in sync
         with the HSM
     """
+    GET_NONCE = 0
 
     def __init__(self, port=None, verbose=False, dummy=False):
         super(HSM, self).__init__('HSM', port, verbose)
@@ -41,8 +42,13 @@ class HSM(Psoc):
 
         return resp == 'K'
     
-    def get_nonce(self, response):
-        return 0
+    def get_nonce(self,transaction):
+        self._sync(True)
+        self._push_msg(str(transaction))
+        resp = self._pull_msg()
+
+        return resp
+        
 
     def get_uuid(self):
         """Retrieves the UUID from the HSM
@@ -74,9 +80,7 @@ class HSM(Psoc):
                  'Not enough bills in ATM' if HSM doesn't have enough bills
                     to complete request
         """
-        if not self._authenticate(uuid):
-            return 'Insufficient funds'
-
+        
         msg = struct.pack('B', amount)
         self._push_msg(msg)
 
@@ -93,6 +97,10 @@ class HSM(Psoc):
             bills.append(bill)
 
         return bills
+    def verify_nonce(self,signed_nonce_and_amount):
+        self._push_msg(signed_nonce_and_amount)
+        resp = self._pull_msg()
+        return resp
 
     def provision(self, uuid, bills):
         """Attempts to provision HSM

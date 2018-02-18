@@ -112,7 +112,7 @@ class Card(Psoc):
 
         return signedNonce
 
-    def withdraw_sign_nonce(self, nonce, pin, hsm_id, transaction):
+    def withdraw_sign_nonce(self, nonce, pin, hsm_nonce, hsm_id, amount, transaction):
         """signs the random nonce
 
         Args:
@@ -127,7 +127,7 @@ class Card(Psoc):
         
         self._sync(False) #not sure if this should be true
         self._send_op(self.SIGN_NONCE) 
-        self._push_msg(str(transaction) + pin + hsm_id + nonce + '\00') 
+        self._push_msg(str(transaction) + amount + pin + hsm_id + hsm_nonce + nonce + '\00') 
         signedNonce = self._pull_msg()
 
         return signedNonce

@@ -20,6 +20,7 @@ class ATM(object):
         self.WITHDRAW = 2
         self.CHANGE_PIN = 3
         self.SIGN_NONCE = 4
+        self.GET_NONCE_HSM = 5
 
 
     def check_balance(self, pin):#secured
@@ -62,7 +63,7 @@ class ATM(object):
             logging.info('ATM card has not been provisioned!')
             return False
 
-    def change_pin(self, old_pin, new_pin):
+    def change_pin(self, old_pin, new_pin):#secured
         """Tries to change the PIN of the connected ATM card
 
         Args:
@@ -139,16 +140,15 @@ class ATM(object):
             if card_id is not None: #checks that its not none
                 logging.info('Requesting nonce')
                 hsm_id = self.hsm.get_uuid()
+                hsm_nonce = self.hsm.get_nonce(GET_NONCE_HSM)
                                                         
                 nonce = self.bank.get_nonce(card_id) #this nonce is encyrpted
                 #nonce = encrypt(nonce)
-                encrypted_data = self.card.withdraw_sign_nonce(nonce,pin,hsm_id,transaction) # signed nonce,transaction,extra_data
-                response = self.bank.verify_nonce(card_id,encrypted_data)
-                if response is not None:
+                encrypted_data = self.card.withdraw_sign_nonce(nonce,pin,hsm_nonce,hsm_id,amount,transaction) # signed nonce,transaction,extra_data
+                response = self.bank.verify_nonce(card_id,encrypted_data) #this response will contain the signed nonce from the server
+                if response is not None: #hsm
                     ##return response #returns bank balance
-                    hsm_encrypted_data = self.hsm.get_nonce(response)
-                    server_encrypted_data = self.bank.hsm_sign_nonce(hsm_id,hsm_encrypted_data)
-                    hsm_resp = self.hsm.verify_signed_nonce(server_encrypted_data)
+                    hsm_resp = self.hsm.verify_signed_nonce(response)
                     if hsm_resp is not None:
                         return hsm_resp
                     
