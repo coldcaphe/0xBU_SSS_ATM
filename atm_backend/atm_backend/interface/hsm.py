@@ -40,6 +40,25 @@ class HSM(Psoc):
         self._vp('Received response %s from HSM' % resp)
 
         return resp == 'K'
+    
+    '''Has the hsm generate a random nonce and store it in the cash.
+    Server needs to sign this nonce to proove that it is a valid request
+
+    Args:
+    transaction(int): The transaction type. Lets the hsm know what is happening
+
+    Returns:
+    a randomly generated nonce that is encrypted with a shared secret key that corosponds to 
+    the hsm_id
+
+    '''
+    def get_nonce(self,transaction):
+        self._sync(True)
+        self._push_msg(str(transaction))
+        resp = self._pull_msg()
+
+        return resp
+        
 
     def get_uuid(self):
         """Retrieves the UUID from the HSM
@@ -58,38 +77,18 @@ class HSM(Psoc):
 
         return uuid
 
-    def withdraw(self, uuid, amount):
-        """Attempts to withdraw bills from the HSM
+    '''
+    Verifies the nonce was correctly signed and completes the withdraw request
 
-        Args:
-            uuid (str): Challenge UUID of HSM
-            amount (int): Number of bills to withdraw from HSM
-
-        Returns:
-            list of str: List of dispensed bills on success
-            str: 'Insufficient funds' if the UUID was incorrect
-                 'Not enough bills in ATM' if HSM doesn't have enough bills
-                    to complete request
-        """
-        if not self._authenticate(uuid):
-            return 'Insufficient funds'
-
-        msg = struct.pack('B', amount)
-        self._push_msg(msg)
-
-        msg = self._pull_msg()
-        self._vp('Secmod replied %s' % msg)
-        if msg == 'BAD':
-            return 'Not enough bills in ATM'
-
-        bills = []
-        for i in range(amount):
-            bill = self._pull_msg()
-            self._vp('Received bill %d/%d: \'%s\'' % (i + 1, amount, bill))
-
-            bills.append(bill)
-
-        return bills
+    Args:
+    signed_nonce_and_amount(str): This contains the amount requested in the withdraw and the 
+    nonce to proove that it is valid and a transaction id that lets the HSM know what to do. All of this is encrypted
+    through the shared secret key for this hsm.
+    '''
+    def verify_nonce(self,signed_nonce_and_amount):
+        self._push_msg(signed_nonce_and_amount)
+        resp = self._pull_msg()
+        return resp
 
     def provision(self, uuid, bills):
         """Attempts to provision HSM

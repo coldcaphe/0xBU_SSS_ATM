@@ -11,8 +11,10 @@ class Card(Psoc):
             Default is dynamic card acquisition
         verbose (bool, optional): Whether to print debug messages
     """
+
     def __init__(self, port=None, verbose=False):
         super(Card, self).__init__('CARD', port, verbose)
+        #transaction IDs
         self.CHECK_BAL = 1
         self.WITHDRAW = 2
         self.CHANGE_PIN = 3
@@ -27,6 +29,7 @@ class Card(Psoc):
         Returns:
             bool: True if ATM card verified authentication, False otherwise
         """
+
         self._vp('Sending pin %s' % pin)
         self._push_msg(pin)
 
@@ -40,6 +43,7 @@ class Card(Psoc):
         Returns:
             str: UUID of ATM card
         """
+
         uuid = self._pull_msg()
         self._vp('Card sent UUID %s' % uuid)
         return uuid
@@ -51,6 +55,7 @@ class Card(Psoc):
             op (int): Operation to send from [self.CHECK_BAL, self.WITHDRAW,
                 self.CHANGE_PIN]
         """
+
         self._vp('Sending op %d' % op)
         self._push_msg(str(op))
 
@@ -68,9 +73,10 @@ class Card(Psoc):
         Returns:
             bool: True if PIN was changed, False otherwise
         """
+
         self._sync(False)
 
-        if not self._authenticate(old_pin):
+        if not self._authenticate(old_pin): #if old pin entered was not correct
             return False
 
         self._send_op(self.CHANGE_PIN)
@@ -82,34 +88,76 @@ class Card(Psoc):
         self._vp('Card sent response %s' % resp)
         return resp == 'SUCCESS'
 
-    def getCardID(self):
-        """checks the card balance
+    def get_card_id(self):
+        """Checks the card balance
 
         Returns:
             str: UUID of ATM card on success
         """
-        self._sync(False) #not sure if this should be true
 
+        self._sync(True) 
         return self._get_uuid()
-
-    def signNonce(self, nonce, pin):
-        """signs the random nonce
+    
+    def change_pin_sign_nonce(self, nonce, old_pin, new_pin, transaction):
+        """Signs the random nonce, called when customer tries to change 
+        the PIN of the connected ATM card
 
         Args:
-            nonce (str): random nonce
-            pin (str): Challenge PIN
+            nonce (str): Random nonce
+            old_pin (str): Challenge PIN
+            new_pin (str): New pin to change to 
+            transaction (int): Transaction ID
 
         Returns 
-            str: signed Nonce
+            str: Signed nonce
         """
-        self._sync(False) #not sure if this should be true
+        
+        self._sync(True) 
         self._send_op(self.SIGN_NONCE) 
-        self._push_msg(pin + nonce + '\00') 
+        self._push_msg(str(transaction) + new_pin + old_pin + nonce + '\00') 
         signedNonce = self._pull_msg()
 
         return signedNonce
 
+    def withdraw_sign_nonce(self, nonce, pin, hsm_nonce, hsm_id, amount, transaction):
+        """Signs the random nonce, called when customer tries to withdraw 
+        money from account associated with connected ATM card
 
+        Args:
+            nonce (str): Random nonce
+            old_pin (str): Challenge PIN
+            hsm_id (str): HSM ID
+            transaction (int): transaction ID
+
+        Returns 
+            str: Signed nonce
+        """
+        
+        self._sync(True) 
+        self._send_op(self.SIGN_NONCE) 
+        self._push_msg(str(transaction) + amount + pin + hsm_id + hsm_nonce + nonce + '\00') 
+        signed_nonce = self._pull_msg()
+
+        return signed_nonce
+    
+    def sign_nonce(self, nonce, pin, transaction):
+        """Signs the random nonce, called when customer tries to check 
+        balance of the account associated with the connected ATM card
+
+        Args:
+            nonce (str): Random nonce
+            pin (str): Challenge PIN
+            transaction (int): Transaction ID
+        Returns 
+            str: Signed nonce
+        """
+
+        self._sync(True)
+        self._send_op(self.SIGN_NONCE) 
+        self._push_msg(str(transaction) + pin + nonce + '\00') 
+        signed_nonce = self._pull_msg()
+
+        return signed_nonce
 
     def withdraw(self, pin):
         """Requests to withdraw from ATM
@@ -121,13 +169,12 @@ class Card(Psoc):
             str: UUID of ATM card on success
             bool: False if PIN didn't match
         """
-        self._sync(False)
 
+        self._sync(False)
         if not self._authenticate(pin):
             return False
 
         self._send_op(self.WITHDRAW)
-
         return self._get_uuid()
 
     def provision(self, uuid, pin):
@@ -140,6 +187,7 @@ class Card(Psoc):
         Returns:
             bool: True if provisioning succeeded, False otherwise
         """
+
         self._sync(True)
 
         msg = self._pull_msg()
