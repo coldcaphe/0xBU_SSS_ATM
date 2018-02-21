@@ -15,6 +15,7 @@
 #include "usbserialprotocol.h"
 #include "SW1.h"
 #include "Reset_isr.h"
+#include <hydrogen.h>
 
 #define PIN_LEN 8
 #define UUID_LEN 36
@@ -24,6 +25,9 @@
 #define PIN_OK "OK"
 #define PIN_BAD "BAD"
 #define CHANGE_PIN '3'
+
+#define NAME_REQ "4"
+#define CHNG_PIN "2" 
 
 //CARD
 
@@ -44,6 +48,17 @@
 static const uint8 PIN[PIN_LEN] = {0x36, 0x35, 0x34, 0x33, 0x35, 0x34, 0x34, 0x36}; //eCTF
 static const uint8 UUID[UUID_LEN] = {0x37, 0x33, 0x36, 0x35, 0x36, 0x33, 0x37, 0x35, 0x37, 0x32, 0x36, 0x39, 0x37, 0x34, 0x37, 0x39}; //security
 
+// more global variables
+static const char * name_req = "name"; //TODO: change??
+
+
+// libhydrogen variables
+hydro_sign_keypair key_pair;
+hydro_sign_keygen(&key_pair);
+
+uint8_t signature[hydro_sign_BYTES];
+
+uint32_t sk_pin;
 
 // reset interrupt on button press
 CY_ISR(Reset_ISR)
@@ -107,16 +122,89 @@ int main(void)
         USER_INFO_Write(&i,PROVISIONED, 1u);
     }
     
+    NAME = "temp_name"; //TODO: figure out name
+
     // Go into infinite loop
     while (1) {
-        /* Place your application code here. */
+        syncConnection(SYNC_NORM);
+        // Request for name from ATM
+        pullMessage(message);
+	
+	// check if there has been a request for name
+	if (message[0] == NAME_REQ) {
+            // Encrypt name
+	    hydro_sign_create(signature, NAME, strlen(NAME), 
+		"__name__", key_pair.sk);
+            // send name to ATM
+	    pushMessage((uint*) signature);
+
+	// change pin 
+	} else if (message[0] == CHNG_PIN) {
+	    //TODO: need to decrypt?
+
+	    // buffer to store the nonce
+	    char non_buff[257];
+	    memcpy(non_buff, &message[1], 256);
+	    non_buff[256] = '\0';
+
+	    // buffer to store the PIN
+	    char pin_buff[17];
+	    memcpy(pin_buff, &message[257], 16);
+            pin_buff[16] = '\0'; 
+
+	    //TODO: length of key??
+	    char tmp_buff[257]; 
+	    sk_pin = hydro_random_buf_deterministic(&tmp_buff, 
+		strlen(tmp_buff), (uint8_t) pin_buff);
+	    
+	    //TODO: public key?
+
+	// other transaction
+	} else {
+	    //TODO: need to decrypt?
+
+            // buffer to store the nonce
+            char non_buff[257];
+            memcpy(non_buff, &message[1], 256);
+            non_buff[256] = '\0';
+
+            // buffer to store the PIN
+            char pin_buff[17];
+            memcpy(pin_buff, &message[257], 16);
+            pin_buff[16] = '\0';
+
+	    // buffer to store the data
+            char data_buff[9];
+            memcpy(data_buff, &message[273], 8);
+            pin_buff[8] = '\0';
+
+            //TODO: length of key??
+            char tmp_buff[257];
+            sk_pin = hydro_random_buf_deterministic(&tmp_buff,
+                strlen(tmp_buff), (uint8_t) pin_buff);
+	
+	    //TODO: any conventional numbers I should use?
+	    char dest[265];
+	    strcpy_s(dest,256,non_buff);
+	    strcpy_s(dest,9,data_buff);
+	    hydro_sign_create(signature, dest, strlen(dest),
+                "_tranxt_", key_pair.sk);
+
+            //TODO: encrypt (sig|nonce|transxt|extra_data)
+	
+	    //pushMessage((uint*) signature);
+            //TODO: public key?
+	}
+
         
+	/*
         // syncronize communication with bank
         syncConnection(SYNC_NORM);
         
         // receive pin number from ATM
         pullMessage(message);
         
+	
         if (strncmp((char*)message, (char*)PIN, PIN_LEN)) {
             pushMessage((uint8*)PIN_BAD, strlen(PIN_BAD));
         } else {
@@ -137,6 +225,7 @@ int main(void)
                 pushMessage(UUID, UUID_LEN);   
             }
         }
+	*/
     }
 }
 
