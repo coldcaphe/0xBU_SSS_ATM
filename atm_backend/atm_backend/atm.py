@@ -17,11 +17,26 @@ class ATM(object):
         self.hsm = hsm
         self.card = card
         #transaction IDs
-        self.CHECK_BAL = 1
-        self.WITHDRAW = 2
-        self.CHANGE_PIN = 3
-        self.SIGN_NONCE = 4
-        self.GET_NONCE_HSM = 5
+        self.REQUEST_NAME                = 0x00
+        self.RETURN_NAME                 = 0x01
+        self.REQUEST_SERVER_NONCE        = 0x02
+        self.RETURN_NONCE                = 0x03
+        self.REQUEST_CARD_SIGNATURE      = 0x04
+        self.RETURN_CARD_SIGNATURE       = 0x05
+        self.REQUEST_HSM_NONCE           = 0x06
+        self.RETURN_HSM_NONCE            = 0x07
+        self.SEND_TRANSACTION_TO_SERVER  = 0x08
+        self.RETURN_RESULT               = 0x09
+        self.REQUEST_HSM_UUID            = 0x0A
+        self.RETURN_HSM_UUID             = 0x0B
+        self.REQUEST_WITHDRAWL           = 0x0C
+
+        self.CHECK_PIN                   = 0x10
+        self.CHECK_BALANCE               = 0x11
+        self.CHANGE_PIN                  = 0x12
+        self.WITHDRAW                    = 0x13
+        
+
 
 
     def check_balance(self, pin): #secured
@@ -36,21 +51,20 @@ class ATM(object):
             bool: False on failure
         """
 
-        transaction = self.CHECK_BAL #set transaction ID
         if not self.card.inserted():
             logging.info('No card inserted')
             return False
 
         try:
             logging.info('check_balance: Requesting card_id using inputted pin')
-            card_id = self.card.get_card_iD()
+            card_id = self.card.get_card_id(self.REQUEST_NAME)
 
             # request nonce from server
             if card_id is not None: #checks that it's not none
                 logging.info('Requesting nonce')
-                nonce = self.bank.get_nonce(card_id) #encrypted nonce
-                encrypted_data = self.card.sign_nonce(nonce,pin,transaction) #signs the random nonce
-                response = self.bank.verify_nonce(card_id,encrypted_data)
+                nonce = self.bank.get_nonce(self.REQUEST_SERVER_NONCE,card_id) #encrypted nonce
+                encrypted_data = self.card.sign_nonce(self.CHECK_BALANCE,nonce,pin) #signs the random nonce
+                response = self.bank.verify_nonce(SEND_TRANSACTION_TO_SERVER,card_id,encrypted_data)
 
                 if response is not None: #checks that it's not None
                     return response # returns bank balance
@@ -81,14 +95,14 @@ class ATM(object):
         
         transaction = self.CHANGE_PIN #set transaction ID
         try:
-            card_id = self.card.get_card_id()
+            card_id = self.card.get_card_id(self.REQUEST_NAME)
             
             # request nonce from server
             if card_id is not None: #checks that it's not none
                 logging.info('Requesting nonce')
-                nonce = self.bank.get_nonce(card_id) #encrypted nonce
-                encrypted_data = self.card.change_pin_sign_nonce(nonce,old_pin,new_pin,transaction) #signs the random nonce
-                response = self.bank.verify_nonce(card_id,encrypted_data)
+                nonce = self.bank.get_nonce(self.REQUEST_SERVER_NONCE,card_id) #encrypted nonce
+                encrypted_data = self.card.change_pin_sign_nonce(self.CHANGE_PIN,nonce,old_pin,new_pin) #signs the random nonce
+                response = self.bank.verify_nonce(self.SEND_TRANSACTION_TO_SERVER,card_id,encrypted_data)
                 
                 if response is not None:
                     return response #returns if nonce is verified and pin change is successful 
@@ -125,7 +139,6 @@ class ATM(object):
             bool: False on failure
         """
         
-        transaction = self.WITHDRAW #set transaction ID
         if not self.hsm.inserted():
             logging.info('No card inserted')
             return False
@@ -135,17 +148,17 @@ class ATM(object):
             return False
 
         try:
-            card_id = self.card.get_card_id()
+            card_id = self.card.get_card_id(self.REQUEST_NAME)
             
             # request nonce from server
             if card_id is not None: #checks that it's not none
                 logging.info('Requesting nonce')
-                hsm_id = self.hsm.get_uuid()
-                hsm_nonce = self.hsm.get_nonce(self.GET_NONCE_HSM) #encrypted nonce
+                hsm_id = self.hsm.get_uuid(self.REQUEST_HSM_UUID)
+                hsm_nonce = self.hsm.get_nonce(self.REQUEST_HSM_NONCE) #encrypted nonce
                                                         
-                nonce = self.bank.get_nonce(card_id) #encrypted nonce
-                encrypted_data = self.card.withdraw_sign_nonce(nonce,pin,hsm_nonce,hsm_id,amount,transaction) #signs the random nonce
-                response = self.bank.verify_nonce(card_id,encrypted_data) #this response will contain the signed nonce from the server
+                nonce = self.bank.get_nonce(self.REQUEST_SERVER_NONCE,card_id) #encrypted nonce
+                encrypted_data = self.card.withdraw_sign_nonce(self.WITHDRAW,nonce,pin,hsm_nonce,hsm_id,amount) #signs the random nonce
+                response = self.bank.verify_nonce(SEND_TRANSACTION_TO_SERVER,card_id,encrypted_data) #this response will contain the signed nonce from the server
                 if response is not None: #hsm
                     hsm_resp = self.hsm.verify_signed_nonce(response)
                     if hsm_resp is not None:

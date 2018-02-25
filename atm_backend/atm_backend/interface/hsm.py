@@ -4,7 +4,6 @@ from serial_emulator import HSMEmulator
 import logging
 import time
 
-
 class HSM(Psoc):
     """Interface for communicating with the HSM
 
@@ -54,27 +53,21 @@ class HSM(Psoc):
     '''
     def get_nonce(self,transaction):
         self._sync(True)
-        self._push_msg(str(transaction))
+        self._push_msg(struct.pack('b',transaction))
         resp = self._pull_msg()
 
-        return resp
+        return struct.unpack('b32s',resp)[1]
         
 
-    def get_uuid(self):
+    def get_uuid(self,transaction):
         """Retrieves the UUID from the HSM
 
         Returns:
             str: UUID of HSM
         """
-        self._sync(False)
-        uuid = self._pull_msg()
-
-        if uuid == 'P':
-            self._vp('Security module not yet provisioned!', logging.error)
-            return None
-
-        self._vp('Got UUID %s' % uuid)
-
+        self._sync(True)
+        self._push_msg(struct.pack('b',transaction))
+        uuid = struct.unpack('b32s',self._pull_msg())[1]
         return uuid
 
     '''

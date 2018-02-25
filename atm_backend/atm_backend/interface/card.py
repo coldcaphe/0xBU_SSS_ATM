@@ -1,6 +1,7 @@
 from psoc import Psoc
 from serial_emulator import CardEmulator
 import logging
+import struct
 
 
 class Card(Psoc):
@@ -14,11 +15,6 @@ class Card(Psoc):
 
     def __init__(self, port=None, verbose=False):
         super(Card, self).__init__('CARD', port, verbose)
-        #transaction IDs
-        self.CHECK_BAL = 1
-        self.WITHDRAW = 2
-        self.CHANGE_PIN = 3
-        self.SIGN_NONCE = 4
 
     def _authenticate(self, pin):
         """Requests authentication from the ATM card
@@ -88,17 +84,19 @@ class Card(Psoc):
         self._vp('Card sent response %s' % resp)
         return resp == 'SUCCESS'
 
-    def get_card_id(self):
+    def get_card_id(self,transaction):
         """Checks the card balance
 
         Returns:
             str: UUID of ATM card on success
         """
 
-        self._sync(True) 
-        return self._get_uuid()
+        self._sync(True)
+        self._push_msg(struct.pack('b',transaction) + '\00') 
+        response = self._pull_msg()
+        return struct.unpack('b1024s',response)[1]
     
-    def change_pin_sign_nonce(self, nonce, old_pin, new_pin, transaction):
+    def change_pin_sign_nonce(self, transaction, nonce, old_pin, new_pin):
         """Signs the random nonce, called when customer tries to change 
         the PIN of the connected ATM card
 
@@ -113,13 +111,12 @@ class Card(Psoc):
         """
         
         self._sync(True) 
-        self._send_op(self.SIGN_NONCE) 
-        self._push_msg(str(transaction) + new_pin + old_pin + nonce + '\00') 
+        self._push_msg(struct.pack('b32s8s8s',transaction,nonce,old_pin,new_pin) +  '\00') 
         signedNonce = self._pull_msg()
 
         return signedNonce
 
-    def withdraw_sign_nonce(self, nonce, pin, hsm_nonce, hsm_id, amount, transaction):
+    def withdraw_sign_nonce(self,transaction, nonce, pin, hsm_nonce, hsm_id, amount):
         """Signs the random nonce, called when customer tries to withdraw 
         money from account associated with connected ATM card
 
@@ -135,12 +132,12 @@ class Card(Psoc):
         
         self._sync(True) 
         self._send_op(self.SIGN_NONCE) 
-        self._push_msg(str(transaction) + amount + pin + hsm_id + hsm_nonce + nonce + '\00') 
+        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin,hsm_nonce,hsm_id,amount) + '\00') 
         signed_nonce = self._pull_msg()
 
         return signed_nonce
     
-    def sign_nonce(self, nonce, pin, transaction):
+    def sign_nonce(self,transaction, nonce, pin):
         """Signs the random nonce, called when customer tries to check 
         balance of the account associated with the connected ATM card
 
@@ -154,28 +151,10 @@ class Card(Psoc):
 
         self._sync(True)
         self._send_op(self.SIGN_NONCE) 
-        self._push_msg(str(transaction) + pin + nonce + '\00') 
+        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin) + '\00') 
         signed_nonce = self._pull_msg()
 
         return signed_nonce
-
-    def withdraw(self, pin):
-        """Requests to withdraw from ATM
-
-        Args:
-            pin (str): Challenge PIN
-
-        Returns:
-            str: UUID of ATM card on success
-            bool: False if PIN didn't match
-        """
-
-        self._sync(False)
-        if not self._authenticate(pin):
-            return False
-
-        self._send_op(self.WITHDRAW)
-        return self._get_uuid()
 
     def provision(self, uuid, pin):
         """Attempts to provision a new ATM card
