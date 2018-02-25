@@ -28,8 +28,8 @@ class Bank:
     Returns:
         Randomly generated nonce
     '''
-    def get_nonce(self, card_id):
-        nonce = self.bank_rpc.get_nonce(card_id)
+    def get_nonce(self,transaction,card_id):
+        nonce = self.bank_rpc.get_nonce(transaction,card_id)
         return nonce
     
     '''Verifyies that a nonce has been properly signed. 
@@ -42,8 +42,8 @@ class Bank:
         the response, will return the proper response depending on the request 
 
     '''
-    def verify_nonce(self, card_id, encrypted_data):
-        res = self.bank_rpc.verify_nonce(card_id, encrypted_data) #signed_nonce,transaction,extra_data
+    def verify_nonce(self, transaction,card_id, encrypted_data):
+        res = self.bank_rpc.verify_nonce(transaction,card_id, encrypted_data) #signed_nonce,transaction,extra_data
         return res
     
 
