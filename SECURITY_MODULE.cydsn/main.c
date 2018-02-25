@@ -15,6 +15,8 @@
 //This is needed for the default communication between the BANK and DISPLAY over the USB-UART
 #include "usbserialprotocol.h"
 #include "SW1.h"
+// Crypto library
+#include <hydrogen.h>
 
 // SECURITY MODULE
 
@@ -44,86 +46,105 @@
 // global EEPROM read variables
 static const uint8 MONEY[MAX_BILLS][BILL_LEN] = {EMPTY_BILL};
 static const uint8 UUID[UUID_LEN + 1] = {'b', 'l', 'a', 'n', 'k', ' ', 
-                                        'u', 'u', 'i', 'd', '!', 0x00 };
+										'u', 'u', 'i', 'd', '!', 0x00 };
 static const uint8 BILLS_LEFT[1] = {0x00};
 
+// new consts below - see protocol_details.txt
+static const int CIPHERTEXT_LEN = 256;
+static const int MESSAGE_LEN = 256; 
+
+static const uint8_t UUID_REQUEST = 10; 
+static const uint8_t UUID_RESPONSE = 11; 
+static const uint8_t NONCE_REQUEST = 6;
+static const uint8_t NONCE_RESPONSE = 7;
+static const uint8_t WITHDRAWL_REQUEST = 12; 
+
+uint8_t[100] request; // when HSM receives message
+uint8_t[100] response; // when HSM sends out a message
+uint8_t message_type;
+uint32_t current_nonce;
+uint32_t secret_key;
 
 // reset interrupt on button press
 CY_ISR(Reset_ISR)
 {
-    pushMessage((uint8*)"In interrupt\n", strlen("In interrupt\n"));
-    SW1_ClearInterrupt();
-    CySoftwareReset();
+	pushMessage((uint8*)"In interrupt\n", strlen("In interrupt\n"));
+	SW1_ClearInterrupt();
+	CySoftwareReset();
 }
 
 
 // provisions HSM (should only ever be called once)
 void provision()
 {
-    int i;
-    uint8 message[64], numbills;
-    
-    for(i = 0; i < 128; i++) {
-        PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[i], BILL_LEN);
-    }
-    
+	int i;
+	uint8 message[64], numbills;
+
+	for(i = 0; i < 128; i++) {
+		PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[i], BILL_LEN);
+	}
+
     // synchronize with atm
-    syncConnection(SYNC_PROV);
- 
-    memset(message, 0u, 64);
-    strcpy((char*)message, PROV_MSG);
-    pushMessage(message, (uint8)strlen(PROV_MSG));
-        
+	syncConnection(SYNC_PROV);
+
+	memset(message, 0u, 64);
+	strcpy((char*)message, PROV_MSG);
+	pushMessage(message, (uint8)strlen(PROV_MSG));
+
     // Set UUID
-    pullMessage(message);
-    PIGGY_BANK_Write(message, UUID, strlen((char*)message) + 1);
-    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
-    
+	pullMessage(message);
+	PIGGY_BANK_Write(message, UUID, strlen((char*)message) + 1);
+	pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
+
     // Get numbills
-    pullMessage(message);
-    numbills = message[0];
-    PIGGY_BANK_Write(&numbills, BILLS_LEFT, 1u);
-    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
-    
+	pullMessage(message);
+	numbills = message[0];
+	PIGGY_BANK_Write(&numbills, BILLS_LEFT, 1u);
+	pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
+
     // Load bills
-    for (i = 0; i < numbills; i++) {
-        pullMessage(message);
-        PIGGY_BANK_Write(message, MONEY[i], BILL_LEN);
-        pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
-    }
+	for (i = 0; i < numbills; i++) {
+		pullMessage(message);
+		PIGGY_BANK_Write(message, MONEY[i], BILL_LEN);
+		pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
+	}
+
+    // Generate shared secret for server
+
+    // todo: do this
 }
 
 
 void dispenseBill()
 {
-    static uint8 stackloc = 0;
-    uint8 message[16];
-    volatile const uint8* ptr; 
-    
-    ptr = MONEY[stackloc];
-    
-    memset(message, 0u, 16);
-    memcpy(message, (void*)ptr, BILL_LEN);
+	static uint8 stackloc = 0;
+	uint8 message[16];
+	volatile const uint8* ptr; 
 
-    pushMessage(message, BILL_LEN);
-    
-    PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[stackloc], 16);
-    stackloc = (stackloc + 1) % 128;
+	ptr = MONEY[stackloc];
+
+	memset(message, 0u, 16);
+	memcpy(message, (void*)ptr, BILL_LEN);
+
+	pushMessage(message, BILL_LEN);
+
+	PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[stackloc], 16);
+	stackloc = (stackloc + 1) % 128;
 }
 
 
 int main(void)
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
-    
+
     // start reset button
-    Reset_isr_StartEx(Reset_ISR);
-    
+	Reset_isr_StartEx(Reset_ISR);
+
     /* Declare vairables here */
-    
-    uint8 numbills, i, bills_left;
-    uint8 message[64];
-    
+
+	uint8 numbills, i, bills_left;
+	uint8 message[64];
+
     /*
      * Note:
      *  To write to EEPROM, write to static const uint8 []
@@ -144,11 +165,11 @@ int main(void)
     // provision security module on first boot
     if(*ptr == 0x00)
     {
-        provision();
-        
+    	provision();
+
         // Mark as provisioned
-        i = 0x01;
-        PIGGY_BANK_Write(&i, PROVISIONED,1u);
+    	i = 0x01;
+    	PIGGY_BANK_Write(&i, PROVISIONED,1u);
     }
     
     // Go into infinite loop
@@ -156,8 +177,68 @@ int main(void)
         /* Place your application code here. */
 
         // synchronize with bank
-        syncConnection(SYNC_NORM);
-            
+    	syncConnection(SYNC_NORM);
+
+        // receive message (expecting nonce request)
+    	request = pullMessage(message);
+        message_type = request[0]; // read off first byte of request
+
+        int i;
+
+        switch(message_type)
+        {
+        	case UUID_REQUEST:
+	        	response[0] = UUID_RESPONSE;
+	        	for (i = 0; i < UUID_LEN; i++) {
+	        		response[i + 1] = UUID[i]; 
+	        	}
+	        	pushMessage(response);
+	        	break;
+
+        	case NONCE_REQUEST:
+	        	// generate nonce
+	        	current_nonce = hydro_random_u32(void);
+	        	// send nonce
+	        	response[0] = NONCE_RESPONSE;
+	        	for (i = 0; i < len(current_nonce); i++) {
+	        		response[i + 1] = current_nonce[i]; 
+	        	}
+	        	pushMessage(response);
+	        	break;
+
+        	case WITHDRAWL_REQUEST:
+	        	// verify signed request
+	        	uint8_t* message;
+	        	uint8_t* ciphertext = &response + 8;
+	        	if (hydro_secretbox_decrypt(message, ciphertext, CIPHERTEXT_LEN,
+	        		uint64_t 0, "WITHDRAW", secret_key)) {
+	        		// message forged!
+	        		break;
+	        	}		
+		        else {
+		        	// dispense bills
+		        	numbills = message[5];
+		        	ptr = BILLS_LEFT;
+		        	if (*ptr < numbills) {
+		        		pushMessage((uint8*)WITH_BAD, strlen(WITH_BAD));
+		        		continue;
+		        	} else {
+		        		pushMessage((uint8*)WITH_OK, strlen(WITH_OK));
+		        		bills_left = *ptr - numbills;
+		        		PIGGY_BANK_Write(&bills_left, BILLS_LEFT, 0x01);
+		        	}
+
+		        	for (i = 0; i < numbills; i++) {
+		        		dispenseBill();
+		        	}
+		        	break;
+	        }
+    	}
+	}
+}
+
+// Old Code:
+        /*
         // send UUID
         ptr = UUID;
         pushMessage((uint8*)ptr, strlen((char*)ptr));
@@ -189,7 +270,6 @@ int main(void)
                 dispenseBill();
             }
         }
-    }
-}
+        */
 
 /* [] END OF FILE */
