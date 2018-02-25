@@ -94,7 +94,7 @@ class Card(Psoc):
         self._sync(True)
         self._push_msg(struct.pack('b',transaction) + '\00') 
         response = self._pull_msg()
-        return struct.unpack('bb',response)[1]
+        return struct.unpack('b1024s',response)[1]
     
     def change_pin_sign_nonce(self, transaction, nonce, old_pin, new_pin):
         """Signs the random nonce, called when customer tries to change 
@@ -111,7 +111,7 @@ class Card(Psoc):
         """
         
         self._sync(True) 
-        self._push_msg(struct.pack('b',transaction) + nonce + old_pin + new_pin '\00') 
+        self._push_msg(struct.pack('b32s8s8s',transaction,nonce,old_pin,new_pin) +  '\00') 
         signedNonce = self._pull_msg()
 
         return signedNonce
@@ -132,7 +132,7 @@ class Card(Psoc):
         
         self._sync(True) 
         self._send_op(self.SIGN_NONCE) 
-        self._push_msg(struct.pack('b',transaction) + nonce + pin + hsm_nonce + hsm_id + amount + '\00') 
+        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin,hsm_nonce,hsm_id,amount) + '\00') 
         signed_nonce = self._pull_msg()
 
         return signed_nonce
@@ -151,7 +151,7 @@ class Card(Psoc):
 
         self._sync(True)
         self._send_op(self.SIGN_NONCE) 
-        self._push_msg(struct.pack('b',transaction) + nonce + pin + '\00') 
+        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin) + '\00') 
         signed_nonce = self._pull_msg()
 
         return signed_nonce
