@@ -92,8 +92,8 @@ class Card(Psoc):
         """
 
         self._sync(True)
-        self._push_msg(struct.pack('b',transaction) + '\00') 
-        response = self._pull_msg()
+        self._push_msg(struct.pack('b',transaction)) 
+        response = self.read(s=1025)#reads 1025 bytes
         return struct.unpack('b1024s',response)[1]
     
     def sign_nonce(self,transaction, nonce, pin):
@@ -109,8 +109,8 @@ class Card(Psoc):
         """
 
         self._sync(True)
-        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin) + '\00') 
-        signed_nonce = self._pull_msg()
+        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin)) 
+        signed_nonce = self.read(s=33)
 
         return struct.unpack('b32s',signed_nonce)[1]
 
@@ -125,7 +125,7 @@ class Card(Psoc):
     def request_new_public_key(self,transaction,new_pin):
         self._sync(True)
         self._push(struct.pack('b8s',transaction,new_pin))
-        public_key = self._pull_msg()
+        public_key = self.read(s=33)
         return struct.unpack('b32s',public_key)
 
     def provision(self, uuid, pin):
