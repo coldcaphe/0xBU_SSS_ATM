@@ -96,50 +96,9 @@ class Card(Psoc):
         response = self._pull_msg()
         return struct.unpack('b1024s',response)[1]
     
-    def change_pin_sign_nonce(self, transaction, nonce, old_pin, new_pin):
-        """Signs the random nonce, called when customer tries to change 
-        the PIN of the connected ATM card
-
-        Args:
-            nonce (str): Random nonce
-            old_pin (str): Challenge PIN
-            new_pin (str): New pin to change to 
-            transaction (int): Transaction ID
-
-        Returns 
-            str: Signed nonce
-        """
-        
-        self._sync(True) 
-        self._push_msg(struct.pack('b32s8s8s',transaction,nonce,old_pin,new_pin) +  '\00') 
-        signedNonce = self._pull_msg()
-
-        return signedNonce
-
-    def withdraw_sign_nonce(self,transaction, nonce, pin, hsm_nonce, hsm_id, amount):
-        """Signs the random nonce, called when customer tries to withdraw 
-        money from account associated with connected ATM card
-
-        Args:
-            nonce (str): Random nonce
-            old_pin (str): Challenge PIN
-            hsm_id (str): HSM ID
-            transaction (int): transaction ID
-
-        Returns 
-            str: Signed nonce
-        """
-        
-        self._sync(True) 
-        self._send_op(self.SIGN_NONCE) 
-        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin,hsm_nonce,hsm_id,amount) + '\00') 
-        signed_nonce = self._pull_msg()
-
-        return signed_nonce
-    
     def sign_nonce(self,transaction, nonce, pin):
-        """Signs the random nonce, called when customer tries to check 
-        balance of the account associated with the connected ATM card
+        """Signs the random nonce, called when customer tries to perform
+        an actoin of the account associated with the connected ATM card
 
         Args:
             nonce (str): Random nonce
@@ -150,11 +109,24 @@ class Card(Psoc):
         """
 
         self._sync(True)
-        self._send_op(self.SIGN_NONCE) 
         self._push_msg(struct.pack('b32s8s',transaction,nonce,pin) + '\00') 
         signed_nonce = self._pull_msg()
 
-        return signed_nonce
+        return struct.unpack('b32s',signed_nonce)[1]
+
+        """Calculates what the public key would be based on the pin sent
+
+        Args:
+            transaction(int): Transaction ID
+            new_pin: theoretical new pin
+        Returns
+            str: New Public Key
+        """
+    def request_new_public_key(self,transaction,new_pin):
+        self._sync(True)
+        self._push(struct.pack('b8s',transaction,new_pin))
+        public_key = self._pull_msg()
+        return struct.unpack('b32s',public_key)
 
     def provision(self, uuid, pin):
         """Attempts to provision a new ATM card
