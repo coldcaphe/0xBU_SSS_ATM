@@ -61,6 +61,8 @@ class HSM(Psoc):
 
     def get_uuid(self,transaction):
         """Retrieves the UUID from the HSM
+        Args:
+            transaction(int): The transaction type. Lets the hsm know what is happening
 
         Returns:
             str: UUID of HSM
@@ -71,14 +73,15 @@ class HSM(Psoc):
         return uuid
 
     '''
-    Verifies the nonce was correctly signed and completes the withdraw request
+    Verifies the nonce was correctly signed and completes the transactions request
 
     Args:
-    signed_nonce_and_amount(str): This contains the amount requested in the withdraw and the 
-    nonce to proove that it is valid and a transaction id that lets the HSM know what to do. All of this is encrypted
-    through the shared secret key for this hsm.
+        transaction(int): The transaction type. Lets the hsm know what is happening
+        encrypted_data(str): contains the data that the hsm will use for its transaction
+    Returns:
+        var: Can either be an array of bills or a balance.
     '''
-    def verify_nonce(self,signed_nonce_and_amount):
+    def send_action(self,transaction,encrypted_data):
         self._push_msg(signed_nonce_and_amount)
         resp = self._pull_msg()
         return resp
