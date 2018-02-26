@@ -1,1 +1,4 @@
 
+[submodule "libhydrogen"]
+	path = libhydrogen
+	url = https://github.com/stevenbrz/libhydrogen
