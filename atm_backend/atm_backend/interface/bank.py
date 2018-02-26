@@ -8,7 +8,6 @@ import xmlrpclib
 
 class Bank:
     """Interface for communicating with the bank
-
     Args:
         address (str): IP address of bank
         port (int): Port to connect to
@@ -38,10 +37,8 @@ class Bank:
         signed_nonce(str): Proof the message came from the card with the pin
         hsm_nonce: a nonce the server needs to sign for the hsm to decrypt the message the server signs
         hsm_id: the id of the hsm
-
         Returns:
         the response, will be an encrypted message containing the acount balance 
-
     '''
     def check_balance(self,card_id,signed_nonce,hsm_nonce,hsm_id):
         res = self.bank_rpc.verify_nonce(card_id,signed_nonce,hsm_nonce,hsm_id) #signed_nonce,transaction,extra_data
@@ -52,7 +49,6 @@ class Bank:
         card_id(int): The id on the card. will be used to help the bank find the shared secret to decrypt.
         signed_nonce(str): Proof the message came from the card with the pin
         new_pk(str): the new private key the server should use
-
     Returns:
     the response, will be either an accept or reject message 
     '''
@@ -67,7 +63,6 @@ class Bank:
         hsm_nonce: a nonce the server needs to sign for the hsm to decrypt the message the server signs
         hsm_id: the id of the hsm
         amount: the amount of money requested
-
         Returns:
         the response, will be an encrypted message containing the acount balance 
     '''
@@ -83,12 +78,10 @@ class DummyBank:
 
     def withdraw(self, hsm_id, card_id, amount):
         """Authorizes a requested withdrawal
-
         Args:
             hsm_id (str): UUID of HSM
             card_id (doesn't matter): Isn't used
             amount: (doesn't matter): Isn't used
-
         Returns:
             str: hsm_id
         """
@@ -96,10 +89,8 @@ class DummyBank:
 
     def check_balance(self, card_id):
         """Authorizes a requested balance check
-
         Args:
             card_id (doesn't matter): Isn't used
-
         Returns:
             int: Balance of 2018
         """
