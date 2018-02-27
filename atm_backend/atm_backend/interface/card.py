@@ -202,7 +202,7 @@ class DummyCard(Card):
         """
 
         packed = struct.pack('b32s8s',transaction,nonce,pin)
-        signed_nonce = struct.pack('b32s',0,"kls/00/kjsdksa/55\sdfaaaaa") 
+        signed_nonce = struct.pack('b32s',0,random_generator()) 
 
         return struct.unpack('b32s',signed_nonce)[1]
 
@@ -216,7 +216,7 @@ class DummyCard(Card):
         """
     def request_new_public_key(self,transaction,new_pin):
         packed = struct.pack('b8s',transaction,new_pin))
-        public_key = struct.pack('b32s',0,"kls/00/kjsdksa/55\sdfaaaaa")
+        public_key = struct.pack('b32s',0,random_generator())
         return struct.unpack('b32s',public_key)
 
     def provision(self, uuid, pin):
