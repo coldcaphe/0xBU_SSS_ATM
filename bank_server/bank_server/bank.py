@@ -91,6 +91,7 @@ class Bank(object):
         self.server.register_function(self.withdraw)
         self.server.register_function(self.check_balance)
         self.server.register_function(self.change_pin)
+        self.server.register_function(self.set_first_pk)
 
         # Bank is initialized. Tell AdminBackend to report that ready_for_atm
         # is True.
@@ -209,6 +210,27 @@ class Bank(object):
         ctext = self.encrypt(key, message)
 
         return ctext
+
+    def set_first_pk(self, card_id, pk):
+        """
+        Sets the first pk for a card (at provision time).
+        Returns True on success, False otherwise
+        """
+        #TODO: make sure that this doesn't allow you to update existing cards lol
+        try:
+            card_id = str(card_id)
+            pk = str(pk)
+        except ValueError:
+            return 'ERROR set_first_pk command usage: set_first_pk <card_id> <pk>'
+
+        if len(card_id) != 36 or len(pk) != 32:
+            return "ERROR your inputs are not right long"
+
+        if not self.db_obj.card_exists(card_id):
+            raise ValueError("ERROR ur card_id is not real")
+
+        return self.db_obj.set_first_pk(card_id, pk)
+
 
 #################################################################
 #Helper functions

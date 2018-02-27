@@ -10,7 +10,7 @@ create table cards (
     used            integer     NOT NULL DEFAULT (1), 
     timestamp       timestamp   NOT NULL DEFAULT (DATETIME('now','localtime')), 
 
-    pk              integer     CHECK (LENGTH(pk) == 32), 
+    pk              integer     DEFAULT NULL CHECK (LENGTH(pk) == 32), 
 
     primary key (account_name, card_id)
 );

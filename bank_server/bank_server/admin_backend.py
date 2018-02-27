@@ -120,7 +120,7 @@ class AdminBackend(object):
             amount(string): initial balance
 
         Returns:
-            Returns randomly generated secret | name padded to 1024 bits on Success.
+            Returns randomly generated secret | card_id
                     False on Failure.
 
         """

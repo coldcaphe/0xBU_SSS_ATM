@@ -162,6 +162,27 @@ class DB(object):
 
         return result[0]
 
+    @lock_db
+    def set_first_pk(card_id, pk):
+        #check that card exists
+        self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE card_id = (?) LIMIT 1);', (card_id,))
+        
+        result = self.cur.fetchone()
+        if result[0] == 0:
+            return False
+
+        #check that pk is null
+        self.cur.execute('SELECT pk FROM cards WHERE card_id = (?);', (card_id,))
+        
+        result = self.cur.fetchone()
+        if result[0] is not None:
+            return False
+
+        return self.modify("UPDATE cards SET pk=(?) WHERE card_id=(?);", 
+            (sqlite3.Binary(new_pk), card_id,))
+
+
+
 ##########
 
     def get_nonce_data(card_id):
