@@ -26,7 +26,7 @@ class ATM(object):
         self.RETURN_HSM_NONCE            = 0x05
         self.REQUEST_HSM_UUID            = 0x06
         self.RETURN_HSM_UUID             = 0x07
-        self.REQUEST_WITHDRAWL           = 0x08
+        self.REQUEST_WITHDRAWAL          = 0x08
         self.RETURN_WITHDRAWAL           = 0x09
         self.REQUEST_BALANCE             = 0x0A
         self.RETURN_BALANCE              = 0x0B
@@ -163,7 +163,7 @@ class ATM(object):
                 signed_nonce = self.card.sign_nonce(self.REQUEST_CARD_SIGNATURE,nonce,pin) #signs the random nonce
                 response = self.bank.withdraw(card_id,signed_nonce,hsm_nonce,hsm_id,amount) #this response will contain the signed nonce from the server
                 if response is not None: #hsm
-                    hsm_resp = self.hsm.send_action(self.REQUEST_WITHDRAW,response)
+                    hsm_resp = self.hsm.send_action(self.REQUEST_WITHDRAWAL,response)
                     if hsm_resp is not None:
                         return hsm_resp #returns if nonce was verified by the HSM                    
                 
