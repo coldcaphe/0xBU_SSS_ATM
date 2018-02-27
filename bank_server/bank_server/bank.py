@@ -87,8 +87,10 @@ class Bank(object):
         self.db_mutex = db_mutex
         self.db_obj = DB(db_mutex=self.db_mutex, db_init=self.db_init, db_path=self.db_path)
         self.server = SimpleXMLRPCServer((self.bank_host, self.bank_port))
+        self.server.register_function(self.get_nonce)
         self.server.register_function(self.withdraw)
         self.server.register_function(self.check_balance)
+        self.server.register_function(self.change_pin)
 
         # Bank is initialized. Tell AdminBackend to report that ready_for_atm
         # is True.
