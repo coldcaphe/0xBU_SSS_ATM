@@ -4,7 +4,7 @@ import logging
 import sys
 import socket
 import xmlrpclib
-
+import base64
 
 class Bank:
     """Interface for communicating with the bank
@@ -41,7 +41,9 @@ class Bank:
         the response, will be an encrypted message containing the acount balance 
     '''
     def check_balance(self,card_id,signed_nonce,hsm_nonce,hsm_id):
-        res = self.bank_rpc.verify_nonce(card_id,signed_nonce,hsm_nonce,hsm_id) #signed_nonce,transaction,extra_data
+        b64signed_nonce = base64(signed_nonce)
+        b64hsm_nonce = base64(signed_nonce)
+        res = self.bank_rpc.check_balance(card_id,b64signed_nonce,b64hsm_nonce,hsm_id) #signed_nonce,transaction,extra_data
         return res
     
     '''Changes the public key the server is using
@@ -53,7 +55,9 @@ class Bank:
     the response, will be either an accept or reject message 
     '''
     def change_pin(self,card_id,signed_nonce,new_pk):
-        res = self.bank_rpc.verify_nonce(card_id,signed_nonce,hsm_nonce,hsm_id) 
+        b64signed_nonce = base64(signed_nonce)
+        b64hsm_nonce = base64(signed_nonce)
+        res = self.bank_rpc.change_pin(card_id,b64signed_nonce,b64hsm_nonce,hsm_id) 
         return res
 
     '''Requests server to aproove a withdraw request. 
@@ -67,7 +71,9 @@ class Bank:
         the response, will be an encrypted message containing the acount balance 
     '''
     def withdraw(self,card_id,signed_nonce,hsm_nonce,hsm_id,amount):
-        res = self.bank_rpc.verify_nonce(card_id,signed_nonce,hsm_nonce,hsm_id,amount) 
+        b64signed_nonce = base64(signed_nonce)
+        b64hsm_nonce = base64(signed_nonce)
+        res = self.bank_rpc.withdraw(card_id,signed_nonce,hsm_nonce,hsm_id,amount) 
         return res
 
 class DummyBank:
