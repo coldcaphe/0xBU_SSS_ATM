@@ -164,18 +164,11 @@ class DB(object):
 
     @lock_db
     def set_first_pk(card_id, pk):
-        #check that card exists
-        self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE card_id = (?) LIMIT 1);', (card_id,))
+        #check that card exists and has null pk
+        self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE card_id = (?) AND pk IS NULL LIMIT 1);', (card_id,))
         
         result = self.cur.fetchone()
         if result[0] == 0:
-            return False
-
-        #check that pk is null
-        self.cur.execute('SELECT pk FROM cards WHERE card_id = (?);', (card_id,))
-        
-        result = self.cur.fetchone()
-        if result[0] is not None:
             return False
 
         return self.modify("UPDATE cards SET pk=(?) WHERE card_id=(?);", 
