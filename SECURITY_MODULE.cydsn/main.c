@@ -53,17 +53,17 @@ static const uint8 BILLS_LEFT[1] = {0x00};
 static const int CIPHERTEXT_LEN = 256;
 static const int MESSAGE_LEN = 256; 
 
-static const uint8_t UUID_REQUEST = 10; 
-static const uint8_t UUID_RESPONSE = 11; 
-static const uint8_t NONCE_REQUEST = 6;
-static const uint8_t NONCE_RESPONSE = 7;
-static const uint8_t WITHDRAWL_REQUEST = 12; 
+static const uint8_t UUID_REQUEST = 0x06; 
+static const uint8_t UUID_RESPONSE = 0x07; 
+static const uint8_t NONCE_REQUEST = 0x04;
+static const uint8_t NONCE_RESPONSE = 0x05;
+static const uint8_t WITHDRAWL_REQUEST = 0x08; 
 
 uint8_t[100] request; // when HSM receives message
 uint8_t[100] response; // when HSM sends out a message
 uint8_t message_type;
-uint32_t current_nonce;
-uint32_t secret_key;
+uint32_t[32] current_nonce;
+uint32_t secret_key; // this will be stored/accessed in the eeprom
 
 // reset interrupt on button press
 CY_ISR(Reset_ISR)
@@ -109,7 +109,7 @@ void provision()
 		pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 	}
 
-    // Generate shared secret for server
+    // Generate shared secret with server
 
     // todo: do this
 }
@@ -183,7 +183,8 @@ int main(void)
     	request = pullMessage(message);
         message_type = request[0]; // read off first byte of request
 
-        int i;
+        int i, j;
+        int flag = 0;
 
         switch(message_type)
         {
@@ -197,7 +198,7 @@ int main(void)
 
         	case NONCE_REQUEST:
 	        	// generate nonce
-	        	current_nonce = hydro_random_u32(void);
+	        	current_nonce = hydro_random_buf(&current_nonce, 32);
 	        	// send nonce
 	        	response[0] = NONCE_RESPONSE;
 	        	for (i = 0; i < len(current_nonce); i++) {
@@ -208,31 +209,41 @@ int main(void)
 
         	case WITHDRAWL_REQUEST:
 	        	// verify signed request
-	        	uint8_t* message;
-	        	uint8_t* ciphertext = &response + 8;
+	        	uint8_t message [MESSAGE_LEN];
+	        	uint8_t* ciphertext = &response + 1;
 	        	if (hydro_secretbox_decrypt(message, ciphertext, CIPHERTEXT_LEN,
 	        		uint64_t 0, "WITHDRAW", secret_key)) {
 	        		// message forged!
 	        		break;
 	        	}		
 		        else {
-		        	// dispense bills
-		        	numbills = message[5];
-		        	ptr = BILLS_LEFT;
-		        	if (*ptr < numbills) {
-		        		pushMessage((uint8*)WITH_BAD, strlen(WITH_BAD));
-		        		continue;
-		        	} else {
-		        		pushMessage((uint8*)WITH_OK, strlen(WITH_OK));
-		        		bills_left = *ptr - numbills;
-		        		PIGGY_BANK_Write(&bills_left, BILLS_LEFT, 0x01);
+		        	// verify nonce
+		        	for (j = 1; j < 33; j++) {
+		        		if (message[j] != current_nonce[j - 1]) {
+		        			flag = 1;
+		        		}
 		        	}
+		        	if (flag == 0) { // if nonce check passed
 
-		        	for (i = 0; i < numbills; i++) {
-		        		dispenseBill();
+			        	// dispense bills
+			        	numbills = message[1 + 32]; // (WITHDRAW (1 byte)| nonce (32 bytes)| amount)
+			        	ptr = BILLS_LEFT;
+			        	if (*ptr < numbills) {
+			        		pushMessage((uint8*)WITH_BAD, strlen(WITH_BAD));
+			        		continue;
+			        	} 
+			        	else {
+			        		pushMessage((uint8*)WITH_OK, strlen(WITH_OK));
+			        		bills_left = *ptr - numbills;
+			        		PIGGY_BANK_Write(&bills_left, BILLS_LEFT, 0x01);
+			        	}
+
+			        	for (i = 0; i < numbills; i++) {
+			        		dispenseBill();
+			        	}
+		        		break;
 		        	}
-		        	break;
-	        }
+	        	}
     	}
 	}
 }
