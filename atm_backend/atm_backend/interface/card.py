@@ -215,7 +215,7 @@ class DummyCard(Card):
             str: New Public Key
         """
     def request_new_public_key(self,transaction,new_pin):
-        packed = struct.pack('b8s',transaction,new_pin))
+        packed = struct.pack('b8s',transaction,new_pin)
         public_key = struct.pack('b32s',0,random_generator())
         return struct.unpack('b32s',public_key)
 
