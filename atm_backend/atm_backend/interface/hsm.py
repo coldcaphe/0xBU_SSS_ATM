@@ -139,11 +139,11 @@ class HSM(Psoc):
         return True
 
 
+import string
+import random
+def random_generator(size=32, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
 class DummyHSM(HSM):
-    import string
-    import random
-    def random_generator(size=32, chars=string.ascii_uppercase + string.digits):
-        return ''.join(random.choice(chars) for x in range(size))
 
     """Emulated HSM for testing
 
@@ -168,7 +168,6 @@ class DummyHSM(HSM):
 
     '''
     def get_nonce(self,transaction):
-        self._sync(True)
         packed = struct.pack('b',transaction)
         resp = struct.pack('b32s',1,random_generator()) #read 33 bytes
         return struct.unpack('b32s',resp)[1]
@@ -182,7 +181,6 @@ class DummyHSM(HSM):
         Returns:
             str: UUID of HSM
         """
-        self._sync(True)
         packed = struct.pack('b',transaction)
         resp = struct.pack('b32s',1,random_generator()) #read 33 bytes
         uuid = struct.unpack('b32s',resp)[1]
@@ -227,7 +225,6 @@ class DummyHSM(HSM):
         Returns:
             bool: True if HSM provisioned, False otherwise
         """
-        self._sync(True)
 
         msg = self._pull_msg()
         if msg != 'P':
