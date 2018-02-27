@@ -19,15 +19,23 @@
 
 #define PIN_LEN 8
 #define UUID_LEN 36
+#define R_LEN 32
 #define PINCHG_SUC "SUCCESS"
 #define PROV_MSG "P"
 #define RECV_OK "K"
 #define PIN_OK "OK"
 #define PIN_BAD "BAD"
-#define CHANGE_PIN '3'
 
-#define NAME_REQ "4"
-#define CHNG_PIN "2" 
+#define NONCE_LEN 32
+#define SIGN_LEN 32
+
+#define REQUEST_NAME                = 0x00
+#define RETURN_NAME                 = 0x01
+#define REQUEST_CARD_SIGNATURE      = 0x02
+#define RETURN_CARD_SIGNATURE       = 0x03
+#define REQUEST_NEW_PK	         = 0x0C
+#define RETURN_NEW_PK		         = 0x0D
+
 
 //CARD
 
@@ -45,20 +53,21 @@
  */
 
 // global EEPROM read variables
-static const uint8 PIN[PIN_LEN] = {0x36, 0x35, 0x34, 0x33, 0x35, 0x34, 0x34, 0x36}; //eCTF
+static const uint8 R[R_LEN] = {};
 static const uint8 UUID[UUID_LEN] = {0x37, 0x33, 0x36, 0x35, 0x36, 0x33, 0x37, 0x35, 0x37, 0x32, 0x36, 0x39, 0x37, 0x34, 0x37, 0x39}; //security
 
-// more global variables
-static const char * name_req = "name"; //TODO: change??
-
+// more variables
+uint8_t[100] request; // when HSM receives message
+uint8_t[100] response; // when HSM sends out a message
+uint8_t message_type;
+uint8_t r[32];
+uint32_t secret_key;
 
 // libhydrogen variables
 hydro_sign_keypair key_pair;
-hydro_sign_keygen(&key_pair);
 
-uint8_t signature[hydro_sign_BYTES];
-
-uint32_t sk_pin;
+uint8_t signature[32];
+hydro_sign_state st;
 
 // reset interrupt on button press
 CY_ISR(Reset_ISR)
@@ -77,12 +86,12 @@ void provision()
     syncConnection(SYNC_PROV);
  
     pushMessage((uint8*)PROV_MSG, (uint8)strlen(PROV_MSG));
-        
-    // set PIN
-    pullMessage(message);
-    USER_INFO_Write(message, PIN, PIN_LEN);
-    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
     
+    // get r (random)
+    pullMessage(message);
+    USER_INFO_Write(message, R, R_LEN);
+    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));         
+
     // set account number
     pullMessage(message);
     USER_INFO_Write(message, UUID, UUID_LEN);
@@ -122,79 +131,81 @@ int main(void)
         USER_INFO_Write(&i,PROVISIONED, 1u);
     }
     
-    NAME = "temp_name"; //TODO: figure out name
-
     // Go into infinite loop
     while (1) {
         syncConnection(SYNC_NORM);
         // Request for name from ATM
-        pullMessage(message);
-	
-	// check if there has been a request for name
-	if (message[0] == NAME_REQ) {
-            // Encrypt name
-	    hydro_sign_create(signature, NAME, strlen(NAME), 
-		"__name__", key_pair.sk);
-            // send name to ATM
-	    pushMessage((uint*) signature);
+        request = pullMessage(message);
+	message_type = request[0];
+	int j;
 
-	// change pin 
-	} else if (message[0] == CHNG_PIN) {
-	    //TODO: need to decrypt?
+	switch(message_type)
+	{
+	    case REQUEST_NAME:
+		response[0] = RETURN_NAME;
+		for (j = 0; j < UUID_LEN; j++)
+		{
+		   response[j+1] = UUID[j];
+		}
+		pushMessage(response);
+		break;
 
-	    // buffer to store the nonce
-	    char non_buff[257];
-	    memcpy(non_buff, &message[1], 256);
-	    non_buff[256] = '\0';
+	    case REQUEST_CARD_SIGNATURE:
+		int nonce[32];
+		for (j = 0; j < NONCE_LEN; j++)
+		{
+		    nonce[j] = request[j+1];
+		}
 
-	    // buffer to store the PIN
-	    char pin_buff[17];
-	    memcpy(pin_buff, &message[257], 16);
-            pin_buff[16] = '\0'; 
+		int pin[8];
+		for (j = 0; j < PIN_LEN; j++)
+		{
+		    pin[j] = request[NONCE_LEN + 1 + j];
+		}
 
-	    //TODO: length of key??
-	    char tmp_buff[257]; 
-	    sk_pin = hydro_random_buf_deterministic(&tmp_buff, 
-		strlen(tmp_buff), (uint8_t) pin_buff);
-	    
-	    //TODO: public key?
+		// Get the seed value by encrypting the PIN with R
+		uint8_t ciphertext[32];
+		hydro_secretbox_encrypt(ciphertext, pin, PIN_LEN, 0, "__seed__", R);
 
-	// other transaction
-	} else {
-	    //TODO: need to decrypt?
+		// Get the public and the secret key
+		hydro_sign_keygen_deterministic(&key_pair, ciphertext);
 
-            // buffer to store the nonce
-            char non_buff[257];
-            memcpy(non_buff, &message[1], 256);
-            non_buff[256] = '\0';
+		// generate signature
+		hydro_sign_create(signature, nonce, strlen(nonce), "__sign__", key_pair.sk);
 
-            // buffer to store the PIN
-            char pin_buff[17];
-            memcpy(pin_buff, &message[257], 16);
-            pin_buff[16] = '\0';
+		response[0] = RETURN_CARD_SIGNATURE;
+		for (j = 0; j < SIG_LEN; j++)
+                {
+                   response[j+1] = signature[j];
+                }
+		pushMessage(response);
+		break;
 
-	    // buffer to store the data
-            char data_buff[9];
-            memcpy(data_buff, &message[273], 8);
-            pin_buff[8] = '\0';
+	    case REQUEST_NEW_PK:
+		int pin[8];
+                for (j = 0; j < PIN_LEN; j++)
+                {
+                    pin[j] = request[1 + j];
+                }
+		
+		// Get the seed value by encrypting the PIN with R
+                uint8_t ciphertext[32];
+                hydro_secretbox_encrypt(ciphertext, pin, PIN_LEN, 0, "__seed__", R);
 
-            //TODO: length of key??
-            char tmp_buff[257];
-            sk_pin = hydro_random_buf_deterministic(&tmp_buff,
-                strlen(tmp_buff), (uint8_t) pin_buff);
-	
-	    //TODO: any conventional numbers I should use?
-	    char dest[265];
-	    strcpy_s(dest,256,non_buff);
-	    strcpy_s(dest,9,data_buff);
-	    hydro_sign_create(signature, dest, strlen(dest),
-                "_tranxt_", key_pair.sk);
+                // Get the public and the secret key
+                hydro_sign_keygen_deterministic(&key_pair, ciphertext);
 
-            //TODO: encrypt (sig|nonce|transxt|extra_data)
-	
-	    //pushMessage((uint*) signature);
-            //TODO: public key?
-	}
+		response[0] = RETURN_NEW_PK;
+		for (j = 0; j < hydro_sign_PUBLICKEYBYTES; j++)
+                {
+                   response[j+1] = key_pair.pk[j];
+                }
+                pushMessage(response);
+		break;
+
+	    default:
+	        break;
+	}	
 
         
 	/*
