@@ -69,7 +69,7 @@ class ATM(object):
                 response = self.bank.check_balance(card_id,signed_nonce,hsm_nonce,hsm_id) #this response will contain the signed nonce from the server
 
                 if response is not None: #checks that it's not None
-                    hsm_resp = self.hsm.verify_signed_nonce(self.REQUEST_BALANCE,response)
+                    hsm_resp = self.hsm.send_action(self.REQUEST_BALANCE,response)
                     if hsm_resp is not None:
                         return hsm_resp # returns bank balance
                     return response                 
@@ -163,7 +163,7 @@ class ATM(object):
                 signed_nonce = self.card.sign_nonce(self.REQUEST_CARD_SIGNATURE,nonce,pin) #signs the random nonce
                 response = self.bank.withdraw(card_id,signed_nonce,hsm_nonce,hsm_id,amount) #this response will contain the signed nonce from the server
                 if response is not None: #hsm
-                    hsm_resp = self.hsm.verify_signed_nonce(self.REQUEST_WITHDRAW,response)
+                    hsm_resp = self.hsm.send_action(self.REQUEST_WITHDRAW,response)
                     if hsm_resp is not None:
                         return hsm_resp #returns if nonce was verified by the HSM                    
                 
