@@ -14,6 +14,15 @@ running in your Bank Server.
 
         ------------------------------------------------------------------------
         function:
+            ready_for_atm - check if bank is ready for atms to connect
+
+        args:
+            None
+
+        returns:
+            bool: True for success, False otherwise.
+        ------------------------------------------------------------------------
+        function:
             create_account
 
         args:
@@ -58,8 +67,12 @@ running in your Bank Server.
 
 import uuid
 import logging
+import xmlrpclib
+import os
+
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from . import DB
+
 
 
 class AdminBackend(object):
@@ -70,7 +83,7 @@ class AdminBackend(object):
     also expose to ease service discovery on the client-side.
 
     """
-    def __init__(self, config, db_mutex):
+    def __init__(self, config, db_mutex, ready_event):
         """ __init__ reads config object and registers interface to xmlrpc
 
         Args:
@@ -83,20 +96,21 @@ class AdminBackend(object):
         self.admin_port = config['admin']['port']
         self.db_path = config['database']['db_path']
         self.db_mutex = db_mutex
+        self.ready_event = ready_event
 
         self.db_obj = DB(db_path=self.db_path)
         server = SimpleXMLRPCServer((self.admin_host, self.admin_port))
         server.register_introspection_functions()
-        server.register_function(self.hello)
         server.register_function(self.create_account)
         server.register_function(self.update_balance)
         server.register_function(self.check_balance)
         server.register_function(self.create_atm)
+        server.register_function(self.ready_for_atm)
         logging.info('admin interface listening on ' + self.admin_host + ':' + str(self.admin_port))
         server.serve_forever()
 
-    def hello(self):
-        return 'hello'
+    def ready_for_atm(self):
+        return self.ready_event.isSet()
 
     def create_account(self, account_name, amount):
         """Create account with account_name starting amount
@@ -106,20 +120,24 @@ class AdminBackend(object):
             amount(string): initial balance
 
         Returns:
-            Returns random uuid (string) on Success.
+            Returns randomly generated secret | name padded to 1024 bits on Success.
                     False on Failure.
 
         """
-        card_id = str(uuid.uuid4())
         try:
             amount = int(amount)
         except ValueError:
             logging.info('amount must be a integer')
             return False
 
+        card_id = str(uuid.uuid4())
+
         if self.db_obj.admin_create_account(account_name, card_id, amount):
             logging.info('admin create account success')
-            return card_id
+            r = os.urandom(32)
+
+            return xmlrpclib.Binary(r + card_id)
+
         logging.info('admin create account failed')
         return False
 
@@ -151,22 +169,25 @@ class AdminBackend(object):
 
         """
         balance = self.db_obj.admin_get_balance(account_name)
-        if balance:
+        if balance is not None:
             logging.info('admin check_balance success')
             return balance
         logging.info('admin check_balance failure')
         return False
 
+    #todo create provisioning data
     def create_atm(self):
         """Create atm
 
         Returns:
-            Returns random uuid (string) on Success.
+            Returns hsm id | hsm key on Success
                     False on Failure.
         """
-        atm_id = str(uuid.uuid4())
-        if self.db_obj.admin_create_atm(atm_id):
+        hsm_id = str(uuid.uuid4())
+        hsm_key = os.urandom(32)
+
+        if self.db_obj.admin_create_atm(hsm_id, hsm_key):
             logging.info('admin create_atm success')
-            return atm_id
+            return xmlrpclib.Binary(hsm_id + hsm_key)
         logging.info('admin create_atm failure')
         return False

@@ -54,65 +54,126 @@ class DB(object):
     ############################
 
     @lock_db
-    def set_balance(self, card_id, balance):
-        """set balance of account: card_id
-
-        Returns:
-            (bool): Returns True on Success. False otherwise.
+    def user_exists(self, name):
         """
-        return self.modify("UPDATE cards SET balance = (?) WHERE \
-                                    card_id = (?);", (balance, card_id,))
+        Returns true iff the name exists in the db
+        """
+        self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE account_name = (?) LIMIT 1);', (name,))
+        
+        result = self.cur.fetchone()
+        if result[0] == 0:
+            return False
+
+        return True
 
     @lock_db
-    def get_balance(self, card_id):
-        """get balance of account: card_id
-
-        Returns:
-            (string or None): Returns balance on Success. None otherwise.
+    def card_exists(self, card_id):
         """
-        self.cur.execute("SELECT balance FROM cards WHERE card_id = (?);", (card_id,))
+        Returns true iff the card_id exists in the db
+        """
+        self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE card_id = (?) LIMIT 1);', (card_id,))
+        
         result = self.cur.fetchone()
-        if result is None:
+        if result[0] == 0:
+            return False
+
+        return True
+
+    @lock_db
+    def check_expired_and_update_nonce(self, card_id, nonce):
+        (_, timestamp, used) = get_nonce_data(card_id)
+
+        #if card has unused nonce that hasn't expired, return error
+        if not used and self.check_timestamp_valid(timestamp):
+            return False
+
+        return self.modify("UPDATE cards SET nonce=(?), used=0, timestamp=DATETIME('now','localtime') WHERE card_id=(?);", 
+                        (sqlite3.Binary(nonce), card_id,))
+
+    @lock_db
+    def update_pk(self, card_id, new_pk):
+        return self.modify("UPDATE cards SET pk=(?) WHERE card_id=(?);", 
+            (sqlite3.Binary(new_pk), card_id,))
+
+    @lock_db
+    def get_hsm_key(self, hsm_id):
+        self.cur.execute('SELECT k_hsm FROM atms WHERE hsm_id = (?);', (hsm_id,))
+        
+        result = self.cur.fetchone()
+        if result == None:
             return None
+
         return result[0]
 
     @lock_db
-    def get_atm(self, atm_id):
-        """get atm_id of atm: atm_id
-        this is an obviously dumb function but maybe it can be expanded...
+    def do_withdrawal(self, card_id, hsm_id, amount):
+        self.cur.execute('SELECT balance FROM cards WHERE card_id = (?);', (card_id,))
+        balance = self.cur.fetchone()
+        if balance == None:
+            return False
+        balance = balance[0]
 
-        Returns:
-            (string or None): Returns atm_id on Success. None otherwise.
-        """
-        self.cur.execute("SELECT atm_id FROM atms WHERE atm_id = (?);", (atm_id,))
-        result = self.cur.fetchone()
-        if result is None:
-            return None
-        return result[0]
+        self.cur.execute('SELECT num_bills FROM atms WHERE hsm_id = (?);', (hsm_id,))
+        hsm_balance = self.cur.fetchone()
+        if hsm_balance == None:
+            return False
+        hsm_balance = hsm_balance[0]
+
+        if amount > balance:
+            return False
+
+        if amount > hsm_balance:
+            return False
+
+        balance -= amount
+        hsm_balance -= amount
+
+        if not self.modify("UPDATE cards SET balance=(?) WHERE card_id=(?)", (balance, card_id,)):
+            return False
+
+        if not self.modify("UPDATE atms SET num_bills=(?) WHERE hsm_id=(?)", (hsm_balance, hsm_id,)):
+            return False
+
+        return True
 
     @lock_db
-    def get_atm_num_bills(self, atm_id):
-        """get number of bills in atm: atm_id
+    def read_set_nonce_used(self, card_id, nonce):
+        (db_nonce, timestamp, used) = get_nonce_data(card_id)
 
-        Returns:
-            (string or None): Returns atm_id on Success. None otherwise.
-        """
-        self.cur.execute("SELECT num_bills FROM atms WHERE atm_id = (?);", (atm_id,))
-        result = self.cur.fetchone()
-        if result is None:
-            return None
-        return result[0]
+        if used:
+            return False
+
+        if db_nonce != nonce:
+            return False
+
+        if not check_timestamp_valid(timestamp):
+            return False
+
+        return self.modify("UPDATE cards SET nonce=(?), used=0, timestamp=DATETIME('now','localtime') WHERE card_id=(?);", 
+                        (sqlite3.Binary(nonce), card_id,))
 
     @lock_db
-    def set_atm_num_bills(self, atm_id, num_bills):
-        """set number of bills in atm: atm_id
+    def get_pk(self, card_id):
+        self.cur.execute('SELECT pk FROM cards WHERE card_id = (?);', (card_id,))
+        
+        result = self.cur.fetchone()
+        if result == None:
+            return None
 
-        Returns:
-            (bool): Returns True on Success. False otherwise.
-        """
-        return self.modify("UPDATE atms SET num_bills = (?) WHERE \
-                                    atm_id = (?);", (num_bills, atm_id,))
+        return result[0]
 
+##########
+
+    def get_nonce_data(card_id):
+        self.cur.execute('SELECT nonce, timestamp, used FROM cards WHERE card_id = (?);', (card_id,))
+        (nonce, timestamp, used) = self.cur.fetchone()
+
+        if nonce == None or timestamp == None or timestamp == None or used == None:
+            return None
+
+        return (nonce, timestamp, used)
+
+###############################################################
     #############################
     # ADMIN INTERFACE FUNCTIONS #
     #############################
@@ -124,17 +185,19 @@ class DB(object):
         Returns:
             (bool): Returns True on Success. False otherwise.
         """
+
         return self.modify('INSERT INTO cards(account_name, card_id, balance) \
                             values (?, ?, ?);', (account_name, card_id, amount,))
 
     @lock_db
-    def admin_create_atm(self, atm_id):
-        """create atm with atm_id
+    def admin_create_atm(self, hsm_id, hsm_key):
+        """create atm
 
         Returns:
-            (bool): Returns True on Success. False otherwise.
+            (bool): True on success, false otherwise
         """
-        return self.modify('INSERT INTO atms(atm_id, num_bills) values (?,?);', (atm_id, 128, ))
+
+        return self.modify('INSERT INTO atms(hsm_id, hsm_key, num_bills) values (?,?,?);', (hsm_id, sqlite3.Binary(hsm_key), 128, ))
 
     @lock_db
     def admin_get_balance(self, account_name):
@@ -146,7 +209,7 @@ class DB(object):
         self.cur.execute("SELECT balance FROM cards WHERE account_name = (?);", (account_name,))
         result = self.cur.fetchone()
         if result is None:
-            return False
+            return None
         return result[0]
 
     @lock_db
@@ -156,5 +219,11 @@ class DB(object):
         Returns:
             (bool): Returns True on Success. False otherwise.
         """
+        self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE account_name = (?) LIMIT 1);', (account_name,))
+        
+        result = self.cur.fetchone()
+        if result[0] == 0:
+            return False
+
         return self.modify("UPDATE cards SET balance = (?) \
                             WHERE account_name = (?);", (balance, account_name))
