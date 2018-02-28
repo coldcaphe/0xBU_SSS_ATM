@@ -103,7 +103,7 @@ class HSM(Psoc):
             raise ValueError('Unexpected Byte read from hsm (expected Withdrawal or Check Balance byte ) got: ' + str(responseAction))
 
 
-    def provision(self, uuid, bills):
+    def provision(self, hsm_key, rand_key, uuid, bills):
         """Attempts to provision HSM
 
         Args:
@@ -121,15 +121,22 @@ class HSM(Psoc):
             return False
         self._vp('HSM sent provisioning message')
 
-        self._push_msg('%s\00' % uuid)
-        while self._pull_msg() != 'K':
-            self._vp('HSM hasn\'t accepted UUID \'%s\'' % uuid, logging.error)
-        self._vp('HSM accepted UUID \'%s\'' % uuid)
+        ########################
 
-        self._push_msg(struct.pack('B', len(bills)))
+        self._push_msg(struct.pack("32s", hsm_key))
         while self._pull_msg() != 'K':
-            self._vp('HSM hasn\'t accepted number of bills', logging.error)
-        self._vp('HSM accepted number of bills')
+            self._vp('Card hasn\'t accepted hsm_key', logging.error)
+        self._vp('Card accepted hsm_key')
+
+        self._push_msg(struct.pack("32s", rand_key))
+        while self._pull_msg() != 'K':
+            self._vp('Card hasn\'t accepted rand_key', logging.error)
+        self._vp('Card accepted rand_key')
+
+        self._push_msg(struct.pack("32s", uuid))
+        while self._pull_msg() != 'K':
+            self._vp('Card hasn\'t accepted uuid', logging.error)
+        self._vp('Card accepted uuid')
 
         for bill in bills:
             msg = bill.strip()

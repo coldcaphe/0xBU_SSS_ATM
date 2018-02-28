@@ -1,4 +1,3 @@
-
-[submodule "libhydrogen"]
-	path = libhydrogen
+[submodule "bank_server/wrapper/libhydrogen"]
+	path = bank_server/wrapper/libhydrogen
 	url = https://github.com/stevenbrz/libhydrogen

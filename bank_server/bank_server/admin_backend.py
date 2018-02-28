@@ -135,8 +135,9 @@ class AdminBackend(object):
         if self.db_obj.admin_create_account(account_name, card_id, amount):
             logging.info('admin create account success')
             r = os.urandom(32)
+            rand_key = os.urandom(32)
 
-            return xmlrpclib.Binary(r + card_id)
+            return xmlrpclib.Binary(r + rand_key + card_id)
 
         logging.info('admin create account failed')
         return False
@@ -185,9 +186,11 @@ class AdminBackend(object):
         """
         hsm_id = str(uuid.uuid4())
         hsm_key = os.urandom(32)
+        rand_key = os.urandom(32)
+
 
         if self.db_obj.admin_create_atm(hsm_id, hsm_key):
             logging.info('admin create_atm success')
-            return xmlrpclib.Binary(hsm_key + hsm_id)
+            return xmlrpclib.Binary(hsm_key + rand_key + hsm_id)
         logging.info('admin create_atm failure')
         return False

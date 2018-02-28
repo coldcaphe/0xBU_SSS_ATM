@@ -47,15 +47,16 @@ class ProvisionTool(object):
         try:
             logging.info('provision_card: generating card id')
 
-            #if it doesn't contain a random PRF key and an id
-            if len(card_blob) != 32 + 36:
+            #if it doesn't contain a random PRF key for rng and an id
+            if len(card_blob) != 32 + 32 + 36:
                 return False
 
             r = card_blob[:32]
-            card_id = [32:]
+            rand_key = card_blob[32:64]
+            card_id = [64:]
 
             logging.info('provision_card: sending info to card')
-            if not self.card.provision(r, card_id):
+            if not self.card.provision(r, rand_key, card_id):
                 return False
 
             logging.info('provision_card: requesting pk from card')
@@ -93,13 +94,17 @@ class ProvisionTool(object):
             logging.error('provision_hsm: no hsm was inserted!')
             return False
 
-        #if it doesn't contain a 32 byte encryption key + a uuid
-        if len(hsm_blob) != 32 + 36:
+        #if it doesn't contain a 32 byte encryption key + a PRF key for rng + a uuid
+        if len(hsm_blob) != 32 + 32 + 36:
                 return False
+
+        hsm_key = card_blob[:32]
+        rand_key = card_blob[32:64]
+        hsm_id = [64:]
 
         try:
             logging.info('provision_atm: provisioning hsm with inputted bills')
-            if self.hsm.provision(hsm_blob, bills):
+            if self.hsm.provision(hsm_key, rand_key, hsm_id, bills):
                 logging.info('provision_atm: provisioned hsm with inputted bills')
                 return True
             logging.error('provision_atm: provision failed!')

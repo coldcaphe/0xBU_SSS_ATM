@@ -2,7 +2,7 @@
 
 #include <Python.h>
 #include <stdio.h>
-#include "../libhydrogen/hydrogen.h"
+#include "./libhydrogen/hydrogen.h"
 #include <string.h>
 
 static PyObject* crypto_secretbox_encrypt(PyObject* self, PyObject* args){

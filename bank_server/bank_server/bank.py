@@ -62,6 +62,7 @@ import base64
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from bank_server import DB
 from datetime import timedelta
+import crypto
 
 class Bank(object):
     """
@@ -272,8 +273,12 @@ class Bank(object):
 
 ##########################
 #Crypto helpers
-    def check_nonce_sig(self, nonce):
-        return True 
+    def check_nonce_sig(self, nonce, sig, pk):
+        try:
+            crypto.sign_verify(sig, nonce, "\0"*8, pk)
+            return True
+        except ValueError:
+            return False
 
-    def encrypt(key, message):
-        return b"00000000000000000000000000000000"
+    def encrypt(self, key, message):
+        return crypto.secretbox_encrypt(message, 0, "\0"*8, key)

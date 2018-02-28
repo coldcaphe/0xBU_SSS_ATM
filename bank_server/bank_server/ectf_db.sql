@@ -18,6 +18,6 @@ create table cards (
 CREATE TABLE atms (
     hsm_id          text        PRIMARY KEY, 
 
-    hsm_key         blob        CHECK (LENGTH(hsm_key) == 32),
-    num_bills       integer     CHECK (num_bills >= 0)
+    hsm_key         blob        NOT NULL CHECK (LENGTH(hsm_key) == 32),
+    num_bills       integer     NOT NULL CHECK (num_bills >= 0)
 );

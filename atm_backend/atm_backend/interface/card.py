@@ -132,11 +132,12 @@ class Card(Psoc):
         public_key = self.read(s=33)
         return struct.unpack('b32s',public_key)
 
-    def provision(self, r, uuid):
+    def provision(self, r, rand_key, uuid):
         """Attempts to provision a new ATM card
 
         Args:
             r (str): 32 byte prf key
+            rand_key (str): 32 byte prf key for randomness
             uuid (str): New UUID for ATM card
 
         Returns:
@@ -145,18 +146,26 @@ class Card(Psoc):
 
         self._sync(True)
 
+        #TODO: do we actually need this weird syncing stuff?
         msg = self._pull_msg()
         if msg != 'P':
             self._vp('Card alredy provisioned!', logging.error)
             return False
         self._vp('Card sent provisioning message')
 
-        self._push_msg('%s\00' % pin)
+        ########################
+        
+        self._push_msg(struct.pack("32s", r))
         while self._pull_msg() != 'K':
-            self._vp('Card hasn\'t accepted PIN', logging.error)
-        self._vp('Card accepted PIN')
+            self._vp('Card hasn\'t accepted r', logging.error)
+        self._vp('Card accepted r')
 
-        self._push_msg('%s\00' % uuid)
+        self._push_msg(struct.pack("32s", rand_key))
+        while self._pull_msg() != 'K':
+            self._vp('Card hasn\'t accepted rand_key', logging.error)
+        self._vp('Card accepted rand_key')
+
+        self._push_msg(struct.pack("36s", uuid))
         while self._pull_msg() != 'K':
             self._vp('Card hasn\'t accepted uuid', logging.error)
         self._vp('Card accepted uuid')
