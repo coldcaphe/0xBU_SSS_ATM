@@ -57,7 +57,7 @@ static const uint8_t UUID_REQUEST = 0x06;
 static const uint8_t UUID_RESPONSE = 0x07; 
 static const uint8_t NONCE_REQUEST = 0x04;
 static const uint8_t NONCE_RESPONSE = 0x05;
-static const uint8_t WITHDRAWL_REQUEST = 0x08; 
+static const uint8_t WITHDRAWAL_REQUEST = 0x08; 
 
 uint8_t[100] request; // when HSM receives message
 uint8_t[100] response; // when HSM sends out a message
@@ -207,7 +207,7 @@ int main(void)
 	        	pushMessage(response);
 	        	break;
 
-        	case WITHDRAWL_REQUEST:
+        	case WITHDRAWAL_REQUEST:
 	        	// verify signed request
 	        	uint8_t message [MESSAGE_LEN];
 	        	uint8_t* ciphertext = &response + 1;
@@ -241,6 +241,7 @@ int main(void)
 			        	for (i = 0; i < numbills; i++) {
 			        		dispenseBill();
 			        	}
+	        	        current_nonce = hydro_random_buf(&current_nonce, 32);// resets the nonce to prevent replays
 		        		break;
 		        	}
 	        	}
