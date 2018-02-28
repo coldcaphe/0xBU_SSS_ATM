@@ -21,7 +21,7 @@
 // SECURITY MODULE
 
 #define NONCE_LEN = 32; 
-#define WITHDRAW_REQUEST_LEN = 64;//TODO  replace with actual length 
+#define ENCRYPTED_MESSAGE_LEN = 48;//for withdrawal
 #define MAX_BILLS 128
 #define BILL_LEN 16
 #define UUID_LEN 36
@@ -214,7 +214,7 @@ int main(void)
 
         	case WITHDRAWAL_REQUEST:
 	        	// verify signed request
-    	        request = pullMessage(message,WITHDRAW_REQUEST_LEN);
+    	        request = pullMessage(message,ENCRYPTED_MESSAGE_LEN);
 	        	uint8_t message [MESSAGE_LEN];
 	        	uint8_t* ciphertext = &request;
 	        	if (hydro_secretbox_decrypt(message, ciphertext, CIPHERTEXT_LEN,
