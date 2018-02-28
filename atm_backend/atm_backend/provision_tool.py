@@ -46,10 +46,25 @@ class ProvisionTool(object):
 
         try:
             logging.info('provision_card: generating card id')
-            card_id = card_blob
+
+            #if it doesn't contain a random PRF key and an id
+            if len(card_blob) != 32 + 36:
+                return False
+
+            r = card_blob[:32]
+            card_id = [32:]
+
             logging.info('provision_card: sending info to card')
-            if self.card.provision(card_id, pin):
-                return True
+            if not self.card.provision(r, card_id):
+                return False
+
+            logging.info('provision_card: requesting pk from card')
+            pk = self.card.request_new_public_key(self.REQUEST_NEW_PK, pin)
+
+            logging.info('provision_card: setting pin on server side')
+            if not bank.set_first_pk(xmlrpclib.Binary(pk)):
+                return False
+
             logging.error('provision_card: provision card failed!')
             return False
         except DeviceRemoved:
@@ -77,6 +92,10 @@ class ProvisionTool(object):
         if not self.hsm.inserted():
             logging.error('provision_hsm: no hsm was inserted!')
             return False
+
+        #if it doesn't contain a 32 byte encryption key + a uuid
+        if len(hsm_blob) != 32 + 36:
+                return False
 
         try:
             logging.info('provision_atm: provisioning hsm with inputted bills')
