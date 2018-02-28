@@ -17,15 +17,21 @@ class HSM(Psoc):
     """
 
     def __init__(self, port=None, verbose=False, dummy=False):
-        super(HSM, self).__init__('HSM', port, verbose)
+        self.port = port
+        self.verbose = verbose
+        dummy = False 
+        
+    def initialize(self):
+        super(HSM, self).__init__('HSM', self.port, self.verbose)
         self._vp('Please connect HSM to continue.')
-        while not self.connected and not dummy:
+        while not self.connected and not self.dummy:
             time.sleep(2)
         self._vp('Initialized')
         self.RETURN_WITHDRAWAL      = 0x09
         self.RETURN_BALANCE         = 0x0B
         self.ACCEPTED               = 0x20
         self.REJECTED               = 0x21
+
 
     
     '''Has the hsm generate a random nonce and store it in the cash.
