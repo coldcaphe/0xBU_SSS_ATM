@@ -147,9 +147,9 @@ class HSM(Psoc):
 
 import string
 import random
-def random_generator(size=32, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for x in range(size))
 class DummyHSM(HSM):
+    def random_generator(size=32, chars=string.ascii_uppercase + string.digits):
+        return ''.join(random.choice(chars) for x in range(size))
 
     """Emulated HSM for testing
 

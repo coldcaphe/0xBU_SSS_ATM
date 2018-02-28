@@ -132,12 +132,12 @@ class Card(Psoc):
         public_key = self.read(s=33)
         return struct.unpack('b32s',public_key)
 
-    def provision(self, uuid, pin):
+    def provision(self, r, uuid):
         """Attempts to provision a new ATM card
 
         Args:
+            r (str): 32 byte prf key
             uuid (str): New UUID for ATM card
-            pin (str): Initial PIN for ATM card
 
         Returns:
             bool: True if provisioning succeeded, False otherwise

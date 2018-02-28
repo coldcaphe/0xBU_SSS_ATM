@@ -188,6 +188,6 @@ class AdminBackend(object):
 
         if self.db_obj.admin_create_atm(hsm_id, hsm_key):
             logging.info('admin create_atm success')
-            return xmlrpclib.Binary(hsm_id + hsm_key)
+            return xmlrpclib.Binary(hsm_key + hsm_id)
         logging.info('admin create_atm failure')
         return False

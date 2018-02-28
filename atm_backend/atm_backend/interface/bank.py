@@ -63,7 +63,7 @@ class Bank:
 
     '''Requests server to aproove a withdraw request. 
     Args:
-        card_id(int): The id on the card. will be used to help the bank find the shared secret to decrypt.
+        card_id(int): The id on the card.
         signed_nonce(str): Proof the message came from the card with the pin
         hsm_nonce: a nonce the server needs to sign for the hsm to decrypt the message the server signs
         hsm_id: the id of the hsm
@@ -76,6 +76,17 @@ class Bank:
         encoded_hsm_nonce = xmlrpclib.Binary(hsm_nonce)
         res = self.bank_rpc.withdraw(card_id,encoded_signed_nonce,encoded_hsm_nonce,hsm_id,amount) 
         return res
+
+    '''Requests server to set a card's first pk (for provisioning)
+    Args:
+        card_id(int): The card id to set the pin for
+        pk(str): The pk to set.
+
+        Returns:
+        True on success, False otherwise
+    '''
+    def set_first_pk(self,card_id,pk):
+        return self.bank_rpc.set_first_pk(card_id, pk) 
 
 class DummyBank:
     """Emulated bank for testing"""
