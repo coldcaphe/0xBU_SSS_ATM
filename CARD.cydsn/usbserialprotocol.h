@@ -42,6 +42,8 @@ uint8 pullMessage(uint8 message[]);
  */
 void syncConnection(int prov);
 
+uint8 pullMessage2(uint8 data[], uint8 length);
+
 
 #endif
 /* [] END OF FILE */

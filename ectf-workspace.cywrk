@@ -9,6 +9,7 @@
 <projects>
 <v>.\SECURITY_MODULE.cydsn\SECURITY_MODULE.cyprj</v>
 <v>.\CARD.cydsn\CARD.cyprj</v>
+<v>.\libhydrogen.cylib\libhydrogen.cyprj</v>
 </projects>
 <workspace_id v="7f74e000-f3e4-45e7-b2f4-a9ece37ab7cc" />
 <WriteAppVersionLastSavedWith v="4.1.0.3210" />

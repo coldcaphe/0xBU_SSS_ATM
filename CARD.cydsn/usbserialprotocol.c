@@ -57,6 +57,16 @@ uint8 pullMessage(uint8 data[])
    return len;
 }
 
+uint8 pullMessage2(uint8 data[], uint8 length)
+{
+    uint8 i;
+    for (i = 0; i < length; i++) {
+        data[i] = getValidByte();   
+    }
+    
+   return i;
+}
+
 /* 
  * generic PSoC synchronization protocol:
  *

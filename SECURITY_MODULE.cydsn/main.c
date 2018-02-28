@@ -16,7 +16,7 @@
 #include "usbserialprotocol.h"
 #include "SW1.h"
 // Crypto library
-#include <hydrogen.h>
+#include "hydrogen.h"
 
 // SECURITY MODULE
 

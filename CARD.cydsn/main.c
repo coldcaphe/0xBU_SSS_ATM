@@ -15,26 +15,28 @@
 #include "usbserialprotocol.h"
 #include "SW1.h"
 #include "Reset_isr.h"
-#include <hydrogen.h>
+#include "hydrogen.h"
 
 #define PIN_LEN 8
 #define UUID_LEN 36
 #define R_LEN 32
+#define NONCE_LEN 32
+#define SIG_LEN 32
+#define PK_LEN 32
+
+
 #define PINCHG_SUC "SUCCESS"
 #define PROV_MSG "P"
 #define RECV_OK "K"
 #define PIN_OK "OK"
 #define PIN_BAD "BAD"
 
-#define NONCE_LEN 32
-#define SIGN_LEN 32
-
-#define REQUEST_NAME                = 0x00
-#define RETURN_NAME                 = 0x01
-#define REQUEST_CARD_SIGNATURE      = 0x02
-#define RETURN_CARD_SIGNATURE       = 0x03
-#define REQUEST_NEW_PK	         = 0x0C
-#define RETURN_NEW_PK		         = 0x0D
+#define REQUEST_NAME            0x00
+#define RETURN_NAME             0x01
+#define REQUEST_CARD_SIGNATURE  0x02
+#define RETURN_CARD_SIGNATURE   0x03
+#define REQUEST_NEW_PK          0x0C
+#define RETURN_NEW_PK           0x0D
 
 
 //CARD
@@ -57,8 +59,8 @@ static const uint8 R[R_LEN] = {};
 static const uint8 UUID[UUID_LEN] = {0x37, 0x33, 0x36, 0x35, 0x36, 0x33, 0x37, 0x35, 0x37, 0x32, 0x36, 0x39, 0x37, 0x34, 0x37, 0x39}; //security
 
 // more variables
-uint8_t[100] request; // when HSM receives message
-uint8_t[100] response; // when HSM sends out a message
+uint8_t request[100]; // when HSM receives message
+uint8_t response[100]; // when HSM sends out a message
 uint8_t message_type;
 uint8_t r[32];
 uint32_t secret_key;
@@ -133,78 +135,84 @@ int main(void)
     
     // Go into infinite loop
     while (1) {
+        //get message type
         syncConnection(SYNC_NORM);
-        // Request for name from ATM
-        request = pullMessage(message);
-	message_type = request[0];
-	int j;
+        pullMessage2(message, (uint8)1);
+	    message_type = request[0];
+	    
+        int j;
+	    switch(message_type)
+	    {
+	        case REQUEST_NAME:
+            {
+		        response[0] = RETURN_NAME;
+		        for (j = 0; j < UUID_LEN; j++)
+		        {
+		            response[j+1] = UUID[j];
+		        }
+		        pushMessage(response, UUID_LEN);
+		        break;
+            }
+	        case REQUEST_CARD_SIGNATURE:
+            {
+		        int nonce[32];
+		        for (j = 0; j < NONCE_LEN; j++)
+		        {
+		            nonce[j] = request[j+1];
+		        }
 
-	switch(message_type)
-	{
-	    case REQUEST_NAME:
-		response[0] = RETURN_NAME;
-		for (j = 0; j < UUID_LEN; j++)
-		{
-		   response[j+1] = UUID[j];
-		}
-		pushMessage(response);
-		break;
+		        int pin[8];
+		        for (j = 0; j < PIN_LEN; j++)
+		        {
+		            pin[j] = request[NONCE_LEN + 1 + j];
+		        }
 
-	    case REQUEST_CARD_SIGNATURE:
-		int nonce[32];
-		for (j = 0; j < NONCE_LEN; j++)
-		{
-		    nonce[j] = request[j+1];
-		}
+        		// Get the seed value by encrypting the PIN with R
+        		uint8_t ciphertext[32];
+        		hydro_secretbox_encrypt(ciphertext, pin, PIN_LEN, 0, "__seed__", R);
 
-		int pin[8];
-		for (j = 0; j < PIN_LEN; j++)
-		{
-		    pin[j] = request[NONCE_LEN + 1 + j];
-		}
+        		// Get the public and the secret key
+        		hydro_sign_keygen_deterministic(&key_pair, ciphertext);
 
-		// Get the seed value by encrypting the PIN with R
-		uint8_t ciphertext[32];
-		hydro_secretbox_encrypt(ciphertext, pin, PIN_LEN, 0, "__seed__", R);
+        		// generate signature
+        		hydro_sign_create(signature, nonce, NONCE_LEN, "__sign__", key_pair.sk);
 
-		// Get the public and the secret key
-		hydro_sign_keygen_deterministic(&key_pair, ciphertext);
+        		response[0] = RETURN_CARD_SIGNATURE;
+        		for (j = 0; j < SIG_LEN; j++)
+                        {
+                           response[j+1] = signature[j];
+                        }
+        		pushMessage(response, SIG_LEN);
+        		break;
+            }
 
-		// generate signature
-		hydro_sign_create(signature, nonce, strlen(nonce), "__sign__", key_pair.sk);
+    	    case REQUEST_NEW_PK:
+            {
+        		int pin[8];
+                        for (j = 0; j < PIN_LEN; j++)
+                        {
+                            pin[j] = request[1 + j];
+                        }
+        		
+        		// Get the seed value by encrypting the PIN with R
+                        uint8_t ciphertext[32];
+                        hydro_secretbox_encrypt(ciphertext, pin, PIN_LEN, 0, "__seed__", R);
 
-		response[0] = RETURN_CARD_SIGNATURE;
-		for (j = 0; j < SIG_LEN; j++)
-                {
-                   response[j+1] = signature[j];
-                }
-		pushMessage(response);
-		break;
+                        // Get the public and the secret key
+                        hydro_sign_keygen_deterministic(&key_pair, ciphertext);
 
-	    case REQUEST_NEW_PK:
-		int pin[8];
-                for (j = 0; j < PIN_LEN; j++)
-                {
-                    pin[j] = request[1 + j];
-                }
-		
-		// Get the seed value by encrypting the PIN with R
-                uint8_t ciphertext[32];
-                hydro_secretbox_encrypt(ciphertext, pin, PIN_LEN, 0, "__seed__", R);
+        		response[0] = RETURN_NEW_PK;
+        		for (j = 0; j < hydro_sign_PUBLICKEYBYTES; j++)
+                        {
+                           response[j+1] = key_pair.pk[j];
+                        }
+                        pushMessage(response, PK_LEN);
+        		break;
+            }
 
-                // Get the public and the secret key
-                hydro_sign_keygen_deterministic(&key_pair, ciphertext);
-
-		response[0] = RETURN_NEW_PK;
-		for (j = 0; j < hydro_sign_PUBLICKEYBYTES; j++)
-                {
-                   response[j+1] = key_pair.pk[j];
-                }
-                pushMessage(response);
-		break;
-
-	    default:
-	        break;
+    	    default:
+    	        break;
+        }
 	}	
 
         
@@ -237,7 +245,6 @@ int main(void)
             }
         }
 	*/
-    }
 }
 
 /* [] END OF FILE */
