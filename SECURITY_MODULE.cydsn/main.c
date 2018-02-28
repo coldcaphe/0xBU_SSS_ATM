@@ -20,6 +20,8 @@
 
 // SECURITY MODULE
 
+#define NONCE_LEN = 32; 
+#define WITHDRAW_REQUEST_LEN = 64;//TODO  replace with actual length 
 #define MAX_BILLS 128
 #define BILL_LEN 16
 #define UUID_LEN 36
@@ -53,11 +55,14 @@ static const uint8 BILLS_LEFT[1] = {0x00};
 static const int CIPHERTEXT_LEN = 256;
 static const int MESSAGE_LEN = 256; 
 
+
 static const uint8_t UUID_REQUEST = 0x06; 
 static const uint8_t UUID_RESPONSE = 0x07; 
 static const uint8_t NONCE_REQUEST = 0x04;
 static const uint8_t NONCE_RESPONSE = 0x05;
 static const uint8_t WITHDRAWAL_REQUEST = 0x08; 
+static const uint8_t REJECTED = 0x21; 
+static const uint8_t ACCEPTED = 0x20; 
 
 uint8_t[100] request; // when HSM receives message
 uint8_t[100] response; // when HSM sends out a message
@@ -180,7 +185,7 @@ int main(void)
     	syncConnection(SYNC_NORM);
 
         // receive message (expecting nonce request)
-    	request = pullMessage(message);
+    	request = pullMessage(message,1);
         message_type = request[0]; // read off first byte of request
 
         int i, j;
@@ -193,7 +198,7 @@ int main(void)
 	        	for (i = 0; i < UUID_LEN; i++) {
 	        		response[i + 1] = UUID[i]; 
 	        	}
-	        	pushMessage(response);
+	        	pushMessage(response,UUID_LEN);
 	        	break;
 
         	case NONCE_REQUEST:
@@ -201,19 +206,21 @@ int main(void)
 	        	current_nonce = hydro_random_buf(&current_nonce, 32);
 	        	// send nonce
 	        	response[0] = NONCE_RESPONSE;
-	        	for (i = 0; i < len(current_nonce); i++) {
+	        	for (i = 0; i < 32; i++) {
 	        		response[i + 1] = current_nonce[i]; 
 	        	}
-	        	pushMessage(response);
+	        	pushMessage(response,NONCE_LEN);
 	        	break;
 
         	case WITHDRAWAL_REQUEST:
 	        	// verify signed request
+    	        request = pullMessage(message,WITHDRAW_REQUEST_LEN);
 	        	uint8_t message [MESSAGE_LEN];
-	        	uint8_t* ciphertext = &response + 1;
+	        	uint8_t* ciphertext = &request;
 	        	if (hydro_secretbox_decrypt(message, ciphertext, CIPHERTEXT_LEN,
-	        		uint64_t 0, "WITHDRAW", secret_key)) {
+	        		uint64_t 0, "WITHDRAW", secret_key)!=0) {
 	        		// message forged!
+                    pushMessage(REJECTED,1)
 	        		break;
 	        	}		
 		        else {
@@ -223,17 +230,21 @@ int main(void)
 		        			flag = 1;
 		        		}
 		        	}
+                    if (message[0]!=WITHDRAWAL_REQUEST){
+                        pushMessage(REJECTED,1)//Not a withdrawal request
+                    }
 		        	if (flag == 0) { // if nonce check passed
-
-			        	// dispense bills
-			        	numbills = message[1 + 32]; // (WITHDRAW (1 byte)| nonce (32 bytes)| amount)
+			        	int numbills = message[1 + 32]; // (WITHDRAW (1 byte)| nonce (32 bytes)| amount)
 			        	ptr = BILLS_LEFT;
 			        	if (*ptr < numbills) {
-			        		pushMessage((uint8*)WITH_BAD, strlen(WITH_BAD));
-			        		continue;
+                            pushMessage(REJECTED,1)//wrong nonce
+			        		break;
 			        	} 
 			        	else {
-			        		pushMessage((uint8*)WITH_OK, strlen(WITH_OK));
+                            pushMessage(RETURN_WITHDRAWAL,1)
+                            pushMessage(ACCEPTED,1)
+                            pushMessage(numbills,1)
+
 			        		bills_left = *ptr - numbills;
 			        		PIGGY_BANK_Write(&bills_left, BILLS_LEFT, 0x01);
 			        	}
