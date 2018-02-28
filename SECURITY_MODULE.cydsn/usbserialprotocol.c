@@ -44,11 +44,9 @@ int pushMessage(const uint8 data[], uint8 size)
 }
 
 
-uint8 pullMessage(uint8 data[])
+uint8 pullMessage(uint8 data[],int len)
 {
-    int i, len;
-    
-    len = getValidByte();
+    int i;
     
     for (i = 0; i < len; i++) {
         data[i] = getValidByte();   
