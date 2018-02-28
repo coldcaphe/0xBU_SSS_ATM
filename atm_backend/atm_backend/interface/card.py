@@ -14,7 +14,11 @@ class Card(Psoc):
     """
 
     def __init__(self, port=None, verbose=False):
-        super(Card, self).__init__('CARD', port, verbose)
+        self.port = port
+        self.verbose = verbose
+
+    def initialize(self):
+        super(Card, self).__init__('CARD', self.port, self.verbose)
 
     def _authenticate(self, pin):
         """Requests authentication from the ATM card
