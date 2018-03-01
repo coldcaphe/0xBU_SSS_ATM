@@ -38,7 +38,11 @@
 #define RETURN_CARD_SIGNATURE   0x03
 #define REQUEST_NEW_PK          0x0C
 #define RETURN_NEW_PK           0x0D
+#define INITIATE_PROVISION	0x25
+#define REQUEST_PROVISION	0x26
 
+#define ACCEPTED		0x20
+#define REJECTED		0x21
 
 //CARD
 
@@ -73,7 +77,7 @@ hydro_sign_keypair key_pair;
 uint8_t signature[32];
 hydro_sign_state st;
 
-// reset interrupt on button press
+// reset interrupt on button get r (random)press
 CY_ISR(Reset_ISR)
 {
     pushMessage((uint8*)"In interrupt\n", strlen("In interrupt\n"));
@@ -89,22 +93,27 @@ void provision()
     // synchronize with bank
     syncConnection(SYNC_PROV);
  
-    pushMessage((uint8*)PROV_MSG, (uint8)strlen(PROV_MSG));
+    pushMessage((uint8*)INITIATE_PROVISION, (uint8)strlen(INITIATE_PROVISION));
     
-    // get r (random)
-    pullMessage(message, R_LEN);
-    USER_INFO_Write(message, R, R_LEN);
-    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));         
+    // get r (random) + random number + account number
+    pullMessage(message, R_LEN + RN_LEN + UUID_LEN + 1);
 
-    // get random number
-    pullMessage(message, RN_LEN);
-    USER_INFO_Write(message, RN, RN_LEN);
-    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
+    // check if provision message
+    if (message[0] != REQUEST_PROVISION) {
+	pushMessage((uint8*)REJECTED, 1);
+    } else {
+	 // get random
+	USER_INFO_Write(&message[1], R, R_LEN);
 
-    // set account number
-    pullMessage(message, UUID_LEN);
-    USER_INFO_Write(message, UUID, UUID_LEN);
-    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
+	// set random number
+	USER_INFO_Write(&message[33], RN, RN_LEN);
+
+	// set account number
+	USER_INFO_Write(&message[65], UUID, UUID_LEN);
+
+	pushMessage((uint8*)ACCEPTED, 1);
+
+    } 
 }
 
 
