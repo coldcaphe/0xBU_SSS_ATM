@@ -1,0 +1,8 @@
+C:/Users/ccpow_000/Desktop/CPS/eCTF/0xBU_SSS_ATM/CARD.cydsn/CortexM0/ARM_GCC_541/Release/CyBootAsmGnu.o : C:/Users/ccpow_000/Desktop/CPS/eCTF/0xBU_SSS_ATM/CARD.cydsn/Generated_Source/PSoC4/CyBootAsmGnu.s C:/Users/ccpow_000/Desktop/CPS/eCTF/0xBU_SSS_ATM/CARD.cydsn/Generated_Source/PSoC4/cydevicegnu_trm.inc C:/Users/ccpow_000/Desktop/CPS/eCTF/0xBU_SSS_ATM/CARD.cydsn/Generated_Source/PSoC4/cyfittergnu.inc 
+
+C:/Users/ccpow_000/Desktop/CPS/eCTF/0xBU_SSS_ATM/CARD.cydsn/Generated_Source/PSoC4/CyBootAsmGnu.s : 
+
+C:/Users/ccpow_000/Desktop/CPS/eCTF/0xBU_SSS_ATM/CARD.cydsn/Generated_Source/PSoC4/cydevicegnu_trm.inc : 
+
+C:/Users/ccpow_000/Desktop/CPS/eCTF/0xBU_SSS_ATM/CARD.cydsn/Generated_Source/PSoC4/cyfittergnu.inc : 
+

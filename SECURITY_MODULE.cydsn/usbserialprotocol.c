@@ -15,6 +15,7 @@
 #define RECV_OK 0
 #define RECV_ER 1
 #define RDY_MSG_RECV "READY"
+#define RDY_MSG_RCV_LEN 5
 #define RDY_MSG_NORM "HSM_N"
 #define RDY_MSG_PROV "HSM_P"
 #define RDY_BAD "BAD"
@@ -44,7 +45,7 @@ int pushMessage(const uint8 data[], uint8 size)
 }
 
 
-uint8 pullMessage(uint8 data[],int len)
+uint8 pullMessage(uint8 data[], uint8 len)
 {
     int i;
     
@@ -64,13 +65,15 @@ uint8 pullMessage(uint8 data[],int len)
  * 3) ATM -> "GO" -> PSoC
  * 4) if bad: goto 1)
  */
+
+//TODO: FIX THE CONNECTION SYNCING
 void syncConnection(int prov) 
 {
     uint8 message[32];
     
     // marco-polo with bank until connection is in sync
     do {
-        pullMessage(message);                               // 1)
+        pullMessage(message, RDY_MSG_RCV_LEN);                               // 1)
         
         if (strcmp((char*)message, RDY_MSG_RECV)) {
             pushMessage(message, strlen((char*)message));   // 2) bad
@@ -79,12 +82,12 @@ void syncConnection(int prov)
             pushMessage((uint8*)RDY_MSG_PROV, 
                         strlen(RDY_MSG_PROV));              // 2) good prov
             
-            pullMessage(message);                           // 3)
+            pullMessage(message, 0);                           // 3)
         } else {
             pushMessage((uint8*)RDY_MSG_NORM, 
                         strlen(RDY_MSG_NORM));              // 2) good norm
             
-            pullMessage(message);                           // 3
+            pullMessage(message, 0);                           // 3
         }
         
     } while (strcmp((char*)message, GO_MSG));               // 4)

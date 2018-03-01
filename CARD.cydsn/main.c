@@ -15,7 +15,7 @@
 #include "usbserialprotocol.h"
 #include "SW1.h"
 #include "Reset_isr.h"
-#include "hydrogen.h"
+#include <hydrogen.h>
 
 #define PIN_LEN 8
 #define UUID_LEN 36

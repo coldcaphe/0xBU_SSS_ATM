@@ -1,4 +1,4 @@
---------------- Build Started: 02/28/2018 17:22:01 Project: SECURITY_MODULE, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 02/28/2018 19:16:43 Project: SECURITY_MODULE, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 cydsfit.exe -.appdatapath "C:\Users\ccpow_000\AppData\Local\Cypress Semiconductor\PSoC Creator\4.1" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\SECURITY_MODULE.cyprj -d CY8C4245AXI-483 -s C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\Generated_Source\PSoC4 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
 Elaborating Design...
 HDL Generation...
@@ -15,110 +15,12 @@ Static timing analysis...
 API Generation...
 Dependency Generation...
 Cleanup...
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I..\bank_server\wrapper\libhydrogen -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/main.lst -g -D DEBUG -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM0\ARM_GCC_541\Debug\main.o
-main.c:67:8: error: expected identifier or '(' before '[' token
- uint8_t[100] request; // when HSM receives message
-        ^
-main.c:68:8: error: expected identifier or '(' before '[' token
- uint8_t[100] response; // when HSM sends out a message
-        ^
-main.c:70:9: error: expected identifier or '(' before '[' token
- uint32_t[32] current_nonce;
-         ^
-main.c: In function 'main':
-main.c:188:6: error: 'request' undeclared (first use in this function)
-      request = pullMessage(message,1);
-      ^
-main.c:188:6: note: each undeclared identifier is reported only once for each function it appears in
-main.c:188:16: error: too many arguments to function 'pullMessage'
-      request = pullMessage(message,1);
-                ^
-In file included from main.c:16:0:
-usbserialprotocol.h:37:7: note: declared here
- uint8 pullMessage(uint8 message[]);
-       ^
-main.c:196:10: error: case label does not reduce to an integer constant
-          case UUID_REQUEST:
-          ^
-main.c:197:11: error: 'response' undeclared (first use in this function)
-           response[0] = UUID_RESPONSE;
-           ^
-main.c:204:10: error: case label does not reduce to an integer constant
-          case NONCE_REQUEST:
-          ^
-main.c:206:11: error: 'current_nonce' undeclared (first use in this function)
-           current_nonce = hydro_random_buf(&current_nonce, 32);
-           ^
-main.c:23:19: error: expected expression before '=' token
- #define NONCE_LEN = 32; 
-                   ^
-main.c:212:32: note: in expansion of macro 'NONCE_LEN'
-           pushMessage(response,NONCE_LEN);
-                                ^
-main.c:215:10: error: case label does not reduce to an integer constant
-The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
-          case WITHDRAWAL_REQUEST:
-          ^
-main.c:24:31: error: expected expression before '=' token
- #define ENCRYPTED_MESSAGE_LEN = 48;//for withdrawal
-                               ^
-main.c:217:44: note: in expansion of macro 'ENCRYPTED_MESSAGE_LEN'
-              request = pullMessage(message,ENCRYPTED_MESSAGE_LEN);
-                                            ^
-main.c:217:24: error: too many arguments to function 'pullMessage'
-              request = pullMessage(message,ENCRYPTED_MESSAGE_LEN);
-                        ^
-In file included from main.c:16:0:
-usbserialprotocol.h:37:7: note: declared here
- uint8 pullMessage(uint8 message[]);
-       ^
-main.c:221:12: error: expected expression before 'uint64_t'
-            uint64_t 0, "WITHDRAW", secret_key)!=0) {
-            ^
-main.c:220:15: error: too few arguments to function 'hydro_secretbox_decrypt'
-           if (hydro_secretbox_decrypt(message, ciphertext, CIPHERTEXT_LEN,
-               ^
-In file included from main.c:19:0:
-..\bank_server\wrapper\libhydrogen/hydrogen.h:97:5: note: declared here
- int hydro_secretbox_decrypt(void *m_, const uint8_t *c, size_t clen, uint64_t msg_id,
-     ^
-main.c:223:33: warning: passing argument 1 of 'pushMessage' makes pointer from integer without a cast [-Wint-conversion]
-                     pushMessage(REJECTED,1)
-                                 ^
-In file included from main.c:16:0:
-usbserialprotocol.h:30:5: note: expected 'const uint8 * {aka const unsigned char *}' but argument is of type 'uint8_t {aka const unsigned char}'
- int pushMessage(const uint8 message[], uint8 size);
-     ^
-main.c:224:12: error: expected ';' before 'break'
-            break;
-            ^
-main.c:234:37: warning: passing argument 1 of 'pushMessage' makes pointer from integer without a cast [-Wint-conversion]
-                         pushMessage(REJECTED,1)//Not a withdrawal request
-                                     ^
-In file included from main.c:16:0:
-usbserialprotocol.h:30:5: note: expected 'const uint8 * {aka const unsigned char *}' but argument is of type 'uint8_t {aka const unsigned char}'
- int pushMessage(const uint8 message[], uint8 size);
-     ^
-main.c:235:21: error: expected ';' before '}' token
-                     }
-                     ^
-main.c:240:41: warning: passing argument 1 of 'pushMessage' makes pointer from integer without a cast [-Wint-conversion]
-                             pushMessage(REJECTED,1)//wrong nonce
-                                         ^
-In file included from main.c:16:0:
-usbserialprotocol.h:30:5: note: expected 'const uint8 * {aka const unsigned char *}' but argument is of type 'uint8_t {aka const unsigned char}'
- int pushMessage(const uint8 message[], uint8 size);
-     ^
-main.c:241:14: error: expected ';' before 'break'
-              break;
-              ^
-main.c:244:41: error: 'RETURN_WITHDRAWAL' undeclared (first use in this function)
-                             pushMessage(RETURN_WITHDRAWAL,1)
-                                         ^
-main.c:245:29: error: expected ';' before 'pushMessage'
-                             pushMessage(ACCEPTED,1)
-                             ^
-main.c:150:8: warning: unused variable 'numbills' [-Wunused-variable]
-  uint8 numbills, i, bills_left;
-        ^
---------------- Build Failed: 02/28/2018 17:22:10 ---------------
+The compile step is up to date, no work needs to be done.
+arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.a .\CortexM0\ARM_GCC_541\Debug\DB_UART.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_SPI_UART.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_SPI_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_PM.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_UART.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\CARD_UART.o .\CortexM0\ARM_GCC_541\Debug\CARD_UART_PM.o .\CortexM0\ARM_GCC_541\Debug\CARD_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\CARD_UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\PIGGY_BANK.o .\CortexM0\ARM_GCC_541\Debug\Reset_isr.o .\CortexM0\ARM_GCC_541\Debug\SW1.o .\CortexM0\ARM_GCC_541\Debug\SW1_PM.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_tx.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_tx_PM.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_SCB_IRQ.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_rx.o .\CortexM0\ARM_GCC_541\Debug\DB_UART_rx_PM.o .\CortexM0\ARM_GCC_541\Debug\CARD_UART_IntClock.o .\CortexM0\ARM_GCC_541\Debug\CyFlash.o .\CortexM0\ARM_GCC_541\Debug\CyLib.o .\CortexM0\ARM_GCC_541\Debug\cyPm.o .\CortexM0\ARM_GCC_541\Debug\cyutils.o .\CortexM0\ARM_GCC_541\Debug\CyLFClk.o .\CortexM0\ARM_GCC_541\Debug\CyBootAsmGnu.o
+arm-none-eabi-ar.exe: creating .\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.elf .\CortexM0\ARM_GCC_541\Debug\main.o .\CortexM0\ARM_GCC_541\Debug\usbserialprotocol.o .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM0\ARM_GCC_541\Debug\cymetadata.o .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o .\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.a ..\libhydrogen.cylib\CortexM0\ARM_GCC_541\Debug\libhydrogen.a "D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM0\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m0 -mthumb -L Generated_Source\PSoC4 -Wl,-Map,.\CortexM0\ARM_GCC_541\Debug/SECURITY_MODULE.map -T Generated_Source\PSoC4\cm0gcc.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
+cyelftool.exe -C C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.elf --flash_row_size 128 --flash_size 32768 --flash_offset 0x00000000
+cyelftool.exe -S C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.elf
+Flash used: 8960 of 32768 bytes (27.3%).
+SRAM used: 2600 of 4096 bytes (63.5%). Stack: 1024 bytes. Heap: 496 bytes.
+--------------- Build Succeeded: 02/28/2018 19:16:52 ---------------
