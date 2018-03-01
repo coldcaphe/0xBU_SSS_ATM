@@ -21,7 +21,8 @@ class AlreadyProvisioned(Exception):
 
 
 class Psoc(object):
-    """Generic PSoC communication interface
+    """
+    Generic PSoC communication interface
 
     Args:
         name (str): Name of the PSoC for debugging
@@ -59,7 +60,8 @@ class Psoc(object):
             self.start_connect_watcher()
 
     def _vp(self, msg, stream=logging.info):
-        """Prints message if verbose was set
+        """
+        Prints message if verbose was set
 
         Args:
             msg (str): message to print
@@ -69,7 +71,8 @@ class Psoc(object):
             stream(self.fmt % msg)
 
     def _push_msg(self, msg):
-        """Sends formatted message to PSoC
+        """
+        Sends formatted message to PSoC
 
         Args:
             msg (str): message to be sent to the PSoC
@@ -79,7 +82,8 @@ class Psoc(object):
         time.sleep(0.1)
 
     def _pull_msg(self):
-        """Pulls message form the PSoC
+        """
+        Pulls message form the PSoC
 
         Returns:
             string with message from PSoC
@@ -104,7 +108,8 @@ class Psoc(object):
         return resp
 
     def _sync(self, provision):
-        """Synchronize communication with PSoC
+        """
+        Synchronize communication with PSoC
 
         Args:
             provision (bool): Whether expecting unprovisioned state
@@ -186,7 +191,8 @@ class Psoc(object):
         self.start_connect_watcher()
 
     def read(self, size=1):
-        """Reads bytes from the connected serial device
+        """
+        Reads bytes from the connected serial device
 
         Args:
             size (int, optional): The number of bytes to read from the serial
@@ -211,7 +217,8 @@ class Psoc(object):
             raise DeviceRemoved
 
     def write(self, data):
-        """Writes bytes to the connected serial device
+        """
+        Writes bytes to the connected serial device
 
         Args:
             data (str): The bytes to be written to the serial device
@@ -242,7 +249,8 @@ class Psoc(object):
         threading.Thread(target=self.device_disconnect_watch, name="%s-disconnect-watcher" % self.name).start()
 
     def inserted(self):
-        """Queries if serial port to ATM card is open
+        """
+        Queries if serial port to ATM card is open
 
         Returns:
             bool: True if port is open, False otherwise

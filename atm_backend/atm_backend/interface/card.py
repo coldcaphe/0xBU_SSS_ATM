@@ -5,7 +5,8 @@ import struct
 
 
 class Card(Psoc):
-    """Interface for communicating with the ATM card
+    """
+    Interface for communicating with the ATM card
 
     Args:
         port (str, optional): Serial port connected to an ATM card
@@ -21,7 +22,8 @@ class Card(Psoc):
         super(Card, self).__init__('CARD', self.port, self.verbose)
 
     def _authenticate(self, pin):
-        """Requests authentication from the ATM card
+        """
+        Requests authentication from the ATM card
 
         Args:
             pin (str): Challenge PIN
@@ -38,24 +40,24 @@ class Card(Psoc):
         return resp == 'OK'
 
     def _get_uuid(self):
-        """Retrieves the UUID from the ATM card
+        """
+        Retrieves the UUID from the ATM card
 
         Returns:
             str: UUID of ATM card
         """
-
         uuid = self._pull_msg()
         self._vp('Card sent UUID %s' % uuid)
         return uuid
 
     def _send_op(self, op):
-        """Sends requested operation to ATM card
+        """
+        Sends requested operation to ATM card
 
         Args:
             op (int): Operation to send from [self.CHECK_BAL, self.WITHDRAW,
                 self.CHANGE_PIN]
         """
-
         self._vp('Sending op %d' % op)
         self._push_msg(str(op))
 
@@ -64,7 +66,8 @@ class Card(Psoc):
         self._vp('Card received op')
 
     def change_pin(self, old_pin, new_pin):
-        """Requests for a pin to be changed
+        """
+        Requests for a pin to be changed
 
         Args:
             old_pin (str): Challenge PIN
@@ -73,7 +76,6 @@ class Card(Psoc):
         Returns:
             bool: True if PIN was changed, False otherwise
         """
-
         self._sync(False)
 
         if not self._authenticate(old_pin): #if old pin entered was not correct
@@ -89,25 +91,27 @@ class Card(Psoc):
         return resp == 'SUCCESS'
 
     def get_card_id(self,transaction):
-        """Checks the card balance
+        """
+        Checks the card balance
 
         Returns:
             str: UUID of ATM card on success
         """
-
         self._sync(True)
         self._push_msg(struct.pack('b',transaction)) 
         response = self.read(s=1025)#reads 1025 bytes
         return struct.unpack('b1024s',response)[1]
     
     def sign_nonce(self,transaction, nonce, pin):
-        """Signs the random nonce, called when customer tries to perform
-        an actoin of the account associated with the connected ATM card
+        """
+        Signs the random nonce, called when customer tries to perform
+        an action of the account associated with the connected ATM card
 
         Args:
             nonce (str): Random nonce
             pin (str): Challenge PIN
             transaction (int): Transaction ID
+            
         Returns 
             str: Signed nonce
         """
@@ -118,22 +122,25 @@ class Card(Psoc):
 
         return struct.unpack('b32s',signed_nonce)[1]
 
-        """Calculates what the public key would be based on the pin sent
+    def request_new_public_key(self,transaction,new_pin):
+        """
+        Calculates what the public key would be based on the pin sent
 
         Args:
             transaction(int): Transaction ID
             new_pin: theoretical new pin
+            
         Returns
             str: New Public Key
         """
-    def request_new_public_key(self,transaction,new_pin):
         self._sync(True)
         self._push(struct.pack('b8s',transaction,new_pin))
         public_key = self.read(s=33)
         return struct.unpack('b32s',public_key)
 
     def provision(self, r, rand_key, uuid):
-        """Attempts to provision a new ATM card
+        """
+        Attempts to provision a new ATM card
 
         Args:
             r (str): 32 byte prf key
@@ -143,10 +150,8 @@ class Card(Psoc):
         Returns:
             bool: True if provisioning succeeded, False otherwise
         """
-
         self._sync(True)
 
-        #TODO: do we actually need this weird syncing stuff?
         msg = self._pull_msg()
         if msg != 'P':
             self._vp('Card alredy provisioned!', logging.error)

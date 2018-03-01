@@ -4,7 +4,8 @@ from interface.psoc import DeviceRemoved, NotProvisioned
 
 
 class ATM(object):
-    """Interface for ATM xmlrpc server
+    """
+    Interface for ATM xmlrpc server
 
     Args:
         bank (Bank or BankEmulator): Interface to bank
@@ -44,7 +45,8 @@ class ATM(object):
 
 
     def check_balance(self, pin): #secured
-        """Tries to check the balance of the account associated with the
+        """
+        Tries to check the balance of the account associated with the
         connected ATM card
 
         Args:
@@ -89,7 +91,8 @@ class ATM(object):
             return False
 
     def change_pin(self, old_pin, new_pin): #secured
-        """Tries to change the PIN of the connected ATM card
+        """
+        Tries to change the PIN of the connected ATM card
 
         Args:
             old_pin (str): 8 digit PIN currently associated with the connected
@@ -133,13 +136,14 @@ class ATM(object):
             return False
 
     def withdraw(self, pin, amount):
-        """Tries to withdraw money from the account associated with the
+        """
+        Tries to withdraw money from the account associated with the
         connected ATM card
 
         Args:
             pin (str): 8 digit PIN currently associated with the connected
                 ATM card
-            amount (int): number of bills to withdraw
+            amount (int): Number of bills to withdraw
 
         Returns:
             list of str: Withdrawn bills on success
