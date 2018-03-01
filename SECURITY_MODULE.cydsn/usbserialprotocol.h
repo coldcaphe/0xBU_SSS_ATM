@@ -34,7 +34,7 @@ int pushMessage(const uint8 message[], uint8 size);
  * Receives a message form the USB-SERIAL and places the data in message
  * Returns length of pulled message
  */
-uint8 pullMessage(uint8 message[], uint8 len);
+uint8 pullMessage(uint8 message[], uint8 length);
 
 
 /*
