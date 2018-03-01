@@ -114,7 +114,8 @@ void provision()
     pullMessage((uint8*)message, (uint8)101);
     
     if (message[0] != REQUEST_PROVISION) {
-        // THROW ERROR
+        // Throw Error
+        pushMessage(&REJECTED, (uint8)1);
     }
     // message:
     // code (1 byte) | enc key (32 bytes) | rand key (32 byte) | UUID (36 bytes) 
@@ -133,6 +134,7 @@ void provision()
     pullMessage((uint8*)message, (uint8)2);
     
     if (message[0] != BILLS_REQUEST) {
+        // Throw Error
         pushMessage(&REJECTED, (uint8)1);
     }
     
