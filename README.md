@@ -33,47 +33,6 @@
 * Download and install Python
 * (The following instructions assume that ‘make’, ‘socat’, and ‘python’ are available on the Path)
 
-### Initializing Docker-Machine on all platforms:
-* Open a terminal (‘Docker Quickstart Terminal’ for Windows or Mac)
-* (If using Docker-Machine) Build a Docker container VM
-     - Create a docker machine: `docker-machine create --driver virtualbox default`
-     - Check that VM was created successfully: `docker-machine ls`
-     - Find the IP address of the VM: `docker-machine ip`
-     - If you ever need to administer the VM, you can ssh into the machine: `docker-machine ssh`
-     - Enable USB in VirtualBox
-          * Stop VM: `docker-machine stop default`
-          * Use VirtualBox settings to enable USB
-          * Start VM: `docker-machine start default`
-* Build reference containers and start servers
-     - Move into bank server directory: `cd bank_server`
-     - Start the bank server and container: `make start`
-	 - Move into ATM backend directory: `cd ../atm_backend`
-     - Start the ATM backend server and container: `make start`
-
-* Allow local interface code to connect to the servers running on the VM (requires redirection of network traffic)
-     - `socat TCP-LISTEN:1336,fork,reuseaddr TCP:<IP address of VM>:1336 &`
-     - `socat TCP-LISTEN:1338,fork,reuseaddr TCP:<IP address of VM>:1338 &`
-* Verify connectivity to servers
-     - Move to interface directory: `cd ../interfaces`
-     - Start admin interface: `python admin_interface.py`
-          * Type `create_atm testatm.info`
-          * If successful, a long string of random characters will be returned and outputed to a file named testatm.info
-          * Type `create_account testaccount 120 testaccount.info`
-          * If successful, a long string of random characters will be returned and outputed to a file named testaccount.info
-          * Type `exit`
-     - Start provision interface: `python provision_interface.py`
-          * Type `provision\_atm testatm.info test\_billfile`
-          * If successful, True will be returned
-          * Type `provision\_card testaccount.info '12345678'`
-          * If successful, True will be returned
-     - Start atm interface: ‘python atm_interface.py’
-          * Type `check_balance '12345678'`
-          * If successful, 120 will be returned
-          * Type `withdraw'12345678' 10`
-          * If successful, 10 bills will be returned
-          * Type `change_pin '12345678' '87654321'`
-          * If successful, True will be returned
-
 ### Install PSoC Creator 4.1 (Requires Windows System)
 * Download installer from http://www.cypress.com/products/psoc-creator-integrated-design-environment-ide
 * Run installer and follow steps
@@ -131,9 +90,9 @@ atm\_backend and the bank\_server.
      - `(cd bank_server && make logs)` // saved to /logs/*
      - `(cd atm_backend && make logs)` // saved to /logs/*
 
-## Important Notes
+## Important Formatting Notes
 
-### Enum values used
+### Enum values used:
 | Message Type | Value| Description |
 |--------------|------|-------------|
 |REQUEST\_NAME  | 0x00 | ATM asks card for card ID |
