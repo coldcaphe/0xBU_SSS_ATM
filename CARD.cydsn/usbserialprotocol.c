@@ -22,7 +22,9 @@
 #define SYNC_CONFIRMED_PROV 0x19
 #define SYNC_CONFIRMED_NO_PROV 0x1A
 #define SYNCED 0x1B
-#define SYNC_TYPE_CARD 0x1D
+#define SYNC_TYPE_CARD_P 0x1D
+#define SYNC_TYPE_CARD_N 0x3D
+#define PSOC_DEVICE_REQUEST 0x1E
 
 
 uint8 getValidByte()
@@ -83,7 +85,7 @@ void syncConnection(int prov)
                 return;
             }
             else if (*message == PSOC_DEVICE_REQUEST) {
-                pushMessage((uint8*)SYNC_TYPE_CARD, (uint8)1);
+                pushMessage((uint8*)SYNC_TYPE_CARD_P, (uint8)1);
                 return;
             }
         }
@@ -98,7 +100,7 @@ void syncConnection(int prov)
                 return;
             }
             else if (*message == PSOC_DEVICE_REQUEST) {
-                pushMessage((uint8*)SYNC_TYPE_CARD, (uint8)1);
+                pushMessage((uint8*)SYNC_TYPE_CARD_N, (uint8)1);
                 return;
             }
         }
