@@ -143,5 +143,9 @@ atm\_backend and the bank\_server.
 
 | Provisioning | Value|
 |----------|------|
-|REQUEST\_PROVISION| 0x22 |
+|INITIATE\_PROVISION|0X25|
+|REQUEST\_PROVISION|0X26|
+|INITIATE\_BILLS\_REQUEST|0X27|
+|BILLS\_REQUEST|0X28|
+|BILL_RECEIVED|0X29|
 
