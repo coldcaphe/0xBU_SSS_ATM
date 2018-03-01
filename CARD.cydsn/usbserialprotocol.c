@@ -22,6 +22,7 @@
 #define SYNC_CONFIRMED_PROV 0x19
 #define SYNC_CONFIRMED_NO_PROV 0x1A
 #define SYNCED 0x1B
+#define SYNC_TYPE_CARD 0x1D
 
 
 uint8 getValidByte()
@@ -81,6 +82,10 @@ void syncConnection(int prov)
                 pushMessage((uint8*)SYNC_FAILED_PROV, (uint8)1);
                 return;
             }
+            else if (*message == PSOC_DEVICE_REQUEST) {
+                pushMessage((uint8*)SYNC_TYPE_CARD, (uint8)1);
+                return;
+            }
         }
         else {
             if (*message == SYNC_REQUEST_PROV) {
@@ -90,6 +95,10 @@ void syncConnection(int prov)
             }
             else if (*message == SYNC_REQUEST_NO_PROV) {
                 pushMessage((uint8*)SYNC_FAILED_NO_PROV, (uint8)1);
+                return;
+            }
+            else if (*message == PSOC_DEVICE_REQUEST) {
+                pushMessage((uint8*)SYNC_TYPE_CARD, (uint8)1);
                 return;
             }
         }
