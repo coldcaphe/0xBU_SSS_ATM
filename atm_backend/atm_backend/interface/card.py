@@ -152,31 +152,18 @@ class Card(Psoc):
         """
         self._sync(True)
 
-        msg = self._pull_msg()
-        if msg != 'P':
-            self._vp('Card alredy provisioned!', logging.error)
+        msg = self.read(1)
+        if msg != self.INITIATE_PROVISION:
             return False
-        self._vp('Card sent provisioning message')
 
-        ########################
         
         self._push_msg(struct.pack("32s", r))
-        while self._pull_msg() != 'K':
-            self._vp('Card hasn\'t accepted r', logging.error)
-        self._vp('Card accepted r')
-
         self._push_msg(struct.pack("32s", rand_key))
-        while self._pull_msg() != 'K':
-            self._vp('Card hasn\'t accepted rand_key', logging.error)
-        self._vp('Card accepted rand_key')
-
         self._push_msg(struct.pack("36s", uuid))
-        while self._pull_msg() != 'K':
-            self._vp('Card hasn\'t accepted uuid', logging.error)
-        self._vp('Card accepted uuid')
 
-        self._vp('Provisioning complete')
-
+        msg = self.read(1)
+        if msg!=self.ACCEPTED:
+            return False
         return True
 
 import string

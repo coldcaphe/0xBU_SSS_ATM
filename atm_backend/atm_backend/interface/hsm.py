@@ -32,6 +32,11 @@ class HSM(Psoc):
         self.RETURN_BALANCE         = 0x0B
         self.ACCEPTED               = 0x20
         self.REJECTED               = 0x21
+        self.INITIATE_PROVISION     = 0x25
+        self.REQUEST_PROVISION      = 0x26
+        self.INITIATE_BILLS_REQUEST = 0x27
+        self.BILL_REQUEST           = 0x28
+        self.BILL_RECIEVED          = 0x29
 
 
     
@@ -239,7 +244,7 @@ class DummyHSM(HSM):
             raise ValueError('Unexpected Byte read from hsm (expected Withdrawal or Check Balance byte ) got: ' + str(responseAction))
 
 
-    def provision(self, uuid, bills):
+    def provision(self, hsm_key, rand_key, uuid, bills):
         """Attempts to provision HSM
 
         Args:
@@ -250,32 +255,29 @@ class DummyHSM(HSM):
             bool: True if HSM provisioned, False otherwise
         """
 
-        msg = self._pull_msg()
-        if msg != 'P':
-            self._vp('HSM already provisioned!', logging.error)
+        msg = self.read(1)
+        if msg != self.INITIATE_PROVISION:
             return False
-        self._vp('HSM sent provisioning message')
+        #Send 101 bytes (request byte | encryption key | rand key | uuid)
+        self.push_msg(self.REQUEST_PROVISION)
+        self.push_msg(hsm_key)
+        self.push_msg(rand_key)
+        self.push_msg(uuid)
 
-        self._push_msg('%s\00' % uuid)
-        while self._pull_msg() != 'K':
-            self._vp('HSM hasn\'t accepted UUID \'%s\'' % uuid, logging.error)
-        self._vp('HSM accepted UUID \'%s\'' % uuid)
+        msg = self.read() # initiate bills request
 
+        if msg != self.INITIATE_BILLS_REQUEST:
+            return False
+
+        num_bills = len(bills)
+        self.push_msg(self.BILLS_REQUEST)
         self._push_msg(struct.pack('B', len(bills)))
-        while self._pull_msg() != 'K':
-            self._vp('HSM hasn\'t accepted number of bills', logging.error)
-        self._vp('HSM accepted number of bills')
-
         for bill in bills:
             msg = bill.strip()
-            self._vp('Sending bill \'%s\'' % msg.encode('hex'))
             self._push_msg(msg)
 
-            while self._pull_msg() != 'K':
+            while self._pull_msg() != self.BILL_RECIEVED:
                 self._vp('HSM hasn\'t accepted bill', logging.error)
-            self._vp('HSM accepted bill')
-
-        self._vp('All bills sent! Provisioning complete!')
 
         return True
 
