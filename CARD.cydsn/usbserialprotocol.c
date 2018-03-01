@@ -44,7 +44,7 @@ int pushMessage(const uint8 data[], uint8 size)
 }
 
 
-uint8 pullMessage(uint8 data[])
+uint8 pullMessage2(uint8 data[])
 {
     int i, len;
     
@@ -57,7 +57,7 @@ uint8 pullMessage(uint8 data[])
    return len;
 }
 
-uint8 pullMessage2(uint8 data[], uint8 length)
+uint8 pullMessage(uint8 data[], uint8 length)
 {
     uint8 i;
     for (i = 0; i < length; i++) {

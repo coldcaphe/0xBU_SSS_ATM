@@ -90,12 +90,12 @@ void provision()
     pushMessage((uint8*)PROV_MSG, (uint8)strlen(PROV_MSG));
     
     // get r (random)
-    pullMessage(message);
+    pullMessage2(message, R_LEN);
     USER_INFO_Write(message, R, R_LEN);
     pushMessage((uint8*)RECV_OK, strlen(RECV_OK));         
 
     // set account number
-    pullMessage(message);
+    pullMessage2(message, UUID_LEN);
     USER_INFO_Write(message, UUID, UUID_LEN);
     pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 }
@@ -139,7 +139,7 @@ int main(void)
     while (1) {
         //get message type
         syncConnection(SYNC_NORM);
-        pullMessage2(message, (uint8)1);
+        pullMessage(message, (uint8)1);
 	    message_type = request[0];
 	    
         int j;
