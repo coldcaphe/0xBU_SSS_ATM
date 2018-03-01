@@ -1,45 +1,5 @@
-# Embedded CTF Example Code
+# Embedded CTF Code
 
-This repository contains an example reference system for MITRE's 2018 
-[Embedded System CTF](http://mitrecyberacademy.org/competitions/embedded/).
-This example meets all the requirements outlined in the challenge writeup
-document, but is not implemented securely.  
-
-## Disclaimer
-This code is incomplete, insecure, and does not meet MITRE standards for
-quality.  This code is being provided for educational purposes to serve as a
-simple example that meets the minimum functional requirements for the 2018 MITRE
-eCTF competition.  Use this code at your own risk!
-
-## Updates 
-
-### Fixed return types
-
-This update fixes the type for the return value from `create_account` and `create_atm`. 
-These functions previously returned string types, but the requirements state that the
-functions must return an xmlrpclib.Binary type.  This update fixes the example code 
-so that it is consistent with the requirements.
-
-### Interface Additions
-
-This update adds simple status functions to the admin interface and the atm 
-provision interface.  These updates were needed to help simplify testing.
-The rules document was also updated to reflect this change.
-
-One new function was added to the admin interface:
-* `ready_for_atm` returns `True` only when the bank is ready for ATM(s) to connect 
-to its bank interface on port 1337. Use this functon to ensure that no ATM is 
-started until the bank is ready to accept connections.
-
-Three functions were added to the provision interface:
-* `ready_for_hsm` returns `True` only when it is ready and waiting for an HSM to connect.
-* `hsm_connected` returns `True` only after the HSM has connected and synced with the ATM 
-  (it has been identified as an HSM).
-* `card_connected` returns `True` only after a card has connected and synced with the ATM 
-  (it has been identified as a card).
-
-
-# Getting started
 
 ## Installing Dependencies
 
@@ -72,47 +32,6 @@ Three functions were added to the provision interface:
     - Now all of the Cygwin Unix functions are available in all terminals
 * Download and install Python
 * (The following instructions assume that ‘make’, ‘socat’, and ‘python’ are available on the Path)
-
-### Initializing Docker-Machine on all platforms:
-* Open a terminal (‘Docker Quickstart Terminal’ for Windows or Mac)
-* (If using Docker-Machine) Build a Docker container VM
-     - Create a docker machine: `docker-machine create --driver virtualbox default`
-     - Check that VM was created successfully: `docker-machine ls`
-     - Find the IP address of the VM: `docker-machine ip`
-     - If you ever need to administer the VM, you can ssh into the machine: `docker-machine ssh`
-     - Enable USB in VirtualBox
-          * Stop VM: `docker-machine stop default`
-          * Use VirtualBox settings to enable USB
-          * Start VM: `docker-machine start default`
-* Build reference containers and start servers
-     - Move into bank server directory: `cd bank_server`
-     - Start the bank server and container: `make start`
-	 - Move into ATM backend directory: `cd ../atm_backend`
-     - Start the ATM backend server and container: `make start`
-
-* Allow local interface code to connect to the servers running on the VM (requires redirection of network traffic)
-     - `socat TCP-LISTEN:1336,fork,reuseaddr TCP:<IP address of VM>:1336 &`
-     - `socat TCP-LISTEN:1338,fork,reuseaddr TCP:<IP address of VM>:1338 &`
-* Verify connectivity to servers
-     - Move to interface directory: `cd ../interfaces`
-     - Start admin interface: `python admin_interface.py`
-          * Type `create_atm testatm.info`
-          * If successful, a long string of random characters will be returned and outputed to a file named testatm.info
-          * Type `create_account testaccount 120 testaccount.info`
-          * If successful, a long string of random characters will be returned and outputed to a file named testaccount.info
-          * Type `exit`
-     - Start provision interface: `python provision_interface.py`
-          * Type `provision\_atm testatm.info test\_billfile`
-          * If successful, True will be returned
-          * Type `provision\_card testaccount.info '12345678'`
-          * If successful, True will be returned
-     - Start atm interface: ‘python atm_interface.py’
-          * Type `check_balance '12345678'`
-          * If successful, 120 will be returned
-          * Type `withdraw'12345678' 10`
-          * If successful, 10 bills will be returned
-          * Type `change_pin '12345678' '87654321'`
-          * If successful, True will be returned
 
 ### Install PSoC Creator 4.1 (Requires Windows System)
 * Download installer from http://www.cypress.com/products/psoc-creator-integrated-design-environment-ide
@@ -171,9 +90,58 @@ atm\_backend and the bank\_server.
      - `(cd bank_server && make logs)` // saved to /logs/*
      - `(cd atm_backend && make logs)` // saved to /logs/*
 
-## Other Examples
+## Important Formatting Notes
 
-### Example 'socat' commmand to redirect TCP traffic
-`socat TCP-LISTEN:1336,fork,reuseaddr TCP:192.168.99.100:1336 &`
-`socat TCP-LISTEN:1338,fork,reuseaddr TCP:192.168.99.100:1338 &`
+### Format of Returned Values
+| Value | Type/Size |
+|-----------|------|
+|Card ID | 36 ascii characters |
+|HSM ID | 4 byte integer|
+|Nonces| 32 bytes |
+|PINs| 8 ascii characters |
+|Balance Amount| 4 byte integer |
+|Withdraw Amount | 4 byte integer |
+|Encrypted Message| Length of data rounded up to the nearest multiple of 16 + a 16 byte authentication tag|
+
+### Enum values used:
+| Message Type | Value| Description |
+|--------------|------|-------------|
+|REQUEST\_NAME  | 0x00 | ATM asks card for card ID |
+|RETURN\_NAME   | 0x01 | Card responds with stored ID |
+|REQUEST\_CARD\_SIGNATURE | 0x02 | ATM sends nonce and PIN to card |
+|RETURN\_CARD\_SIGNATURE | 0x03 | Card responds with signature |
+|REQUEST\_HSM\_NONCE | 0x04 | ATM asks HSM for nonce |
+|RETURN\_HSM\_NONCE | 0x05 | HSM responds with nonce |
+|REQUEST\_HSM\_UUID | 0x06 | ATM asks HSM for HSM ID |
+|RETURN\_HSM\_UUID  | 0x07 | HSM sends its ID to ATM |
+|REQUEST\_WITHDRAWAL | 0x08 | ATM asks HSM to decrypt message and return the bills if the message is valid |
+|RETURN\_WITHDRAWAL | 0x09 | HSM sends bills to ATM |
+|REQUEST\_BALANCE | 0x0A | ATM asks HSM to decrypt message and returns the balance if the message is valid |
+|RETURN\_BALANCE | 0x0B | Returns the decrypted balance |
+|REQUEST\_NEW_PK | 0x0C | ATM asks card to generate a new PK |
+|RETURN\_NEW_PK | 0x0D | Card returns new PK |
+
+| Transaction Opcodes | Value|
+|--------------|------|
+|CHECK\_BALANCE  | 0x11 |
+|WITHDRAW  | 0x13 |
+
+| Sync Type | Value|
+|-----------|------|
+|SYNC\_REQUEST\_PROV | 0x15 |
+|SYNC\_REQUEST\_NO\_PROV| 0x16 |
+|SYNC\_CONFIRMED\_PROV | 0x17 |
+|SYNC\_CONFIRMED\_NO\_PROV | 0x18 |
+|SYNC\_FAILED\_NO\_PROV | 0x19 |
+|SYNC\_FAILED\_PROV| 0x1A |
+|SYNCED | 0x1B |
+
+| Messages | Value|
+|----------|------|
+|ACCEPTED | 0x20 |
+|REJECTED | 0x21 |
+
+| Provisioning | Value|
+|----------|------|
+|REQUEST\_PROVISION| 0x22 |
 
