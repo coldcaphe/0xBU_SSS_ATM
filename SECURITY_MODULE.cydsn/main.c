@@ -89,7 +89,7 @@ void provision()
 		PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[i], BILL_LEN);
 	}
 
-    // Synchronize with ATM
+    	// Synchronize with ATM
 	syncConnection(SYNC_PROV);
 
 	// Push provisioning message
@@ -97,18 +97,18 @@ void provision()
 	strcpy((char*)message, PROV_MSG);
 	pushMessage(message, (uint8)strlen(PROV_MSG));
 
-    // Set UUID
+    	// Set UUID
 	pullMessage(message, 1);
 	PIGGY_BANK_Write(message, UUID, strlen((char*)message) + 1);
 	pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 
-    // Get number of bills
+    	// Get number of bills
 	pullMessage(message, 1);
 	numbills = message[0];
 	PIGGY_BANK_Write(&numbills, BILLS_LEFT, 1u);
 	pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 
-    // Load bills
+    	// Load bills
 	for (i = 0; i < numbills; i++) {
 		pullMessage(message, 1);
 		PIGGY_BANK_Write(message, MONEY[i], BILL_LEN);
@@ -129,7 +129,7 @@ void dispenseBill()
 
 	memset(message, 0u, 16);
 	memcpy(message, (void*)ptr, BILL_LEN);
-
+	
 	pushMessage(message, BILL_LEN);
 
 	PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[stackloc], 16);
@@ -140,12 +140,12 @@ void dispenseBill()
 int main(void)
 {
 	// Enable global interrupts
-    CyGlobalIntEnable; 
+    	CyGlobalIntEnable; 
 
-    // Start reset button
+    	// Start reset button
 	Reset_isr_StartEx(Reset_ISR);
 
-    // Declare variables here
+    	// Declare variables here
 	uint8 numbills, i, bills_left;
 	uint8 message[64];
 
@@ -219,14 +219,14 @@ int main(void)
 
         	case (int)WITHDRAWAL_REQUEST:
 	        	// Verify signed request
-    	        pullMessage(message, ENCRYPTED_MESSAGE_LEN);
+    	        	pullMessage(message, ENCRYPTED_MESSAGE_LEN);
 	        	uint8_t message [MESSAGE_LEN];
 	        	uint8_t* ciphertext = &request;
 
-				// Check if message is forged
+			// Check if message is forged
 	        	if (hydro_secretbox_decrypt(message, ciphertext, CIPHERTEXT_LEN,
 	        		(uint64_t) 0, "WITHDRAW", secret_key)!=0) {
-                    pushMessage(&REJECTED,1);
+                    		pushMessage(&REJECTED,1);
 	        		break;
 	        	}		
 
@@ -238,26 +238,26 @@ int main(void)
 		        		}
 		        	}
 
-					// Send message if request is not a withdrawal request
-                    if (message[0]!=WITHDRAWAL_REQUEST){
-                        pushMessage(&REJECTED,1);
-                    }
+				// Send message if request is not a withdrawal request
+                    		if (message[0]!=WITHDRAWAL_REQUEST){
+                        		pushMessage(&REJECTED,1);
+                    		}
 
-					// If nonce checked passed 
+				// If nonce checked passed 
 		        	if (flag == 0) { 
 			        	uint8 numbills = message[1 + 32]; // (WITHDRAW (1 byte)| nonce (32 bytes)| amount)
 			        	ptr = BILLS_LEFT;
 
 			        	if (*ptr < numbills) {
-                            pushMessage(&REJECTED,1); // Wrong nonce
+                            			pushMessage(&REJECTED,1); // Wrong nonce
 			        		break;
 			        	} 
 
 			        	else {
-							// Send accepted withdrawal messagae
-                            pushMessage(&RETURN_WITHDRAWAL, 1);
-                            pushMessage(&ACCEPTED, 1);
-                            pushMessage(&numbills, 1);
+						// Send accepted withdrawal messagae
+                            			pushMessage(&RETURN_WITHDRAWAL, 1);
+                            			pushMessage(&ACCEPTED, 1);
+                            			pushMessage(&numbills, 1);
 
 			        		bills_left = *ptr - numbills;
 			        		PIGGY_BANK_Write(&bills_left, BILLS_LEFT, 0x01);
@@ -267,8 +267,8 @@ int main(void)
 			        		dispenseBill();
 			        	}
 	        	        
-						// Resets the nonce to prevent replays
-                        hydro_random_buf(&current_nonce, 32);
+					// Resets the nonce to prevent replays
+                        		hydro_random_buf(&current_nonce, 32);
 		        		break;
 		        	}
 	        	}
