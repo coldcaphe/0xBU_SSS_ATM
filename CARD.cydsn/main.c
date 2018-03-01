@@ -38,7 +38,7 @@
 #define RETURN_CARD_SIGNATURE   0x03
 #define REQUEST_NEW_PK          0x0C
 #define RETURN_NEW_PK           0x0D
-#define INITIATE_PROVISION_CARD	0x2A
+#define INITIATE_PROVISION      0x25
 #define REQUEST_PROVISION	0x26
 
 #define ACCEPTED		0x20
