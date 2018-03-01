@@ -53,7 +53,7 @@ class ProvisionTool(object):
 
             r = card_blob[:32]
             rand_key = card_blob[32:64]
-            card_id = [64:]
+            card_id = card_blob[64:]
 
             logging.info('provision_card: sending info to card')
             if not self.card.provision(r, rand_key, card_id):
@@ -100,7 +100,7 @@ class ProvisionTool(object):
 
         hsm_key = card_blob[:32]
         rand_key = card_blob[32:64]
-        hsm_id = [64:]
+        hsm_id = card_blob[64:]
 
         try:
             logging.info('provision_atm: provisioning hsm with inputted bills')
