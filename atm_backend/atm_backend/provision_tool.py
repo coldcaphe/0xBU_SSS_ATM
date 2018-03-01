@@ -1,6 +1,6 @@
 import logging
 from interface.psoc import DeviceRemoved, AlreadyProvisioned
-
+import xmlrpclib
 
 class ProvisionTool(object):
     """Interface for the provisioning xmlrpc server
@@ -63,7 +63,7 @@ class ProvisionTool(object):
             pk = self.card.request_new_public_key(self.REQUEST_NEW_PK, pin)
 
             logging.info('provision_card: setting pin on server side')
-            if not bank.set_first_pk(xmlrpclib.Binary(pk)):
+            if not self.bank.set_first_pk(xmlrpclib.Binary(pk)):
                 return False
 
             logging.error('provision_card: provision card failed!')
@@ -98,9 +98,9 @@ class ProvisionTool(object):
         if len(hsm_blob) != 32 + 32 + 36:
                 return False
 
-        hsm_key = card_blob[:32]
-        rand_key = card_blob[32:64]
-        hsm_id = card_blob[64:]
+        hsm_key = hsm_blob[:32]
+        rand_key = hsm_blob[32:64]
+        hsm_id = hsm_blob[64:]
 
         try:
             logging.info('provision_atm: provisioning hsm with inputted bills')

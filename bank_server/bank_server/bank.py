@@ -99,7 +99,10 @@ class Bank(object):
         # is True.
         ready_event.set()
         self.server.serve_forever()
-
+        
+        # Enum values for transaction opcodes
+        self.CHECK_BALANCE = 0x11
+        self.WITHDRAW = 0x13
 
 ###############################################################################
 
@@ -197,7 +200,7 @@ class Bank(object):
 
         balance = self.db_obj.get_balance(card_id)
 
-        message = struct.pack("1b32b4b", CHECK_BALANCE, hsm_nonce, balance)
+        message = struct.pack("1b32b4b", self.CHECK_BALANCE, hsm_nonce, balance)
         ctext = self.encrypt(key, message)
 
         return ctext
@@ -242,7 +245,7 @@ class Bank(object):
         if key == None:
             return "ERROR incorrect HSM id"
 
-        message = struct.pack("1b32b4b", WITHDRAW, hsm_nonce, amount)
+        message = struct.pack("1b32b4b", self.WITHDRAW, hsm_nonce, amount)
         ctext = self.encrypt(key, message)
 
         return ctext
@@ -277,7 +280,7 @@ class Bank(object):
 #################################################################
 #Helper functions
 
-    def check_nonce_and_set_used(card_id, nonce, signature):
+    def check_nonce_and_set_used(self,card_id, nonce, signature):
         """
         Checks that a nonce is valid (is the currently stored nonce, is used, isn't expired, has a correct signature), 
         then updates the used flag

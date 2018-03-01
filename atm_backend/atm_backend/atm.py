@@ -184,7 +184,7 @@ class ATM(object):
             return False
         try:
             logging.info('change_pin: Sending PIN change request to card')
-            if self.card.change_pin(old_pin, new_pin):
+            if self.card.change_pin(pin, new_pin):
                 return True
             logging.info('change_pin failed')
             return False
