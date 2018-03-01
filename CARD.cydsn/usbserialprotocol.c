@@ -14,11 +14,14 @@
 
 #define RECV_OK 0
 #define RECV_ER 1
-#define RDY_MSG_RECV "READY"
-#define RDY_MSG_NORM "CARD_N"
-#define RDY_MSG_PROV "CARD_P"
-#define RDY_BAD "BAD"
-#define GO_MSG "GO"
+
+#define SYNC_REQUEST_PROV 0x15
+#define SYNC_REQUEST_NO_PROV 0x16
+#define SYNC_FAILED_PROV 0x17
+#define SYNC_FAILED_NO_PROV 0x18
+#define SYNC_CONFIRMED_PROV 0x19
+#define SYNC_CONFIRMED_NO_PROV 0x1A
+#define SYNCED 0x1B
 
 
 uint8 getValidByte()
@@ -43,32 +46,18 @@ int pushMessage(const uint8 data[], uint8 size)
     return RECV_OK;
 }
 
-
-uint8 pullMessage2(uint8 data[])
-{
-    int i, len;
-    
-    len = getValidByte();
-    
-    for (i = 0; i < len; i++) {
-        data[i] = getValidByte();   
-    }
-    
-   return len;
-}
-
 uint8 pullMessage(uint8 data[], uint8 length)
 {
     uint8 i;
     for (i = 0; i < length; i++) {
         data[i] = getValidByte();   
     }
-    
+
    return i;
 }
 
 /* 
- * generic PSoC synchronization protocol:
+ * synchronization protocol:
  *
  * 1) ATM -> "READY" -> PSoC
  * 2) if bad:  PSoC -> received bad message -> ATM; goto 1)
@@ -78,28 +67,35 @@ uint8 pullMessage(uint8 data[], uint8 length)
  */
 void syncConnection(int prov) 
 {
-    uint8 message[32];
+    uint8* message;
     
-    // marco-polo with bank until connection is in sync
     do {
-        pullMessage(message);                               // 1)
-        
-        if (strcmp((char*)message, RDY_MSG_RECV)) {
-            pushMessage(message, strlen((char*)message));   // 2) bad
-            strcpy((char*)message, RDY_BAD);
-        } else if (prov) {
-            pushMessage((uint8*)RDY_MSG_PROV, 
-                        strlen(RDY_MSG_PROV));              // 2) good prov
-            
-            pullMessage(message);                           // 3)
-        } else {
-            pushMessage((uint8*)RDY_MSG_NORM, 
-                        strlen(RDY_MSG_NORM));              // 2) good norm
-            
-            pullMessage(message);                           // 3
+        pullMessage(message, (uint8)1);                              
+        if (prov) {
+            if (*message == SYNC_REQUEST_NO_PROV) {
+                pushMessage((uint8*)SYNC_CONFIRMED_PROV, (uint8)1);
+                return;
+                
+            }
+            else if (*message == SYNC_REQUEST_PROV) {
+                pushMessage((uint8*)SYNC_FAILED_PROV, (uint8)1);
+                return;
+            }
         }
-        
-    } while (strcmp((char*)message, GO_MSG));               // 4)
+        else {
+            if (*message == SYNC_REQUEST_PROV) {
+                pushMessage((uint8*)SYNC_CONFIRMED_NO_PROV, (uint8)1);
+                return;
+                
+            }
+            else if (*message == SYNC_REQUEST_NO_PROV) {
+                pushMessage((uint8*)SYNC_FAILED_NO_PROV, (uint8)1);
+                return;
+            }
+        }
+    }
+    
+    while (*message != SYNCED);
 }
 
 /* [] END OF FILE */
