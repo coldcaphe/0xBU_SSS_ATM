@@ -1,3 +1,6 @@
+[submodule "libhydrogen.cylib/libhydrogen"]
+	path = libhydrogen.cylib/libhydrogen
+	url = https://github.com/stevenbrz/libhydrogen
 [submodule "bank_server/wrapper/libhydrogen"]
 	path = bank_server/wrapper/libhydrogen
-	url = https://github.com/stevenbrz/libhydrogen
+	url = https://github.com/jedisct1/libhydrogen
