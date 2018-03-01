@@ -35,7 +35,7 @@ class HSM(Psoc):
         self.INITIATE_PROVISION     = 0x25
         self.REQUEST_PROVISION      = 0x26
         self.INITIATE_BILLS_REQUEST = 0x27
-        self.BILL_REQUEST           = 0x28
+        self.BILLS_REQUEST          = 0x28
         self.BILL_RECIEVED          = 0x29
 
 
