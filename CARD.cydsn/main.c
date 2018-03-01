@@ -102,7 +102,7 @@ void provision()
     pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 
     // set account number
-    pullMessage2(message, UUID_LEN);
+    pullMessage(message, UUID_LEN);
     USER_INFO_Write(message, UUID, UUID_LEN);
     pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 }
