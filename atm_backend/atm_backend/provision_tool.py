@@ -94,7 +94,7 @@ class ProvisionTool(object):
             logging.error('provision_hsm: no hsm was inserted!')
             return False
 
-        #if it doesn't contain a 32 byte encryption key + a PRF key for rng + a uuid
+        #if it doesn't contain a 32 byte encryption key + a rand key for rng + a uuid
         if len(hsm_blob) != 32 + 32 + 36:
                 return False
 
