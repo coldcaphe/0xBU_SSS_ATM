@@ -43,8 +43,6 @@ class Psoc(object):
         self.port = ''
         self.baudrate = 115200
         self.old_ports = [port_info.device for port_info in list_ports()]
-        self.sync_name_n = '%s_N' % name
-        self.sync_name_p = '%s_P' % name
         self.SYNC_REQUEST_PROV         = 0x15
         self.SYNC_REQUEST_NO_PROV      = 0x16
         self.SYNC_CONFIRMED_PROV       = 0x17
@@ -52,6 +50,14 @@ class Psoc(object):
         self.SYNC_FAILED_NO_PROV       = 0x19
         self.SYNC_FAILED_PROV          = 0x1A
         self.SYNCED                    = 0x1B
+        self.SYNC_TYPE_HSM_N           = 0x1C
+        self.SYNC_TYPE_HSM_P           = 0x3C
+        self.SYNC_TYPE_CARD_N          = 0x1D
+        self.SYNC_TYPE_CARD_P          = 0x3D
+        self.PSOC_DEVICE_REQUEST       = 0x1E
+
+        self.sync_name_n = '%s_N' % name
+        self.sync_name_p = '%s_P' % name
 
 
         if ser:
@@ -97,7 +103,7 @@ class Psoc(object):
 
     def _sync_once(self,request,accept,wrong_states):
         resp = ''
-        while resp != accept:
+        while resp in accept:
             self._push_msg(request)
             resp = self.read(1)
 
@@ -142,8 +148,17 @@ class Psoc(object):
     def open(self):
         time.sleep(.1)
         self.ser = serial.Serial(self.port, baudrate=self.baudrate, timeout=1)
-        resp = self._sync_once(['CARD_N', 'CARD_P', 'HSM_N', 'HSM_P'])
-        if resp == self.sync_name_p or resp == self.sync_name_n:
+        resp = self._sync_once(self.PSOC_DEVICE_REQUEST,[self.SYNC_TYPE_HSM_P, self.SYNC_TYPE_HSM_N, self.SYNC_TYPE_CARD_P, self.SYNC_TYPE_CARD_N],[])
+        resp_f = "Error"
+        if resp == self.SYNC_TYPE_HSM_P:
+            resp_f="HSM_P"
+        elif resp == self.SYNC_TYPE_HSM_N:
+            resp_f="HSM_N"
+        elif resp == self.SYNC_TYPE_CARD_P:
+            resp_f="CARD_P"
+        elif resp == self.SYNC_TYPE_CARD_N:
+            resp_f="CARD_N"
+        if resp_f == self.sync_name_p or resp_f == self.sync_name_n:
             logging.info('DYNAMIC SERIAL: Connected to %s', resp)
             self.connected = True
         else:
