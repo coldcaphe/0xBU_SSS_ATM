@@ -1,6 +1,5 @@
 # Embedded CTF Code
 
-# Getting started
 
 ## Installing Dependencies
 
