@@ -88,7 +88,7 @@ CY_ISR(Reset_ISR)
 // provisions card (should only ever be called once)
 void provision()
 {
-    uint8 message[64];
+    uint8 message[101];
     
     // synchronize with bank
     syncConnection(SYNC_PROV);
@@ -234,35 +234,6 @@ int main(void)
 	}	
 
         
-	/*
-        // syncronize communication with bank
-        syncConnection(SYNC_NORM);
-        
-        // receive pin number from ATM
-        pullMessage(message);
-        
-	
-        if (strncmp((char*)message, (char*)PIN, PIN_LEN)) {
-            pushMessage((uint8*)PIN_BAD, strlen(PIN_BAD));
-        } else {
-            pushMessage((uint8*)PIN_OK, strlen(PIN_OK));
-            
-            // get command
-            pullMessage(message);
-            pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
-            
-            // change PIN or broadcast UUID
-            if(message[0] == CHANGE_PIN)
-            {
-                pullMessage(message);
-                USER_INFO_Write(message, PIN, PIN_LEN);
-                
-                pushMessage((uint8*)PINCHG_SUC, strlen(PINCHG_SUC));
-            } else {
-                pushMessage(UUID, UUID_LEN);   
-            }
-        }
-	*/
 }
 
 /* [] END OF FILE */
