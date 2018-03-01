@@ -1214,25 +1214,25 @@ END GROUP
  .debug_abbrev  0x0000179d       0x9a .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_SPI_UART_INT.o)
  .debug_abbrev  0x00001837      0x4e5 ..\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\libhydrogen.a(hydrogen.o)
 
-.debug_line     0x00000000     0x2ff9
+.debug_line     0x00000000     0x2fb2
  *(.debug_line)
- .debug_line    0x00000000      0x279 .\CortexM0\ARM_GCC_541\Release\main.o
- .debug_line    0x00000279      0x166 .\CortexM0\ARM_GCC_541\Release\usbserialprotocol.o
- .debug_line    0x000003df      0x196 .\CortexM0\ARM_GCC_541\Release\cyfitter_cfg.o
- .debug_line    0x00000575      0x133 .\CortexM0\ARM_GCC_541\Release\cymetadata.o
- .debug_line    0x000006a8      0x21d .\CortexM0\ARM_GCC_541\Release\Cm0Start.o
- .debug_line    0x000008c5       0xc8 .\CortexM0\ARM_GCC_541\Release\CARD.a(USER_INFO.o)
- .debug_line    0x0000098d      0x160 .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART.o)
- .debug_line    0x00000aed      0x17c .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_SPI_UART.o)
- .debug_line    0x00000c69      0x1b2 .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_UART.o)
- .debug_line    0x00000e1b      0x1b1 .\CortexM0\ARM_GCC_541\Release\CARD.a(Reset_isr.o)
- .debug_line    0x00000fcc       0xc6 .\CortexM0\ARM_GCC_541\Release\CARD.a(SW1.o)
- .debug_line    0x00001092      0x18a .\CortexM0\ARM_GCC_541\Release\CARD.a(CyFlash.o)
- .debug_line    0x0000121c      0x4c6 .\CortexM0\ARM_GCC_541\Release\CARD.a(CyLib.o)
- .debug_line    0x000016e2      0x4c0 .\CortexM0\ARM_GCC_541\Release\CARD.a(CyLFClk.o)
- .debug_line    0x00001ba2       0x69 .\CortexM0\ARM_GCC_541\Release\CARD.a(CyBootAsmGnu.o)
- .debug_line    0x00001c0b       0xcd .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_SPI_UART_INT.o)
- .debug_line    0x00001cd8     0x1321 ..\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\libhydrogen.a(hydrogen.o)
+ .debug_line    0x00000000      0x277 .\CortexM0\ARM_GCC_541\Release\main.o
+ .debug_line    0x00000277      0x166 .\CortexM0\ARM_GCC_541\Release\usbserialprotocol.o
+ .debug_line    0x000003dd      0x196 .\CortexM0\ARM_GCC_541\Release\cyfitter_cfg.o
+ .debug_line    0x00000573      0x133 .\CortexM0\ARM_GCC_541\Release\cymetadata.o
+ .debug_line    0x000006a6      0x21d .\CortexM0\ARM_GCC_541\Release\Cm0Start.o
+ .debug_line    0x000008c3       0xc8 .\CortexM0\ARM_GCC_541\Release\CARD.a(USER_INFO.o)
+ .debug_line    0x0000098b      0x160 .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART.o)
+ .debug_line    0x00000aeb      0x17c .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_SPI_UART.o)
+ .debug_line    0x00000c67      0x1b2 .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_UART.o)
+ .debug_line    0x00000e19      0x1b1 .\CortexM0\ARM_GCC_541\Release\CARD.a(Reset_isr.o)
+ .debug_line    0x00000fca       0xc6 .\CortexM0\ARM_GCC_541\Release\CARD.a(SW1.o)
+ .debug_line    0x00001090      0x18a .\CortexM0\ARM_GCC_541\Release\CARD.a(CyFlash.o)
+ .debug_line    0x0000121a      0x4c6 .\CortexM0\ARM_GCC_541\Release\CARD.a(CyLib.o)
+ .debug_line    0x000016e0      0x4c0 .\CortexM0\ARM_GCC_541\Release\CARD.a(CyLFClk.o)
+ .debug_line    0x00001ba0       0x69 .\CortexM0\ARM_GCC_541\Release\CARD.a(CyBootAsmGnu.o)
+ .debug_line    0x00001c09       0xcd .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_SPI_UART_INT.o)
+ .debug_line    0x00001cd6     0x12dc ..\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\libhydrogen.a(hydrogen.o)
 
 .debug_frame    0x00000000     0x1db0
  *(.debug_frame)
@@ -1273,7 +1273,7 @@ END GROUP
  .debug_frame   0x00001d70       0x20 d:/programs/psoccreator/psoc creator/4.1/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(getpid.o)
  .debug_frame   0x00001d90       0x20 d:/programs/psoccreator/psoc creator/4.1/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(kill.o)
 
-.debug_str      0x00000000     0x25cf
+.debug_str      0x00000000     0x25b8
  *(.debug_str)
  .debug_str     0x00000000      0x2fe .\CortexM0\ARM_GCC_541\Release\main.o
                                 0x35a (size before relaxing)
@@ -1305,8 +1305,8 @@ END GROUP
                                 0x730 (size before relaxing)
  .debug_str     0x0000187e       0x45 .\CortexM0\ARM_GCC_541\Release\CARD.a(USB_UART_SPI_UART_INT.o)
                                 0x2ab (size before relaxing)
- .debug_str     0x000018c3      0xd0c ..\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\libhydrogen.a(hydrogen.o)
-                                0xfcb (size before relaxing)
+ .debug_str     0x000018c3      0xcf5 ..\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\libhydrogen.a(hydrogen.o)
+                                0xfb4 (size before relaxing)
 
 .debug_loc      0x00000000     0x7308
  *(.debug_loc)

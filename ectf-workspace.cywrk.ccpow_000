@@ -31,6 +31,7 @@
 <v>ectf-workspace\CARD\Source Files\main.c</v>
 <v>ectf-workspace\CARD\Source Files\usbserialprotocol.c</v>
 <v>ectf-workspace\CARD\Generated_Source\PSoC4</v>
+<v>ectf-workspace\libhydrogen</v>
 <v>ectf-workspace\libhydrogen\Header Files</v>
 <v>ectf-workspace\libhydrogen\Header Files\common.h</v>
 <v>ectf-workspace\libhydrogen\Header Files\core.h</v>
@@ -49,7 +50,6 @@
 <v>ectf-workspace\libhydrogen\Header Files\x25519.h</v>
 <v>ectf-workspace\libhydrogen\Source Files</v>
 <v>ectf-workspace\libhydrogen\Source Files\hydrogen.c</v>
-<v>ectf-workspace\libhydrogen\Source Files\README.md</v>
 <v>ectf-workspace\SECURITY_MODULE</v>
 <v>ectf-workspace\SECURITY_MODULE\TopDesign</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr</v>
@@ -72,6 +72,24 @@
 <v>ectf-workspace</v>
 <v>ectf-workspace\CARD</v>
 <v>ectf-workspace\libhydrogen</v>
+<v>ectf-workspace\libhydrogen\Header Files</v>
+<v>ectf-workspace\libhydrogen\Header Files\common.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\core.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\gimli-core.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\hash.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\hydrogen.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\hydrogen_p.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\kdf.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\kx.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\portable.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\pwhash.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\random.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\secretbox.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\sign.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\ssse3.h</v>
+<v>ectf-workspace\libhydrogen\Header Files\x25519.h</v>
+<v>ectf-workspace\libhydrogen\Source Files</v>
+<v>ectf-workspace\libhydrogen\Source Files\hydrogen.c</v>
 <v>ectf-workspace\SECURITY_MODULE</v>
 <v>ectf-workspace\SECURITY_MODULE\TopDesign</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr</v>
@@ -252,6 +270,44 @@
 <v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.elf</v>
 <v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.hex</v>
 <v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Debug\SECURITY_MODULE.map</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CARD_UART.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CARD_UART_BOOT.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CARD_UART_INT.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CARD_UART_IntClock.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CARD_UART_PM.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\Cm0Start.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CyBootAsmGnu.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\cyfitter_cfg.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CyFlash.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CyLFClk.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\CyLib.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\cymetadata.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\cyPm.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\cyutils.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_BOOT.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_PM.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_rx.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_rx_PM.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_SCB_IRQ.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_SCBCLK.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_SPI_UART.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_SPI_UART_INT.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_tx.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_tx_PM.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_UART.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\DB_UART_UART_BOOT.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\main.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\PIGGY_BANK.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\Reset_isr.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\SW1.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\SW1_PM.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\Listing Files\usbserialprotocol.lst</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\SECURITY_MODULE.elf</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\SECURITY_MODULE.hex</v>
+<v>ectf-workspace\SECURITY_MODULE\CortexM0\ARM_GCC_541\Release\SECURITY_MODULE.map</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.gpdsc</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.rpt</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE_timing.html</v>
@@ -259,52 +315,6 @@
 <VisibleNodeIds>
 <v>ectf-workspace</v>
 <v>ectf-workspace\CARD</v>
-<v>ectf-workspace\CARD\CortexM0</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\ATM_UART.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\ATM_UART_BOOT.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\ATM_UART_INT.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\ATM_UART_IntClock.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\ATM_UART_PM.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\Reset_isr.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\SW1.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\SW1_PM.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_BOOT.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_PM.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_rx.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_rx_PM.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_SCB_IRQ.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_SCBCLK.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_SPI_UART.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_SPI_UART_INT.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_tx.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_tx_PM.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_UART.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USB_UART_UART_BOOT.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\usbserialprotocol.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\Listing Files\USER_INFO.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\CARD.elf</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\CARD.hex</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Debug\CARD.map</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Release</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Release\Listing Files</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Release\Listing Files\ATM_UART.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Release\Listing Files\ATM_UART_BOOT.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Release\Listing Files\ATM_UART_INT.lst</v>
-<v>ectf-workspace\CARD\CortexM0\ARM_GCC_541\Release\Listing Files\ATM_UART_IntClock.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -390,13 +400,11 @@
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
 <OpenDocs>
-<name v=".\CARD.cydsn\cyapicallbacks.h" />
-<name v=".\CARD.cydsn\usbserialprotocol.h" />
 <name v=".\CARD.cydsn\main.c" />
-<name v=".\CARD.cydsn\usbserialprotocol.c" />
-<name v=".\CARD.cydsn\Generated_Source\PSoC4\cm0gcc.ld" />
 <name v=".\SECURITY_MODULE.cydsn\main.c" />
-<name v=".\bank_server\wrapper\libhydrogen\README.md" />
+<name v=".\SECURITY_MODULE.cydsn\usbserialprotocol.c" />
+<name v=".\SECURITY_MODULE.cydsn\usbserialprotocol.h" />
+<name v=".\bank_server\wrapper\libhydrogen\impl\random.h" />
 </OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
@@ -404,7 +412,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1439, 648" SelectedTabbedMdiWindow="5b5440fb-695e-4a9b-88db-f6f77e54dafe"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="019a9afe-8682-4dd0-b897-b5563dc4b7b6" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\cyapicallbacks.h" Guid="8d83fb4c-125e-449d-8a87-27e863c031db" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\usbserialprotocol.h" Guid="28cce5f9-55c2-4c84-8d23-21126ae2ac9d" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\main.c" Guid="5b5440fb-695e-4a9b-88db-f6f77e54dafe" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\usbserialprotocol.c" Guid="104e4144-caf0-47c8-ae28-9974ad199c1c" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\Generated_Source\PSoC4\cm0gcc.ld" Guid="9c8912c9-6889-458f-aaf0-96c8e4ea2853" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\main.c" Guid="d09c28d8-edc8-403d-858f-f9442b613805" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\bank_server\wrapper\libhydrogen\README.md" Guid="5342e8b0-4273-4b0d-99eb-4e72310af40c" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1406, 648" SelectedTabbedMdiWindow="c3253138-9dec-4620-9f80-dd111781c4ed"><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\main.c" Guid="1fd42540-54a2-4333-b51c-188439a21ce2" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\main.c" Guid="609bb777-68da-45be-a28c-c96ddcd42802" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\usbserialprotocol.c" Guid="e343225b-0363-48b5-a62d-5f89eca3cbb6" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\usbserialprotocol.h" Guid="09ff1389-029d-4d48-92a1-9d81e5eb25bf" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="019a9afe-8682-4dd0-b897-b5563dc4b7b6" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\bank_server\wrapper\libhydrogen\impl\random.h" Guid="c3253138-9dec-4620-9f80-dd111781c4ed" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="Debug" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

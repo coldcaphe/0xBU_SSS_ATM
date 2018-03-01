@@ -1,0 +1,1292 @@
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"PIGGY_BANK.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.PIGGY_BANK_Start,"ax",%progbits
+  20              		.align	1
+  21              		.global	PIGGY_BANK_Start
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	PIGGY_BANK_Start, %function
+  25              	PIGGY_BANK_Start:
+  26              	.LFB4:
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              		@ sp needed
+  32 0000 7047     		bx	lr
+  33              		.cfi_endproc
+  34              	.LFE4:
+  35              		.size	PIGGY_BANK_Start, .-PIGGY_BANK_Start
+  36              		.section	.text.PIGGY_BANK_Stop,"ax",%progbits
+  37              		.align	1
+  38              		.global	PIGGY_BANK_Stop
+  39              		.code	16
+  40              		.thumb_func
+  41              		.type	PIGGY_BANK_Stop, %function
+  42              	PIGGY_BANK_Stop:
+  43              	.LFB1:
+  44              		.file 1 "Generated_Source\\PSoC4\\PIGGY_BANK.c"
+   1:Generated_Source\PSoC4/PIGGY_BANK.c **** /*******************************************************************************
+   2:Generated_Source\PSoC4/PIGGY_BANK.c **** * File Name: PIGGY_BANK.c
+   3:Generated_Source\PSoC4/PIGGY_BANK.c **** * Version 1.20
+   4:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+   5:Generated_Source\PSoC4/PIGGY_BANK.c **** * Description:
+   6:Generated_Source\PSoC4/PIGGY_BANK.c **** *  This file provides the source code to API for the Emulated EEPROM Component.
+   7:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+   8:Generated_Source\PSoC4/PIGGY_BANK.c **** ********************************************************************************
+   9:Generated_Source\PSoC4/PIGGY_BANK.c **** * Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
+  10:Generated_Source\PSoC4/PIGGY_BANK.c **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC4/PIGGY_BANK.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC4/PIGGY_BANK.c **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC4/PIGGY_BANK.c **** *******************************************************************************/
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 2
+
+
+  14:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  15:Generated_Source\PSoC4/PIGGY_BANK.c **** #include "PIGGY_BANK.h"
+  16:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  17:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  18:Generated_Source\PSoC4/PIGGY_BANK.c **** /*******************************************************************************
+  19:Generated_Source\PSoC4/PIGGY_BANK.c **** * Function Name: PIGGY_BANK_Start
+  20:Generated_Source\PSoC4/PIGGY_BANK.c **** ********************************************************************************
+  21:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  22:Generated_Source\PSoC4/PIGGY_BANK.c **** * Summary:
+  23:Generated_Source\PSoC4/PIGGY_BANK.c **** *  Empty function. Included for consistency with other
+  24:Generated_Source\PSoC4/PIGGY_BANK.c **** *  components.
+  25:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  26:Generated_Source\PSoC4/PIGGY_BANK.c **** * Parameters:
+  27:Generated_Source\PSoC4/PIGGY_BANK.c **** *  None
+  28:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  29:Generated_Source\PSoC4/PIGGY_BANK.c **** * Return:
+  30:Generated_Source\PSoC4/PIGGY_BANK.c **** *  None
+  31:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  32:Generated_Source\PSoC4/PIGGY_BANK.c **** *******************************************************************************/
+  33:Generated_Source\PSoC4/PIGGY_BANK.c **** void PIGGY_BANK_Start(void) 
+  34:Generated_Source\PSoC4/PIGGY_BANK.c **** {
+  35:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  36:Generated_Source\PSoC4/PIGGY_BANK.c **** }
+  37:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  38:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  39:Generated_Source\PSoC4/PIGGY_BANK.c **** /*******************************************************************************
+  40:Generated_Source\PSoC4/PIGGY_BANK.c **** * Function Name: PIGGY_BANK_Stop
+  41:Generated_Source\PSoC4/PIGGY_BANK.c **** ********************************************************************************
+  42:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  43:Generated_Source\PSoC4/PIGGY_BANK.c **** * Summary:
+  44:Generated_Source\PSoC4/PIGGY_BANK.c **** *  Empty function. Included for consistency with other
+  45:Generated_Source\PSoC4/PIGGY_BANK.c **** *  components.
+  46:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  47:Generated_Source\PSoC4/PIGGY_BANK.c **** * Parameters:
+  48:Generated_Source\PSoC4/PIGGY_BANK.c **** *  None
+  49:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  50:Generated_Source\PSoC4/PIGGY_BANK.c **** * Return:
+  51:Generated_Source\PSoC4/PIGGY_BANK.c **** *  None
+  52:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  53:Generated_Source\PSoC4/PIGGY_BANK.c **** *******************************************************************************/
+  54:Generated_Source\PSoC4/PIGGY_BANK.c **** void PIGGY_BANK_Stop(void) 
+  55:Generated_Source\PSoC4/PIGGY_BANK.c **** {
+  45              		.loc 1 55 0
+  46              		.cfi_startproc
+  47              		@ args = 0, pretend = 0, frame = 0
+  48              		@ frame_needed = 0, uses_anonymous_args = 0
+  49              		@ link register save eliminated.
+  56:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  57:Generated_Source\PSoC4/PIGGY_BANK.c **** }
+  50              		.loc 1 57 0
+  51              		@ sp needed
+  52 0000 7047     		bx	lr
+  53              		.cfi_endproc
+  54              	.LFE1:
+  55              		.size	PIGGY_BANK_Stop, .-PIGGY_BANK_Stop
+  56              		.section	.text.PIGGY_BANK_Write,"ax",%progbits
+  57              		.align	1
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 3
+
+
+  58              		.global	PIGGY_BANK_Write
+  59              		.code	16
+  60              		.thumb_func
+  61              		.type	PIGGY_BANK_Write, %function
+  62              	PIGGY_BANK_Write:
+  63              	.LFB2:
+  58:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  59:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  60:Generated_Source\PSoC4/PIGGY_BANK.c **** /*******************************************************************************
+  61:Generated_Source\PSoC4/PIGGY_BANK.c **** * Function Name: PIGGY_BANK_Write
+  62:Generated_Source\PSoC4/PIGGY_BANK.c **** ********************************************************************************
+  63:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  64:Generated_Source\PSoC4/PIGGY_BANK.c **** * Summary:
+  65:Generated_Source\PSoC4/PIGGY_BANK.c **** *  Writes the specified number of bytes from the source buffer in SRAM to the
+  66:Generated_Source\PSoC4/PIGGY_BANK.c **** *  emulated EEPROM array in flash, without modifying other data in flash.
+  67:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  68:Generated_Source\PSoC4/PIGGY_BANK.c **** * Parameters:
+  69:Generated_Source\PSoC4/PIGGY_BANK.c **** *  srcBuf:    Pointer to the SRAM buffer holding the data to write.
+  70:Generated_Source\PSoC4/PIGGY_BANK.c **** *  eepromPtr: Pointer to the array or variable in flash representing
+  71:Generated_Source\PSoC4/PIGGY_BANK.c **** *             the emulated EEPROM.
+  72:Generated_Source\PSoC4/PIGGY_BANK.c **** *  byteCount: Number of bytes to write from srcBuf to eepromPtr.
+  73:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  74:Generated_Source\PSoC4/PIGGY_BANK.c **** * Return:
+  75:Generated_Source\PSoC4/PIGGY_BANK.c **** *    CYRET_SUCCESS     Successful write.
+  76:Generated_Source\PSoC4/PIGGY_BANK.c **** *    CYRET_BAD_PARAM   eepromPtr is out of range of flash memory.
+  77:Generated_Source\PSoC4/PIGGY_BANK.c **** *    CYRET_UNKNOWN     Other error in writing flash.
+  78:Generated_Source\PSoC4/PIGGY_BANK.c **** *
+  79:Generated_Source\PSoC4/PIGGY_BANK.c **** *******************************************************************************/
+  80:Generated_Source\PSoC4/PIGGY_BANK.c **** #if (CY_PSOC3)
+  81:Generated_Source\PSoC4/PIGGY_BANK.c ****     cystatus PIGGY_BANK_Write(const uint8 srcBuf[], const uint8 eepromPtr[], uint16 byteCount)
+  82:Generated_Source\PSoC4/PIGGY_BANK.c ****                                                                             
+  83:Generated_Source\PSoC4/PIGGY_BANK.c **** #else
+  84:Generated_Source\PSoC4/PIGGY_BANK.c ****     cystatus PIGGY_BANK_Write(const uint8 srcBuf[], const uint8 eepromPtr[], uint32 byteCount)
+  85:Generated_Source\PSoC4/PIGGY_BANK.c **** #endif /* (!CY_PSOC3) */
+  86:Generated_Source\PSoC4/PIGGY_BANK.c **** {
+  64              		.loc 1 86 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 144
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              	.LVL0:
+  87:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint8 writeBuffer[CY_FLASH_SIZEOF_ROW];
+  88:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint32 arrayId;
+  89:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint32 rowId;
+  90:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint32 dstIndex;
+  91:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint32 srcIndex;
+  92:Generated_Source\PSoC4/PIGGY_BANK.c ****     cystatus rc;
+  93:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint32 eeOffset;
+  94:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint32 byteOffset;
+  95:Generated_Source\PSoC4/PIGGY_BANK.c ****     
+  96:Generated_Source\PSoC4/PIGGY_BANK.c ****     #if (!CY_PSOC4)
+  97:Generated_Source\PSoC4/PIGGY_BANK.c ****         #if (CYDEV_ECC_ENABLE == 0)
+  98:Generated_Source\PSoC4/PIGGY_BANK.c ****             uint8 rowBuffer[CY_FLASH_SIZEOF_ROW + CY_FLASH_SIZEOF_ECC_ROW];
+  99:Generated_Source\PSoC4/PIGGY_BANK.c ****         #endif /* CYDEV_ECC_ENABLE == 0) */
+ 100:Generated_Source\PSoC4/PIGGY_BANK.c ****     #endif /* (!CY_PSOC4) */
+ 101:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 102:Generated_Source\PSoC4/PIGGY_BANK.c ****     eeOffset = (uint32)eepromPtr;
+ 103:Generated_Source\PSoC4/PIGGY_BANK.c ****     #if (CY_PSOC3)
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 4
+
+
+ 104:Generated_Source\PSoC4/PIGGY_BANK.c ****         eeOffset &= PIGGY_BANK_CODE_ADDR_MASK;
+ 105:Generated_Source\PSoC4/PIGGY_BANK.c ****     #endif /* (CY_PSOC3) */
+ 106:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 107:Generated_Source\PSoC4/PIGGY_BANK.c ****     /* Make sure, that eepromPtr[] points to ROM */
+ 108:Generated_Source\PSoC4/PIGGY_BANK.c ****     #if (CY_PSOC3)
+ 109:Generated_Source\PSoC4/PIGGY_BANK.c ****         if (((uint32)eepromPtr >= PIGGY_BANK_CODE_ADDR_OFFSET) &&
+ 110:Generated_Source\PSoC4/PIGGY_BANK.c ****             (((uint32)eepromPtr + byteCount) <= PIGGY_BANK_CODE_ADDR_END))
+ 111:Generated_Source\PSoC4/PIGGY_BANK.c ****     #else
+ 112:Generated_Source\PSoC4/PIGGY_BANK.c ****         if (((uint32)eepromPtr + byteCount) <= PIGGY_BANK_FLASH_END_ADDR)
+  69              		.loc 1 112 0
+  70 0000 8023     		movs	r3, #128
+  86:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint8 writeBuffer[CY_FLASH_SIZEOF_ROW];
+  71              		.loc 1 86 0
+  72 0002 F0B5     		push	{r4, r5, r6, r7, lr}
+  73              		.cfi_def_cfa_offset 20
+  74              		.cfi_offset 4, -20
+  75              		.cfi_offset 5, -16
+  76              		.cfi_offset 6, -12
+  77              		.cfi_offset 7, -8
+  78              		.cfi_offset 14, -4
+  79 0004 A5B0     		sub	sp, sp, #148
+  80              		.cfi_def_cfa_offset 168
+  86:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint8 writeBuffer[CY_FLASH_SIZEOF_ROW];
+  81              		.loc 1 86 0
+  82 0006 0292     		str	r2, [sp, #8]
+  83              		.loc 1 112 0
+  84 0008 8A18     		adds	r2, r1, r2
+  85              	.LVL1:
+  86:Generated_Source\PSoC4/PIGGY_BANK.c ****     uint8 writeBuffer[CY_FLASH_SIZEOF_ROW];
+  86              		.loc 1 86 0
+  87 000a 0390     		str	r0, [sp, #12]
+  88 000c 0F00     		movs	r7, r1
+  89              		.loc 1 112 0
+  90 000e 1B02     		lsls	r3, r3, #8
+ 113:Generated_Source\PSoC4/PIGGY_BANK.c ****     #endif /* (CY_PSOC3) */
+ 114:Generated_Source\PSoC4/PIGGY_BANK.c ****     {
+ 115:Generated_Source\PSoC4/PIGGY_BANK.c ****         #if (!CY_PSOC4)
+ 116:Generated_Source\PSoC4/PIGGY_BANK.c ****             (void)CySetTemp();
+ 117:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 118:Generated_Source\PSoC4/PIGGY_BANK.c ****             #if(CYDEV_ECC_ENABLE == 0)
+ 119:Generated_Source\PSoC4/PIGGY_BANK.c ****                 (void)CySetFlashEEBuffer(rowBuffer);
+ 120:Generated_Source\PSoC4/PIGGY_BANK.c ****             #endif
+ 121:Generated_Source\PSoC4/PIGGY_BANK.c ****         #endif /* (!CY_PSOC4) */
+ 122:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 123:Generated_Source\PSoC4/PIGGY_BANK.c ****         arrayId = eeOffset / CY_FLASH_SIZEOF_ARRAY;
+ 124:Generated_Source\PSoC4/PIGGY_BANK.c ****         rowId = (eeOffset / CY_FLASH_SIZEOF_ROW) % PIGGY_BANK_ROWS_IN_ARRAY;
+ 125:Generated_Source\PSoC4/PIGGY_BANK.c ****         byteOffset = (CY_FLASH_SIZEOF_ARRAY * arrayId) + (CY_FLASH_SIZEOF_ROW * rowId);
+ 126:Generated_Source\PSoC4/PIGGY_BANK.c ****         srcIndex = 0u;
+ 127:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 128:Generated_Source\PSoC4/PIGGY_BANK.c ****         rc = CYRET_SUCCESS;
+ 129:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 130:Generated_Source\PSoC4/PIGGY_BANK.c ****         while ((srcIndex < byteCount) && (CYRET_SUCCESS == rc))
+ 131:Generated_Source\PSoC4/PIGGY_BANK.c ****         {
+ 132:Generated_Source\PSoC4/PIGGY_BANK.c ****             /* Copy data to the write buffer either from the source buffer or from the flash */
+ 133:Generated_Source\PSoC4/PIGGY_BANK.c ****             for (dstIndex = 0u; dstIndex < CY_FLASH_SIZEOF_ROW; dstIndex++)
+ 134:Generated_Source\PSoC4/PIGGY_BANK.c ****             {
+ 135:Generated_Source\PSoC4/PIGGY_BANK.c ****                 if ((byteOffset >= eeOffset) && (srcIndex < byteCount))
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 5
+
+
+ 136:Generated_Source\PSoC4/PIGGY_BANK.c ****                 {
+ 137:Generated_Source\PSoC4/PIGGY_BANK.c ****                     writeBuffer[dstIndex] = srcBuf[srcIndex];
+ 138:Generated_Source\PSoC4/PIGGY_BANK.c ****                     srcIndex++;
+ 139:Generated_Source\PSoC4/PIGGY_BANK.c ****                 }
+ 140:Generated_Source\PSoC4/PIGGY_BANK.c ****                 else
+ 141:Generated_Source\PSoC4/PIGGY_BANK.c ****                 {
+ 142:Generated_Source\PSoC4/PIGGY_BANK.c ****                     writeBuffer[dstIndex] = CY_GET_XTND_REG8(CYDEV_FLASH_BASE + byteOffset);
+ 143:Generated_Source\PSoC4/PIGGY_BANK.c ****                 }
+ 144:Generated_Source\PSoC4/PIGGY_BANK.c ****                 byteOffset++;
+ 145:Generated_Source\PSoC4/PIGGY_BANK.c ****             }
+ 146:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 147:Generated_Source\PSoC4/PIGGY_BANK.c ****             /* Write flash row */
+ 148:Generated_Source\PSoC4/PIGGY_BANK.c ****             #if (CY_PSOC4)
+ 149:Generated_Source\PSoC4/PIGGY_BANK.c ****                 rc = CySysFlashWriteRow(rowId, writeBuffer);
+ 150:Generated_Source\PSoC4/PIGGY_BANK.c ****             #else
+ 151:Generated_Source\PSoC4/PIGGY_BANK.c ****                 rc = CyWriteRowData((uint8)arrayId, (uint16)rowId, writeBuffer);
+ 152:Generated_Source\PSoC4/PIGGY_BANK.c ****             #endif /* (CY_PSOC4) */
+ 153:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 154:Generated_Source\PSoC4/PIGGY_BANK.c ****             /* Go to the next row */
+ 155:Generated_Source\PSoC4/PIGGY_BANK.c ****             rowId++;
+ 156:Generated_Source\PSoC4/PIGGY_BANK.c ****             #if (CY_FLASH_NUMBER_ARRAYS > 1)
+ 157:Generated_Source\PSoC4/PIGGY_BANK.c ****                 if (rowId >= PIGGY_BANK_ROWS_IN_ARRAY)
+ 158:Generated_Source\PSoC4/PIGGY_BANK.c ****                 {
+ 159:Generated_Source\PSoC4/PIGGY_BANK.c ****                     arrayId++;
+ 160:Generated_Source\PSoC4/PIGGY_BANK.c ****                     rowId = 0u;
+ 161:Generated_Source\PSoC4/PIGGY_BANK.c ****                 }
+ 162:Generated_Source\PSoC4/PIGGY_BANK.c ****             #endif /* (CY_FLASH_NUMBER_ARRAYS > 1) */
+ 163:Generated_Source\PSoC4/PIGGY_BANK.c ****         }
+ 164:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 165:Generated_Source\PSoC4/PIGGY_BANK.c ****         /* Flush both Cache and PHUB prefetch buffer */
+ 166:Generated_Source\PSoC4/PIGGY_BANK.c ****         #if (CY_PSOC5)
+ 167:Generated_Source\PSoC4/PIGGY_BANK.c ****             CyFlushCache();
+ 168:Generated_Source\PSoC4/PIGGY_BANK.c ****         #elif (CY_PSOC3)
+ 169:Generated_Source\PSoC4/PIGGY_BANK.c ****             CY_FLASH_CONTROL_REG |= 6u;
+ 170:Generated_Source\PSoC4/PIGGY_BANK.c ****         #endif /* (CY_PSOC5) */
+ 171:Generated_Source\PSoC4/PIGGY_BANK.c ****     }
+ 172:Generated_Source\PSoC4/PIGGY_BANK.c ****     else
+ 173:Generated_Source\PSoC4/PIGGY_BANK.c ****     {
+ 174:Generated_Source\PSoC4/PIGGY_BANK.c ****         rc = CYRET_BAD_PARAM;
+  91              		.loc 1 174 0
+  92 0010 0120     		movs	r0, #1
+  93              	.LVL2:
+ 112:Generated_Source\PSoC4/PIGGY_BANK.c ****     #endif /* (CY_PSOC3) */
+  94              		.loc 1 112 0
+  95 0012 9A42     		cmp	r2, r3
+  96 0014 2ED8     		bhi	.L10
+  97              	.LVL3:
+ 128:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+  98              		.loc 1 128 0
+  99 0016 0020     		movs	r0, #0
+ 126:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 100              		.loc 1 126 0
+ 101 0018 0600     		movs	r6, r0
+ 124:Generated_Source\PSoC4/PIGGY_BANK.c ****         byteOffset = (CY_FLASH_SIZEOF_ARRAY * arrayId) + (CY_FLASH_SIZEOF_ROW * rowId);
+ 102              		.loc 1 124 0
+ 103 001a CB09     		lsrs	r3, r1, #7
+ 125:Generated_Source\PSoC4/PIGGY_BANK.c ****         srcIndex = 0u;
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 6
+
+
+ 104              		.loc 1 125 0
+ 105 001c CC0B     		lsrs	r4, r1, #15
+ 106              	.LVL4:
+ 124:Generated_Source\PSoC4/PIGGY_BANK.c ****         byteOffset = (CY_FLASH_SIZEOF_ARRAY * arrayId) + (CY_FLASH_SIZEOF_ROW * rowId);
+ 107              		.loc 1 124 0
+ 108 001e DBB2     		uxtb	r3, r3
+ 125:Generated_Source\PSoC4/PIGGY_BANK.c ****         srcIndex = 0u;
+ 109              		.loc 1 125 0
+ 110 0020 2402     		lsls	r4, r4, #8
+ 111              	.LVL5:
+ 112 0022 E418     		adds	r4, r4, r3
+ 113 0024 E401     		lsls	r4, r4, #7
+ 114 0026 04AD     		add	r5, sp, #16
+ 124:Generated_Source\PSoC4/PIGGY_BANK.c ****         byteOffset = (CY_FLASH_SIZEOF_ARRAY * arrayId) + (CY_FLASH_SIZEOF_ROW * rowId);
+ 115              		.loc 1 124 0
+ 116 0028 0193     		str	r3, [sp, #4]
+ 117              	.LVL6:
+ 118 002a 2D1B     		subs	r5, r5, r4
+ 119              	.LVL7:
+ 120              	.L5:
+ 130:Generated_Source\PSoC4/PIGGY_BANK.c ****         {
+ 121              		.loc 1 130 0
+ 122 002c 029B     		ldr	r3, [sp, #8]
+ 123 002e 9E42     		cmp	r6, r3
+ 124 0030 04D3     		bcc	.L9
+ 125              	.L11:
+ 175:Generated_Source\PSoC4/PIGGY_BANK.c ****     }
+ 176:Generated_Source\PSoC4/PIGGY_BANK.c **** 
+ 177:Generated_Source\PSoC4/PIGGY_BANK.c ****     /* Mask return codes from flash, if they are not supported */
+ 178:Generated_Source\PSoC4/PIGGY_BANK.c ****     if ((CYRET_SUCCESS != rc) && (CYRET_BAD_PARAM != rc))
+ 126              		.loc 1 178 0
+ 127 0032 0128     		cmp	r0, #1
+ 128 0034 1ED9     		bls	.L10
+ 179:Generated_Source\PSoC4/PIGGY_BANK.c ****     {
+ 180:Generated_Source\PSoC4/PIGGY_BANK.c ****         rc = CYRET_UNKNOWN;
+ 129              		.loc 1 180 0
+ 130 0036 0120     		movs	r0, #1
+ 131              	.LVL8:
+ 132 0038 4042     		rsbs	r0, r0, #0
+ 133 003a 1BE0     		b	.L10
+ 134              	.LVL9:
+ 135              	.L9:
+ 130:Generated_Source\PSoC4/PIGGY_BANK.c ****         {
+ 136              		.loc 1 130 0 discriminator 1
+ 137 003c 0028     		cmp	r0, #0
+ 138 003e F8D1     		bne	.L11
+ 139 0040 2300     		movs	r3, r4
+ 140 0042 8033     		adds	r3, r3, #128
+ 141              	.L8:
+ 142              	.LVL10:
+ 135:Generated_Source\PSoC4/PIGGY_BANK.c ****                 {
+ 143              		.loc 1 135 0
+ 144 0044 A742     		cmp	r7, r4
+ 145 0046 07D8     		bhi	.L6
+ 135:Generated_Source\PSoC4/PIGGY_BANK.c ****                 {
+ 146              		.loc 1 135 0 is_stmt 0 discriminator 1
+ 147 0048 029A     		ldr	r2, [sp, #8]
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 7
+
+
+ 148 004a B242     		cmp	r2, r6
+ 149 004c 04D9     		bls	.L6
+ 137:Generated_Source\PSoC4/PIGGY_BANK.c ****                     srcIndex++;
+ 150              		.loc 1 137 0 is_stmt 1
+ 151 004e 039A     		ldr	r2, [sp, #12]
+ 152 0050 925D     		ldrb	r2, [r2, r6]
+ 138:Generated_Source\PSoC4/PIGGY_BANK.c ****                 }
+ 153              		.loc 1 138 0
+ 154 0052 0136     		adds	r6, r6, #1
+ 155              	.LVL11:
+ 137:Generated_Source\PSoC4/PIGGY_BANK.c ****                     srcIndex++;
+ 156              		.loc 1 137 0
+ 157 0054 2A55     		strb	r2, [r5, r4]
+ 138:Generated_Source\PSoC4/PIGGY_BANK.c ****                 }
+ 158              		.loc 1 138 0
+ 159 0056 01E0     		b	.L7
+ 160              	.L6:
+ 142:Generated_Source\PSoC4/PIGGY_BANK.c ****                 }
+ 161              		.loc 1 142 0
+ 162 0058 2278     		ldrb	r2, [r4]
+ 163 005a 2A55     		strb	r2, [r5, r4]
+ 164              	.L7:
+ 144:Generated_Source\PSoC4/PIGGY_BANK.c ****             }
+ 165              		.loc 1 144 0 discriminator 2
+ 166 005c 0134     		adds	r4, r4, #1
+ 167              	.LVL12:
+ 133:Generated_Source\PSoC4/PIGGY_BANK.c ****             {
+ 168              		.loc 1 133 0 discriminator 2
+ 169 005e 9C42     		cmp	r4, r3
+ 170 0060 F0D1     		bne	.L8
+ 149:Generated_Source\PSoC4/PIGGY_BANK.c ****             #else
+ 171              		.loc 1 149 0
+ 172 0062 04A9     		add	r1, sp, #16
+ 173 0064 0198     		ldr	r0, [sp, #4]
+ 174              	.LVL13:
+ 175 0066 FFF7FEFF 		bl	CySysFlashWriteRow
+ 176              	.LVL14:
+ 155:Generated_Source\PSoC4/PIGGY_BANK.c ****             #if (CY_FLASH_NUMBER_ARRAYS > 1)
+ 177              		.loc 1 155 0
+ 178 006a 019B     		ldr	r3, [sp, #4]
+ 179 006c 803D     		subs	r5, r5, #128
+ 180 006e 0133     		adds	r3, r3, #1
+ 181 0070 0193     		str	r3, [sp, #4]
+ 182              	.LVL15:
+ 183 0072 DBE7     		b	.L5
+ 184              	.LVL16:
+ 185              	.L10:
+ 181:Generated_Source\PSoC4/PIGGY_BANK.c ****     }
+ 182:Generated_Source\PSoC4/PIGGY_BANK.c ****     
+ 183:Generated_Source\PSoC4/PIGGY_BANK.c ****     return (rc);
+ 184:Generated_Source\PSoC4/PIGGY_BANK.c **** }
+ 186              		.loc 1 184 0
+ 187 0074 25B0     		add	sp, sp, #148
+ 188              		@ sp needed
+ 189              	.LVL17:
+ 190 0076 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 191              		.cfi_endproc
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 8
+
+
+ 192              	.LFE2:
+ 193              		.size	PIGGY_BANK_Write, .-PIGGY_BANK_Write
+ 194              		.text
+ 195              	.Letext0:
+ 196              		.file 2 "Generated_Source\\PSoC4\\cytypes.h"
+ 197              		.file 3 "Generated_Source\\PSoC4\\CyFlash.h"
+ 198              		.section	.debug_info,"",%progbits
+ 199              	.Ldebug_info0:
+ 200 0000 D4010000 		.4byte	0x1d4
+ 201 0004 0400     		.2byte	0x4
+ 202 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 203 000a 04       		.byte	0x4
+ 204 000b 01       		.uleb128 0x1
+ 205 000c C0010000 		.4byte	.LASF28
+ 206 0010 0C       		.byte	0xc
+ 207 0011 00000000 		.4byte	.LASF29
+ 208 0015 B8000000 		.4byte	.LASF30
+ 209 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 210 001d 00000000 		.4byte	0
+ 211 0021 00000000 		.4byte	.Ldebug_line0
+ 212 0025 02       		.uleb128 0x2
+ 213 0026 01       		.byte	0x1
+ 214 0027 06       		.byte	0x6
+ 215 0028 B4010000 		.4byte	.LASF0
+ 216 002c 02       		.uleb128 0x2
+ 217 002d 01       		.byte	0x1
+ 218 002e 08       		.byte	0x8
+ 219 002f 85000000 		.4byte	.LASF1
+ 220 0033 02       		.uleb128 0x2
+ 221 0034 02       		.byte	0x2
+ 222 0035 05       		.byte	0x5
+ 223 0036 95010000 		.4byte	.LASF2
+ 224 003a 02       		.uleb128 0x2
+ 225 003b 02       		.byte	0x2
+ 226 003c 07       		.byte	0x7
+ 227 003d 37000000 		.4byte	.LASF3
+ 228 0041 02       		.uleb128 0x2
+ 229 0042 04       		.byte	0x4
+ 230 0043 05       		.byte	0x5
+ 231 0044 9F010000 		.4byte	.LASF4
+ 232 0048 02       		.uleb128 0x2
+ 233 0049 04       		.byte	0x4
+ 234 004a 07       		.byte	0x7
+ 235 004b 98000000 		.4byte	.LASF5
+ 236 004f 02       		.uleb128 0x2
+ 237 0050 08       		.byte	0x8
+ 238 0051 05       		.byte	0x5
+ 239 0052 78010000 		.4byte	.LASF6
+ 240 0056 02       		.uleb128 0x2
+ 241 0057 08       		.byte	0x8
+ 242 0058 07       		.byte	0x7
+ 243 0059 49010000 		.4byte	.LASF7
+ 244 005d 03       		.uleb128 0x3
+ 245 005e 04       		.byte	0x4
+ 246 005f 05       		.byte	0x5
+ 247 0060 696E7400 		.ascii	"int\000"
+ 248 0064 02       		.uleb128 0x2
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 9
+
+
+ 249 0065 04       		.byte	0x4
+ 250 0066 07       		.byte	0x7
+ 251 0067 3C010000 		.4byte	.LASF8
+ 252 006b 04       		.uleb128 0x4
+ 253 006c AA000000 		.4byte	.LASF9
+ 254 0070 02       		.byte	0x2
+ 255 0071 B901     		.2byte	0x1b9
+ 256 0073 2C000000 		.4byte	0x2c
+ 257 0077 04       		.uleb128 0x4
+ 258 0078 35010000 		.4byte	.LASF10
+ 259 007c 02       		.byte	0x2
+ 260 007d BB01     		.2byte	0x1bb
+ 261 007f 48000000 		.4byte	0x48
+ 262 0083 02       		.uleb128 0x2
+ 263 0084 04       		.byte	0x4
+ 264 0085 04       		.byte	0x4
+ 265 0086 6F000000 		.4byte	.LASF11
+ 266 008a 02       		.uleb128 0x2
+ 267 008b 08       		.byte	0x8
+ 268 008c 04       		.byte	0x4
+ 269 008d 12010000 		.4byte	.LASF12
+ 270 0091 02       		.uleb128 0x2
+ 271 0092 01       		.byte	0x1
+ 272 0093 08       		.byte	0x8
+ 273 0094 86010000 		.4byte	.LASF13
+ 274 0098 04       		.uleb128 0x4
+ 275 0099 2C010000 		.4byte	.LASF14
+ 276 009d 02       		.byte	0x2
+ 277 009e 5B02     		.2byte	0x25b
+ 278 00a0 48000000 		.4byte	0x48
+ 279 00a4 04       		.uleb128 0x4
+ 280 00a5 93000000 		.4byte	.LASF15
+ 281 00a9 02       		.byte	0x2
+ 282 00aa 6302     		.2byte	0x263
+ 283 00ac B0000000 		.4byte	0xb0
+ 284 00b0 05       		.uleb128 0x5
+ 285 00b1 6B000000 		.4byte	0x6b
+ 286 00b5 02       		.uleb128 0x2
+ 287 00b6 08       		.byte	0x8
+ 288 00b7 04       		.byte	0x4
+ 289 00b8 A8010000 		.4byte	.LASF16
+ 290 00bc 02       		.uleb128 0x2
+ 291 00bd 04       		.byte	0x4
+ 292 00be 07       		.byte	0x7
+ 293 00bf 6F010000 		.4byte	.LASF17
+ 294 00c3 06       		.uleb128 0x6
+ 295 00c4 75000000 		.4byte	.LASF31
+ 296 00c8 01       		.byte	0x1
+ 297 00c9 36       		.byte	0x36
+ 298 00ca 01       		.byte	0x1
+ 299 00cb 07       		.uleb128 0x7
+ 300 00cc C3000000 		.4byte	0xc3
+ 301 00d0 00000000 		.4byte	.LFB1
+ 302 00d4 02000000 		.4byte	.LFE1-.LFB1
+ 303 00d8 01       		.uleb128 0x1
+ 304 00d9 9C       		.byte	0x9c
+ 305 00da 08       		.uleb128 0x8
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 10
+
+
+ 306 00db 4A000000 		.4byte	.LASF32
+ 307 00df 01       		.byte	0x1
+ 308 00e0 54       		.byte	0x54
+ 309 00e1 98000000 		.4byte	0x98
+ 310 00e5 00000000 		.4byte	.LFB2
+ 311 00e9 78000000 		.4byte	.LFE2-.LFB2
+ 312 00ed 01       		.uleb128 0x1
+ 313 00ee 9C       		.byte	0x9c
+ 314 00ef B1010000 		.4byte	0x1b1
+ 315 00f3 09       		.uleb128 0x9
+ 316 00f4 30000000 		.4byte	.LASF18
+ 317 00f8 01       		.byte	0x1
+ 318 00f9 54       		.byte	0x54
+ 319 00fa B1010000 		.4byte	0x1b1
+ 320 00fe 00000000 		.4byte	.LLST0
+ 321 0102 09       		.uleb128 0x9
+ 322 0103 8B010000 		.4byte	.LASF19
+ 323 0107 01       		.byte	0x1
+ 324 0108 54       		.byte	0x54
+ 325 0109 B1010000 		.4byte	0x1b1
+ 326 010d 20000000 		.4byte	.LLST1
+ 327 0111 09       		.uleb128 0x9
+ 328 0112 FF000000 		.4byte	.LASF20
+ 329 0116 01       		.byte	0x1
+ 330 0117 54       		.byte	0x54
+ 331 0118 77000000 		.4byte	0x77
+ 332 011c 4C000000 		.4byte	.LLST2
+ 333 0120 0A       		.uleb128 0xa
+ 334 0121 24000000 		.4byte	.LASF21
+ 335 0125 01       		.byte	0x1
+ 336 0126 57       		.byte	0x57
+ 337 0127 BC010000 		.4byte	0x1bc
+ 338 012b 03       		.uleb128 0x3
+ 339 012c 91       		.byte	0x91
+ 340 012d E87E     		.sleb128 -152
+ 341 012f 0B       		.uleb128 0xb
+ 342 0130 B0000000 		.4byte	.LASF22
+ 343 0134 01       		.byte	0x1
+ 344 0135 58       		.byte	0x58
+ 345 0136 77000000 		.4byte	0x77
+ 346 013a 6C000000 		.4byte	.LLST3
+ 347 013e 0B       		.uleb128 0xb
+ 348 013f 69010000 		.4byte	.LASF23
+ 349 0143 01       		.byte	0x1
+ 350 0144 59       		.byte	0x59
+ 351 0145 77000000 		.4byte	0x77
+ 352 0149 AC000000 		.4byte	.LLST4
+ 353 014d 0B       		.uleb128 0xb
+ 354 014e 09010000 		.4byte	.LASF24
+ 355 0152 01       		.byte	0x1
+ 356 0153 5A       		.byte	0x5a
+ 357 0154 77000000 		.4byte	0x77
+ 358 0158 D7000000 		.4byte	.LLST5
+ 359 015c 0B       		.uleb128 0xb
+ 360 015d 5B000000 		.4byte	.LASF25
+ 361 0161 01       		.byte	0x1
+ 362 0162 5B       		.byte	0x5b
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 11
+
+
+ 363 0163 77000000 		.4byte	0x77
+ 364 0167 EB000000 		.4byte	.LLST6
+ 365 016b 0C       		.uleb128 0xc
+ 366 016c 726300   		.ascii	"rc\000"
+ 367 016f 01       		.byte	0x1
+ 368 0170 5C       		.byte	0x5c
+ 369 0171 98000000 		.4byte	0x98
+ 370 0175 0A010000 		.4byte	.LLST7
+ 371 0179 0B       		.uleb128 0xb
+ 372 017a 60010000 		.4byte	.LASF26
+ 373 017e 01       		.byte	0x1
+ 374 017f 5D       		.byte	0x5d
+ 375 0180 77000000 		.4byte	0x77
+ 376 0184 3F010000 		.4byte	.LLST8
+ 377 0188 0B       		.uleb128 0xb
+ 378 0189 64000000 		.4byte	.LASF27
+ 379 018d 01       		.byte	0x1
+ 380 018e 5E       		.byte	0x5e
+ 381 018f 77000000 		.4byte	0x77
+ 382 0193 6B010000 		.4byte	.LLST9
+ 383 0197 0D       		.uleb128 0xd
+ 384 0198 6A000000 		.4byte	.LVL14
+ 385 019c CC010000 		.4byte	0x1cc
+ 386 01a0 0E       		.uleb128 0xe
+ 387 01a1 01       		.uleb128 0x1
+ 388 01a2 50       		.byte	0x50
+ 389 01a3 04       		.uleb128 0x4
+ 390 01a4 91       		.byte	0x91
+ 391 01a5 DC7E     		.sleb128 -164
+ 392 01a7 06       		.byte	0x6
+ 393 01a8 0E       		.uleb128 0xe
+ 394 01a9 01       		.uleb128 0x1
+ 395 01aa 51       		.byte	0x51
+ 396 01ab 03       		.uleb128 0x3
+ 397 01ac 91       		.byte	0x91
+ 398 01ad E87E     		.sleb128 -152
+ 399 01af 00       		.byte	0
+ 400 01b0 00       		.byte	0
+ 401 01b1 0F       		.uleb128 0xf
+ 402 01b2 04       		.byte	0x4
+ 403 01b3 B7010000 		.4byte	0x1b7
+ 404 01b7 10       		.uleb128 0x10
+ 405 01b8 6B000000 		.4byte	0x6b
+ 406 01bc 11       		.uleb128 0x11
+ 407 01bd 6B000000 		.4byte	0x6b
+ 408 01c1 CC010000 		.4byte	0x1cc
+ 409 01c5 12       		.uleb128 0x12
+ 410 01c6 BC000000 		.4byte	0xbc
+ 411 01ca 7F       		.byte	0x7f
+ 412 01cb 00       		.byte	0
+ 413 01cc 13       		.uleb128 0x13
+ 414 01cd 19010000 		.4byte	.LASF33
+ 415 01d1 19010000 		.4byte	.LASF33
+ 416 01d5 03       		.byte	0x3
+ 417 01d6 4E       		.byte	0x4e
+ 418 01d7 00       		.byte	0
+ 419              		.section	.debug_abbrev,"",%progbits
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 12
+
+
+ 420              	.Ldebug_abbrev0:
+ 421 0000 01       		.uleb128 0x1
+ 422 0001 11       		.uleb128 0x11
+ 423 0002 01       		.byte	0x1
+ 424 0003 25       		.uleb128 0x25
+ 425 0004 0E       		.uleb128 0xe
+ 426 0005 13       		.uleb128 0x13
+ 427 0006 0B       		.uleb128 0xb
+ 428 0007 03       		.uleb128 0x3
+ 429 0008 0E       		.uleb128 0xe
+ 430 0009 1B       		.uleb128 0x1b
+ 431 000a 0E       		.uleb128 0xe
+ 432 000b 55       		.uleb128 0x55
+ 433 000c 17       		.uleb128 0x17
+ 434 000d 11       		.uleb128 0x11
+ 435 000e 01       		.uleb128 0x1
+ 436 000f 10       		.uleb128 0x10
+ 437 0010 17       		.uleb128 0x17
+ 438 0011 00       		.byte	0
+ 439 0012 00       		.byte	0
+ 440 0013 02       		.uleb128 0x2
+ 441 0014 24       		.uleb128 0x24
+ 442 0015 00       		.byte	0
+ 443 0016 0B       		.uleb128 0xb
+ 444 0017 0B       		.uleb128 0xb
+ 445 0018 3E       		.uleb128 0x3e
+ 446 0019 0B       		.uleb128 0xb
+ 447 001a 03       		.uleb128 0x3
+ 448 001b 0E       		.uleb128 0xe
+ 449 001c 00       		.byte	0
+ 450 001d 00       		.byte	0
+ 451 001e 03       		.uleb128 0x3
+ 452 001f 24       		.uleb128 0x24
+ 453 0020 00       		.byte	0
+ 454 0021 0B       		.uleb128 0xb
+ 455 0022 0B       		.uleb128 0xb
+ 456 0023 3E       		.uleb128 0x3e
+ 457 0024 0B       		.uleb128 0xb
+ 458 0025 03       		.uleb128 0x3
+ 459 0026 08       		.uleb128 0x8
+ 460 0027 00       		.byte	0
+ 461 0028 00       		.byte	0
+ 462 0029 04       		.uleb128 0x4
+ 463 002a 16       		.uleb128 0x16
+ 464 002b 00       		.byte	0
+ 465 002c 03       		.uleb128 0x3
+ 466 002d 0E       		.uleb128 0xe
+ 467 002e 3A       		.uleb128 0x3a
+ 468 002f 0B       		.uleb128 0xb
+ 469 0030 3B       		.uleb128 0x3b
+ 470 0031 05       		.uleb128 0x5
+ 471 0032 49       		.uleb128 0x49
+ 472 0033 13       		.uleb128 0x13
+ 473 0034 00       		.byte	0
+ 474 0035 00       		.byte	0
+ 475 0036 05       		.uleb128 0x5
+ 476 0037 35       		.uleb128 0x35
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 13
+
+
+ 477 0038 00       		.byte	0
+ 478 0039 49       		.uleb128 0x49
+ 479 003a 13       		.uleb128 0x13
+ 480 003b 00       		.byte	0
+ 481 003c 00       		.byte	0
+ 482 003d 06       		.uleb128 0x6
+ 483 003e 2E       		.uleb128 0x2e
+ 484 003f 00       		.byte	0
+ 485 0040 3F       		.uleb128 0x3f
+ 486 0041 19       		.uleb128 0x19
+ 487 0042 03       		.uleb128 0x3
+ 488 0043 0E       		.uleb128 0xe
+ 489 0044 3A       		.uleb128 0x3a
+ 490 0045 0B       		.uleb128 0xb
+ 491 0046 3B       		.uleb128 0x3b
+ 492 0047 0B       		.uleb128 0xb
+ 493 0048 27       		.uleb128 0x27
+ 494 0049 19       		.uleb128 0x19
+ 495 004a 20       		.uleb128 0x20
+ 496 004b 0B       		.uleb128 0xb
+ 497 004c 00       		.byte	0
+ 498 004d 00       		.byte	0
+ 499 004e 07       		.uleb128 0x7
+ 500 004f 2E       		.uleb128 0x2e
+ 501 0050 00       		.byte	0
+ 502 0051 31       		.uleb128 0x31
+ 503 0052 13       		.uleb128 0x13
+ 504 0053 11       		.uleb128 0x11
+ 505 0054 01       		.uleb128 0x1
+ 506 0055 12       		.uleb128 0x12
+ 507 0056 06       		.uleb128 0x6
+ 508 0057 40       		.uleb128 0x40
+ 509 0058 18       		.uleb128 0x18
+ 510 0059 9742     		.uleb128 0x2117
+ 511 005b 19       		.uleb128 0x19
+ 512 005c 00       		.byte	0
+ 513 005d 00       		.byte	0
+ 514 005e 08       		.uleb128 0x8
+ 515 005f 2E       		.uleb128 0x2e
+ 516 0060 01       		.byte	0x1
+ 517 0061 3F       		.uleb128 0x3f
+ 518 0062 19       		.uleb128 0x19
+ 519 0063 03       		.uleb128 0x3
+ 520 0064 0E       		.uleb128 0xe
+ 521 0065 3A       		.uleb128 0x3a
+ 522 0066 0B       		.uleb128 0xb
+ 523 0067 3B       		.uleb128 0x3b
+ 524 0068 0B       		.uleb128 0xb
+ 525 0069 27       		.uleb128 0x27
+ 526 006a 19       		.uleb128 0x19
+ 527 006b 49       		.uleb128 0x49
+ 528 006c 13       		.uleb128 0x13
+ 529 006d 11       		.uleb128 0x11
+ 530 006e 01       		.uleb128 0x1
+ 531 006f 12       		.uleb128 0x12
+ 532 0070 06       		.uleb128 0x6
+ 533 0071 40       		.uleb128 0x40
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 14
+
+
+ 534 0072 18       		.uleb128 0x18
+ 535 0073 9742     		.uleb128 0x2117
+ 536 0075 19       		.uleb128 0x19
+ 537 0076 01       		.uleb128 0x1
+ 538 0077 13       		.uleb128 0x13
+ 539 0078 00       		.byte	0
+ 540 0079 00       		.byte	0
+ 541 007a 09       		.uleb128 0x9
+ 542 007b 05       		.uleb128 0x5
+ 543 007c 00       		.byte	0
+ 544 007d 03       		.uleb128 0x3
+ 545 007e 0E       		.uleb128 0xe
+ 546 007f 3A       		.uleb128 0x3a
+ 547 0080 0B       		.uleb128 0xb
+ 548 0081 3B       		.uleb128 0x3b
+ 549 0082 0B       		.uleb128 0xb
+ 550 0083 49       		.uleb128 0x49
+ 551 0084 13       		.uleb128 0x13
+ 552 0085 02       		.uleb128 0x2
+ 553 0086 17       		.uleb128 0x17
+ 554 0087 00       		.byte	0
+ 555 0088 00       		.byte	0
+ 556 0089 0A       		.uleb128 0xa
+ 557 008a 34       		.uleb128 0x34
+ 558 008b 00       		.byte	0
+ 559 008c 03       		.uleb128 0x3
+ 560 008d 0E       		.uleb128 0xe
+ 561 008e 3A       		.uleb128 0x3a
+ 562 008f 0B       		.uleb128 0xb
+ 563 0090 3B       		.uleb128 0x3b
+ 564 0091 0B       		.uleb128 0xb
+ 565 0092 49       		.uleb128 0x49
+ 566 0093 13       		.uleb128 0x13
+ 567 0094 02       		.uleb128 0x2
+ 568 0095 18       		.uleb128 0x18
+ 569 0096 00       		.byte	0
+ 570 0097 00       		.byte	0
+ 571 0098 0B       		.uleb128 0xb
+ 572 0099 34       		.uleb128 0x34
+ 573 009a 00       		.byte	0
+ 574 009b 03       		.uleb128 0x3
+ 575 009c 0E       		.uleb128 0xe
+ 576 009d 3A       		.uleb128 0x3a
+ 577 009e 0B       		.uleb128 0xb
+ 578 009f 3B       		.uleb128 0x3b
+ 579 00a0 0B       		.uleb128 0xb
+ 580 00a1 49       		.uleb128 0x49
+ 581 00a2 13       		.uleb128 0x13
+ 582 00a3 02       		.uleb128 0x2
+ 583 00a4 17       		.uleb128 0x17
+ 584 00a5 00       		.byte	0
+ 585 00a6 00       		.byte	0
+ 586 00a7 0C       		.uleb128 0xc
+ 587 00a8 34       		.uleb128 0x34
+ 588 00a9 00       		.byte	0
+ 589 00aa 03       		.uleb128 0x3
+ 590 00ab 08       		.uleb128 0x8
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 15
+
+
+ 591 00ac 3A       		.uleb128 0x3a
+ 592 00ad 0B       		.uleb128 0xb
+ 593 00ae 3B       		.uleb128 0x3b
+ 594 00af 0B       		.uleb128 0xb
+ 595 00b0 49       		.uleb128 0x49
+ 596 00b1 13       		.uleb128 0x13
+ 597 00b2 02       		.uleb128 0x2
+ 598 00b3 17       		.uleb128 0x17
+ 599 00b4 00       		.byte	0
+ 600 00b5 00       		.byte	0
+ 601 00b6 0D       		.uleb128 0xd
+ 602 00b7 898201   		.uleb128 0x4109
+ 603 00ba 01       		.byte	0x1
+ 604 00bb 11       		.uleb128 0x11
+ 605 00bc 01       		.uleb128 0x1
+ 606 00bd 31       		.uleb128 0x31
+ 607 00be 13       		.uleb128 0x13
+ 608 00bf 00       		.byte	0
+ 609 00c0 00       		.byte	0
+ 610 00c1 0E       		.uleb128 0xe
+ 611 00c2 8A8201   		.uleb128 0x410a
+ 612 00c5 00       		.byte	0
+ 613 00c6 02       		.uleb128 0x2
+ 614 00c7 18       		.uleb128 0x18
+ 615 00c8 9142     		.uleb128 0x2111
+ 616 00ca 18       		.uleb128 0x18
+ 617 00cb 00       		.byte	0
+ 618 00cc 00       		.byte	0
+ 619 00cd 0F       		.uleb128 0xf
+ 620 00ce 0F       		.uleb128 0xf
+ 621 00cf 00       		.byte	0
+ 622 00d0 0B       		.uleb128 0xb
+ 623 00d1 0B       		.uleb128 0xb
+ 624 00d2 49       		.uleb128 0x49
+ 625 00d3 13       		.uleb128 0x13
+ 626 00d4 00       		.byte	0
+ 627 00d5 00       		.byte	0
+ 628 00d6 10       		.uleb128 0x10
+ 629 00d7 26       		.uleb128 0x26
+ 630 00d8 00       		.byte	0
+ 631 00d9 49       		.uleb128 0x49
+ 632 00da 13       		.uleb128 0x13
+ 633 00db 00       		.byte	0
+ 634 00dc 00       		.byte	0
+ 635 00dd 11       		.uleb128 0x11
+ 636 00de 01       		.uleb128 0x1
+ 637 00df 01       		.byte	0x1
+ 638 00e0 49       		.uleb128 0x49
+ 639 00e1 13       		.uleb128 0x13
+ 640 00e2 01       		.uleb128 0x1
+ 641 00e3 13       		.uleb128 0x13
+ 642 00e4 00       		.byte	0
+ 643 00e5 00       		.byte	0
+ 644 00e6 12       		.uleb128 0x12
+ 645 00e7 21       		.uleb128 0x21
+ 646 00e8 00       		.byte	0
+ 647 00e9 49       		.uleb128 0x49
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 16
+
+
+ 648 00ea 13       		.uleb128 0x13
+ 649 00eb 2F       		.uleb128 0x2f
+ 650 00ec 0B       		.uleb128 0xb
+ 651 00ed 00       		.byte	0
+ 652 00ee 00       		.byte	0
+ 653 00ef 13       		.uleb128 0x13
+ 654 00f0 2E       		.uleb128 0x2e
+ 655 00f1 00       		.byte	0
+ 656 00f2 3F       		.uleb128 0x3f
+ 657 00f3 19       		.uleb128 0x19
+ 658 00f4 3C       		.uleb128 0x3c
+ 659 00f5 19       		.uleb128 0x19
+ 660 00f6 6E       		.uleb128 0x6e
+ 661 00f7 0E       		.uleb128 0xe
+ 662 00f8 03       		.uleb128 0x3
+ 663 00f9 0E       		.uleb128 0xe
+ 664 00fa 3A       		.uleb128 0x3a
+ 665 00fb 0B       		.uleb128 0xb
+ 666 00fc 3B       		.uleb128 0x3b
+ 667 00fd 0B       		.uleb128 0xb
+ 668 00fe 00       		.byte	0
+ 669 00ff 00       		.byte	0
+ 670 0100 00       		.byte	0
+ 671              		.section	.debug_loc,"",%progbits
+ 672              	.Ldebug_loc0:
+ 673              	.LLST0:
+ 674 0000 00000000 		.4byte	.LVL0
+ 675 0004 12000000 		.4byte	.LVL2
+ 676 0008 0100     		.2byte	0x1
+ 677 000a 50       		.byte	0x50
+ 678 000b 12000000 		.4byte	.LVL2
+ 679 000f 78000000 		.4byte	.LFE2
+ 680 0013 0300     		.2byte	0x3
+ 681 0015 91       		.byte	0x91
+ 682 0016 E47E     		.sleb128 -156
+ 683 0018 00000000 		.4byte	0
+ 684 001c 00000000 		.4byte	0
+ 685              	.LLST1:
+ 686 0020 00000000 		.4byte	.LVL0
+ 687 0024 2C000000 		.4byte	.LVL7
+ 688 0028 0100     		.2byte	0x1
+ 689 002a 51       		.byte	0x51
+ 690 002b 2C000000 		.4byte	.LVL7
+ 691 002f 76000000 		.4byte	.LVL17
+ 692 0033 0100     		.2byte	0x1
+ 693 0035 57       		.byte	0x57
+ 694 0036 76000000 		.4byte	.LVL17
+ 695 003a 78000000 		.4byte	.LFE2
+ 696 003e 0400     		.2byte	0x4
+ 697 0040 F3       		.byte	0xf3
+ 698 0041 01       		.uleb128 0x1
+ 699 0042 51       		.byte	0x51
+ 700 0043 9F       		.byte	0x9f
+ 701 0044 00000000 		.4byte	0
+ 702 0048 00000000 		.4byte	0
+ 703              	.LLST2:
+ 704 004c 00000000 		.4byte	.LVL0
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 17
+
+
+ 705 0050 0A000000 		.4byte	.LVL1
+ 706 0054 0100     		.2byte	0x1
+ 707 0056 52       		.byte	0x52
+ 708 0057 0A000000 		.4byte	.LVL1
+ 709 005b 78000000 		.4byte	.LFE2
+ 710 005f 0300     		.2byte	0x3
+ 711 0061 91       		.byte	0x91
+ 712 0062 E07E     		.sleb128 -160
+ 713 0064 00000000 		.4byte	0
+ 714 0068 00000000 		.4byte	0
+ 715              	.LLST3:
+ 716 006c 16000000 		.4byte	.LVL3
+ 717 0070 1E000000 		.4byte	.LVL4
+ 718 0074 0500     		.2byte	0x5
+ 719 0076 71       		.byte	0x71
+ 720 0077 00       		.sleb128 0
+ 721 0078 3F       		.byte	0x3f
+ 722 0079 25       		.byte	0x25
+ 723 007a 9F       		.byte	0x9f
+ 724 007b 1E000000 		.4byte	.LVL4
+ 725 007f 22000000 		.4byte	.LVL5
+ 726 0083 0100     		.2byte	0x1
+ 727 0085 54       		.byte	0x54
+ 728 0086 22000000 		.4byte	.LVL5
+ 729 008a 2C000000 		.4byte	.LVL7
+ 730 008e 0500     		.2byte	0x5
+ 731 0090 71       		.byte	0x71
+ 732 0091 00       		.sleb128 0
+ 733 0092 3F       		.byte	0x3f
+ 734 0093 25       		.byte	0x25
+ 735 0094 9F       		.byte	0x9f
+ 736 0095 2C000000 		.4byte	.LVL7
+ 737 0099 74000000 		.4byte	.LVL16
+ 738 009d 0500     		.2byte	0x5
+ 739 009f 77       		.byte	0x77
+ 740 00a0 00       		.sleb128 0
+ 741 00a1 3F       		.byte	0x3f
+ 742 00a2 25       		.byte	0x25
+ 743 00a3 9F       		.byte	0x9f
+ 744 00a4 00000000 		.4byte	0
+ 745 00a8 00000000 		.4byte	0
+ 746              	.LLST4:
+ 747 00ac 2A000000 		.4byte	.LVL6
+ 748 00b0 2C000000 		.4byte	.LVL7
+ 749 00b4 0100     		.2byte	0x1
+ 750 00b6 53       		.byte	0x53
+ 751 00b7 2C000000 		.4byte	.LVL7
+ 752 00bb 72000000 		.4byte	.LVL15
+ 753 00bf 0300     		.2byte	0x3
+ 754 00c1 91       		.byte	0x91
+ 755 00c2 DC7E     		.sleb128 -164
+ 756 00c4 72000000 		.4byte	.LVL15
+ 757 00c8 74000000 		.4byte	.LVL16
+ 758 00cc 0100     		.2byte	0x1
+ 759 00ce 53       		.byte	0x53
+ 760 00cf 00000000 		.4byte	0
+ 761 00d3 00000000 		.4byte	0
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 18
+
+
+ 762              	.LLST5:
+ 763 00d7 44000000 		.4byte	.LVL10
+ 764 00db 74000000 		.4byte	.LVL16
+ 765 00df 0200     		.2byte	0x2
+ 766 00e1 30       		.byte	0x30
+ 767 00e2 9F       		.byte	0x9f
+ 768 00e3 00000000 		.4byte	0
+ 769 00e7 00000000 		.4byte	0
+ 770              	.LLST6:
+ 771 00eb 2A000000 		.4byte	.LVL6
+ 772 00ef 2C000000 		.4byte	.LVL7
+ 773 00f3 0200     		.2byte	0x2
+ 774 00f5 30       		.byte	0x30
+ 775 00f6 9F       		.byte	0x9f
+ 776 00f7 2C000000 		.4byte	.LVL7
+ 777 00fb 74000000 		.4byte	.LVL16
+ 778 00ff 0100     		.2byte	0x1
+ 779 0101 56       		.byte	0x56
+ 780 0102 00000000 		.4byte	0
+ 781 0106 00000000 		.4byte	0
+ 782              	.LLST7:
+ 783 010a 2A000000 		.4byte	.LVL6
+ 784 010e 2C000000 		.4byte	.LVL7
+ 785 0112 0200     		.2byte	0x2
+ 786 0114 30       		.byte	0x30
+ 787 0115 9F       		.byte	0x9f
+ 788 0116 2C000000 		.4byte	.LVL7
+ 789 011a 38000000 		.4byte	.LVL8
+ 790 011e 0100     		.2byte	0x1
+ 791 0120 50       		.byte	0x50
+ 792 0121 3C000000 		.4byte	.LVL9
+ 793 0125 66000000 		.4byte	.LVL13
+ 794 0129 0100     		.2byte	0x1
+ 795 012b 50       		.byte	0x50
+ 796 012c 6A000000 		.4byte	.LVL14
+ 797 0130 78000000 		.4byte	.LFE2
+ 798 0134 0100     		.2byte	0x1
+ 799 0136 50       		.byte	0x50
+ 800 0137 00000000 		.4byte	0
+ 801 013b 00000000 		.4byte	0
+ 802              	.LLST8:
+ 803 013f 00000000 		.4byte	.LVL0
+ 804 0143 2C000000 		.4byte	.LVL7
+ 805 0147 0100     		.2byte	0x1
+ 806 0149 51       		.byte	0x51
+ 807 014a 2C000000 		.4byte	.LVL7
+ 808 014e 76000000 		.4byte	.LVL17
+ 809 0152 0100     		.2byte	0x1
+ 810 0154 57       		.byte	0x57
+ 811 0155 76000000 		.4byte	.LVL17
+ 812 0159 78000000 		.4byte	.LFE2
+ 813 015d 0400     		.2byte	0x4
+ 814 015f F3       		.byte	0xf3
+ 815 0160 01       		.uleb128 0x1
+ 816 0161 51       		.byte	0x51
+ 817 0162 9F       		.byte	0x9f
+ 818 0163 00000000 		.4byte	0
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 19
+
+
+ 819 0167 00000000 		.4byte	0
+ 820              	.LLST9:
+ 821 016b 2A000000 		.4byte	.LVL6
+ 822 016f 74000000 		.4byte	.LVL16
+ 823 0173 0100     		.2byte	0x1
+ 824 0175 54       		.byte	0x54
+ 825 0176 00000000 		.4byte	0
+ 826 017a 00000000 		.4byte	0
+ 827              		.section	.debug_aranges,"",%progbits
+ 828 0000 24000000 		.4byte	0x24
+ 829 0004 0200     		.2byte	0x2
+ 830 0006 00000000 		.4byte	.Ldebug_info0
+ 831 000a 04       		.byte	0x4
+ 832 000b 00       		.byte	0
+ 833 000c 0000     		.2byte	0
+ 834 000e 0000     		.2byte	0
+ 835 0010 00000000 		.4byte	.LFB1
+ 836 0014 02000000 		.4byte	.LFE1-.LFB1
+ 837 0018 00000000 		.4byte	.LFB2
+ 838 001c 78000000 		.4byte	.LFE2-.LFB2
+ 839 0020 00000000 		.4byte	0
+ 840 0024 00000000 		.4byte	0
+ 841              		.section	.debug_ranges,"",%progbits
+ 842              	.Ldebug_ranges0:
+ 843 0000 00000000 		.4byte	.LFB1
+ 844 0004 02000000 		.4byte	.LFE1
+ 845 0008 00000000 		.4byte	.LFB2
+ 846 000c 78000000 		.4byte	.LFE2
+ 847 0010 00000000 		.4byte	0
+ 848 0014 00000000 		.4byte	0
+ 849              		.section	.debug_line,"",%progbits
+ 850              	.Ldebug_line0:
+ 851 0000 C5000000 		.section	.debug_str,"MS",%progbits,1
+ 851      02005400 
+ 851      00000201 
+ 851      FB0E0D00 
+ 851      01010101 
+ 852              	.LASF29:
+ 853 0000 47656E65 		.ascii	"Generated_Source\\PSoC4\\PIGGY_BANK.c\000"
+ 853      72617465 
+ 853      645F536F 
+ 853      75726365 
+ 853      5C50536F 
+ 854              	.LASF21:
+ 855 0024 77726974 		.ascii	"writeBuffer\000"
+ 855      65427566 
+ 855      66657200 
+ 856              	.LASF18:
+ 857 0030 73726342 		.ascii	"srcBuf\000"
+ 857      756600
+ 858              	.LASF3:
+ 859 0037 73686F72 		.ascii	"short unsigned int\000"
+ 859      7420756E 
+ 859      7369676E 
+ 859      65642069 
+ 859      6E7400
+ 860              	.LASF32:
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 20
+
+
+ 861 004a 50494747 		.ascii	"PIGGY_BANK_Write\000"
+ 861      595F4241 
+ 861      4E4B5F57 
+ 861      72697465 
+ 861      00
+ 862              	.LASF25:
+ 863 005b 73726349 		.ascii	"srcIndex\000"
+ 863      6E646578 
+ 863      00
+ 864              	.LASF27:
+ 865 0064 62797465 		.ascii	"byteOffset\000"
+ 865      4F666673 
+ 865      657400
+ 866              	.LASF11:
+ 867 006f 666C6F61 		.ascii	"float\000"
+ 867      7400
+ 868              	.LASF31:
+ 869 0075 50494747 		.ascii	"PIGGY_BANK_Stop\000"
+ 869      595F4241 
+ 869      4E4B5F53 
+ 869      746F7000 
+ 870              	.LASF1:
+ 871 0085 756E7369 		.ascii	"unsigned char\000"
+ 871      676E6564 
+ 871      20636861 
+ 871      7200
+ 872              	.LASF15:
+ 873 0093 72656738 		.ascii	"reg8\000"
+ 873      00
+ 874              	.LASF5:
+ 875 0098 6C6F6E67 		.ascii	"long unsigned int\000"
+ 875      20756E73 
+ 875      69676E65 
+ 875      6420696E 
+ 875      7400
+ 876              	.LASF9:
+ 877 00aa 75696E74 		.ascii	"uint8\000"
+ 877      3800
+ 878              	.LASF22:
+ 879 00b0 61727261 		.ascii	"arrayId\000"
+ 879      79496400 
+ 880              	.LASF30:
+ 881 00b8 433A5C55 		.ascii	"C:\\Users\\ccpow_000\\Desktop\\CPS\\eCTF\\0xBU_SSS_"
+ 881      73657273 
+ 881      5C636370 
+ 881      6F775F30 
+ 881      30305C44 
+ 882 00e5 41544D5C 		.ascii	"ATM\\SECURITY_MODULE.cydsn\000"
+ 882      53454355 
+ 882      52495459 
+ 882      5F4D4F44 
+ 882      554C452E 
+ 883              	.LASF20:
+ 884 00ff 62797465 		.ascii	"byteCount\000"
+ 884      436F756E 
+ 884      7400
+ 885              	.LASF24:
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 21
+
+
+ 886 0109 64737449 		.ascii	"dstIndex\000"
+ 886      6E646578 
+ 886      00
+ 887              	.LASF12:
+ 888 0112 646F7562 		.ascii	"double\000"
+ 888      6C6500
+ 889              	.LASF33:
+ 890 0119 43795379 		.ascii	"CySysFlashWriteRow\000"
+ 890      73466C61 
+ 890      73685772 
+ 890      69746552 
+ 890      6F7700
+ 891              	.LASF14:
+ 892 012c 63797374 		.ascii	"cystatus\000"
+ 892      61747573 
+ 892      00
+ 893              	.LASF10:
+ 894 0135 75696E74 		.ascii	"uint32\000"
+ 894      333200
+ 895              	.LASF8:
+ 896 013c 756E7369 		.ascii	"unsigned int\000"
+ 896      676E6564 
+ 896      20696E74 
+ 896      00
+ 897              	.LASF7:
+ 898 0149 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 898      206C6F6E 
+ 898      6720756E 
+ 898      7369676E 
+ 898      65642069 
+ 899              	.LASF26:
+ 900 0160 65654F66 		.ascii	"eeOffset\000"
+ 900      66736574 
+ 900      00
+ 901              	.LASF23:
+ 902 0169 726F7749 		.ascii	"rowId\000"
+ 902      6400
+ 903              	.LASF17:
+ 904 016f 73697A65 		.ascii	"sizetype\000"
+ 904      74797065 
+ 904      00
+ 905              	.LASF6:
+ 906 0178 6C6F6E67 		.ascii	"long long int\000"
+ 906      206C6F6E 
+ 906      6720696E 
+ 906      7400
+ 907              	.LASF13:
+ 908 0186 63686172 		.ascii	"char\000"
+ 908      00
+ 909              	.LASF19:
+ 910 018b 65657072 		.ascii	"eepromPtr\000"
+ 910      6F6D5074 
+ 910      7200
+ 911              	.LASF2:
+ 912 0195 73686F72 		.ascii	"short int\000"
+ 912      7420696E 
+ 912      7400
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccafxGdg.s 			page 22
+
+
+ 913              	.LASF4:
+ 914 019f 6C6F6E67 		.ascii	"long int\000"
+ 914      20696E74 
+ 914      00
+ 915              	.LASF16:
+ 916 01a8 6C6F6E67 		.ascii	"long double\000"
+ 916      20646F75 
+ 916      626C6500 
+ 917              	.LASF0:
+ 918 01b4 7369676E 		.ascii	"signed char\000"
+ 918      65642063 
+ 918      68617200 
+ 919              	.LASF28:
+ 920 01c0 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 920      43313120 
+ 920      352E342E 
+ 920      31203230 
+ 920      31363036 
+ 921 01f3 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 921      20726576 
+ 921      6973696F 
+ 921      6E203233 
+ 921      37373135 
+ 922 0226 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects\000"
+ 922      66756E63 
+ 922      74696F6E 
+ 922      2D736563 
+ 922      74696F6E 
+ 923              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

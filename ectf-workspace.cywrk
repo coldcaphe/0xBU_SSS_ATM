@@ -15,7 +15,10 @@
 <WriteAppVersionLastSavedWith v="4.1.0.3210" />
 <WriteAppMarketingVersionLastSavedWith v="4.1 Update 1" />
 <CyGuid_dcbd9771-0334-43dc-9cc3-fe99dc3c5316 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize+CyPrjDependencyList" version="4">
-<wrkspc_dependencies />
+<wrkspc_dependencies>
+<wrkspc_dependency project="SECURITY_MODULE.cydsn\SECURITY_MODULE.cyprj" dependency="libhydrogen.cylib\libhydrogen.cyprj" />
+<wrkspc_dependency project="CARD.cydsn\CARD.cyprj" dependency="libhydrogen.cylib\libhydrogen.cyprj" />
+</wrkspc_dependencies>
 </CyGuid_dcbd9771-0334-43dc-9cc3-fe99dc3c5316>
 <CyGuid_63b68103-67f5-4406-8da6-5c8625765b82 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize+CyIgnoredSystemDepsList" version="1">
 <wrkspc_dependencies />

@@ -12,21 +12,35 @@
 <dependency_info name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0" xml_contents_version="2">
 <CyGuid_1173175f-1b9b-4ad4-a065-754a48a27021 type_name="CyDesigner.Common.Base.CyFileDeps" version="1">
 <file name=".\CortexM0\ARM_GCC_541\Debug\hydrogen.o">
-<dep name="..\bank_server\wrapper\libhydrogen\hydrogen.c" />
-<dep name="..\bank_server\wrapper\libhydrogen\hydrogen.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\common.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\core.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\gimli-core.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\hash.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\hydrogen_p.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\kdf.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\kx.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\pwhash.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\random.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\secretbox.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\sign.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\x25519.h" />
+<dep name=".\libhydrogen\hydrogen.c" />
+<dep name=".\libhydrogen\hydrogen.h" />
+<dep name=".\libhydrogen\impl\common.h" />
+<dep name=".\libhydrogen\impl\core.h" />
+<dep name=".\libhydrogen\impl\gimli-core.h" />
+<dep name=".\libhydrogen\impl\hash.h" />
+<dep name=".\libhydrogen\impl\hydrogen_p.h" />
+<dep name=".\libhydrogen\impl\kdf.h" />
+<dep name=".\libhydrogen\impl\kx.h" />
+<dep name=".\libhydrogen\impl\pwhash.h" />
+<dep name=".\libhydrogen\impl\random.h" />
+<dep name=".\libhydrogen\impl\secretbox.h" />
+<dep name=".\libhydrogen\impl\sign.h" />
+<dep name=".\libhydrogen\impl\x25519.h" />
 </file>
+<file name=".\libhydrogen\hydrogen.c" />
+<file name=".\libhydrogen\hydrogen.h" />
+<file name=".\libhydrogen\impl\common.h" />
+<file name=".\libhydrogen\impl\core.h" />
+<file name=".\libhydrogen\impl\gimli-core.h" />
+<file name=".\libhydrogen\impl\hash.h" />
+<file name=".\libhydrogen\impl\hydrogen_p.h" />
+<file name=".\libhydrogen\impl\kdf.h" />
+<file name=".\libhydrogen\impl\kx.h" />
+<file name=".\libhydrogen\impl\pwhash.h" />
+<file name=".\libhydrogen\impl\random.h" />
+<file name=".\libhydrogen\impl\secretbox.h" />
+<file name=".\libhydrogen\impl\sign.h" />
+<file name=".\libhydrogen\impl\x25519.h" />
 <file name="..\bank_server\wrapper\libhydrogen\hydrogen.c" />
 <file name="..\bank_server\wrapper\libhydrogen\hydrogen.h" />
 <file name="..\bank_server\wrapper\libhydrogen\impl\common.h" />
@@ -46,21 +60,35 @@
 <dependency_info name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" xml_contents_version="2">
 <CyGuid_1173175f-1b9b-4ad4-a065-754a48a27021 type_name="CyDesigner.Common.Base.CyFileDeps" version="1">
 <file name=".\CortexM0\ARM_GCC_541\Release\hydrogen.o">
-<dep name="..\bank_server\wrapper\libhydrogen\hydrogen.c" />
-<dep name="..\bank_server\wrapper\libhydrogen\hydrogen.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\common.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\core.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\gimli-core.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\hash.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\hydrogen_p.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\kdf.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\kx.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\pwhash.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\random.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\secretbox.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\sign.h" />
-<dep name="..\bank_server\wrapper\libhydrogen\impl\x25519.h" />
+<dep name=".\libhydrogen\hydrogen.c" />
+<dep name=".\libhydrogen\hydrogen.h" />
+<dep name=".\libhydrogen\impl\common.h" />
+<dep name=".\libhydrogen\impl\core.h" />
+<dep name=".\libhydrogen\impl\gimli-core.h" />
+<dep name=".\libhydrogen\impl\hash.h" />
+<dep name=".\libhydrogen\impl\hydrogen_p.h" />
+<dep name=".\libhydrogen\impl\kdf.h" />
+<dep name=".\libhydrogen\impl\kx.h" />
+<dep name=".\libhydrogen\impl\pwhash.h" />
+<dep name=".\libhydrogen\impl\random.h" />
+<dep name=".\libhydrogen\impl\secretbox.h" />
+<dep name=".\libhydrogen\impl\sign.h" />
+<dep name=".\libhydrogen\impl\x25519.h" />
 </file>
+<file name=".\libhydrogen\hydrogen.c" />
+<file name=".\libhydrogen\hydrogen.h" />
+<file name=".\libhydrogen\impl\common.h" />
+<file name=".\libhydrogen\impl\core.h" />
+<file name=".\libhydrogen\impl\gimli-core.h" />
+<file name=".\libhydrogen\impl\hash.h" />
+<file name=".\libhydrogen\impl\hydrogen_p.h" />
+<file name=".\libhydrogen\impl\kdf.h" />
+<file name=".\libhydrogen\impl\kx.h" />
+<file name=".\libhydrogen\impl\pwhash.h" />
+<file name=".\libhydrogen\impl\random.h" />
+<file name=".\libhydrogen\impl\secretbox.h" />
+<file name=".\libhydrogen\impl\sign.h" />
+<file name=".\libhydrogen\impl\x25519.h" />
 <file name="..\bank_server\wrapper\libhydrogen\hydrogen.c" />
 <file name="..\bank_server\wrapper\libhydrogen\hydrogen.h" />
 <file name="..\bank_server\wrapper\libhydrogen\impl\common.h" />
@@ -105,10 +133,12 @@
 <name v="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0">
 <name_val_pair name="..\bank_server\wrapper\libhydrogen\hydrogen.c" v="-mcpu=cortex-m0 -mthumb -I. -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 <name_val_pair name="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Debug\libhydrogen.a" v="-rs .\CortexM0\ARM_GCC_541\Debug\libhydrogen.a C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Debug\hydrogen.o" />
+<name_val_pair name="libhydrogen\hydrogen.c" v="-mcpu=cortex-m0 -mthumb -I. -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 </name>
 <name v="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0">
 <name_val_pair name="..\bank_server\wrapper\libhydrogen\hydrogen.c" v="-mcpu=cortex-m0 -mthumb -I. -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D NDEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Os" />
 <name_val_pair name="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\libhydrogen.a" v="-rs .\CortexM0\ARM_GCC_541\Release\libhydrogen.a C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\hydrogen.o" />
+<name_val_pair name="libhydrogen\hydrogen.c" v="-mcpu=cortex-m0 -mthumb -I. -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D NDEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Os" />
 </name>
 </genericCmdLineData>
 <codeGenCmdLineTag v="" />
