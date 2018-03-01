@@ -92,6 +92,17 @@ atm\_backend and the bank\_server.
 
 ## Important Formatting Notes
 
+### Format of Returned Values
+| Value | Type/Size |
+|-----------|------|
+|Card ID | 36 ascii characters |
+|HSM ID | 4 byte integer|
+|Nonces| 32 bytes |
+|PINs| 8 ascii characters |
+|Balance Amount| 4 byte integer |
+|Withdraw Amount | 4 byte integer |
+|Encrypted Message| Length of data rounded up to the nearest multiple of 16 + a 16 byte authentication tag|
+
 ### Enum values used:
 | Message Type | Value| Description |
 |--------------|------|-------------|
