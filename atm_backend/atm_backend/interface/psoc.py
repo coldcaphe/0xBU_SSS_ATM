@@ -44,6 +44,14 @@ class Psoc(object):
         self.old_ports = [port_info.device for port_info in list_ports()]
         self.sync_name_n = '%s_N' % name
         self.sync_name_p = '%s_P' % name
+        self.SYNC_REQUEST_PROV         = 0x15
+        self.SYNC_REQUEST_NO_PROV      = 0x16
+        self.SYNC_CONFIRMED_PROV       = 0x17
+        self.SYNC_CONFIRMED_NO_PROV    = 0x18
+        self.SYNC_FAILED_NO_PROV       = 0x19
+        self.SYNC_FAILED_PROV          = 0x1A
+        self.SYNCED                    = 0x1B
+
 
         if ser:
             self.connected = True
@@ -83,16 +91,14 @@ class Psoc(object):
         pkt_len = struct.unpack('B', hdr)[0]
         return self.read(pkt_len)
 
-    def _sync_once(self, names):
+    def _sync_once(self,request,accept,wrong_states):
         resp = ''
-        while resp not in names:
-            self._vp('Sending ready message')
-            self._push_msg("READY\00")
-            resp = self._pull_msg()
-            self._vp('Got response \'%s\', want something from \'%s\'' % (resp, str(names)))
+        while resp != accept:
+            self._push_msg(request)
+            resp = self.read(1)
 
             # if in wrong state (provisioning/normal)
-            if len(names) == 1 and resp != names[0] and resp[:-1] == names[0][:-1]:
+            if resp in wrong_states:
                 return False
 
         return resp
@@ -108,15 +114,25 @@ class Psoc(object):
             AlreadyProvisioned if PSoC is unexpectedly already provisioned
         """
         if provision:
-            if not self._sync_once([self.sync_name_p]):
+            if not self._sync_once(self.SYNC_REQUEST_PROV,
+                self.SYNC_CONFIRMED_NO_PROV,
+                [self.SYNC_CONFIRMED_PROV,
+                self.SYNC_FAILED_NO_PROV,
+                self.SYNC_FAILED_PROV]):
+
                 self._vp("Already provisioned!", logging.error)
                 raise AlreadyProvisioned
         else:
-            if not self._sync_once([self.sync_name_n]):
+            if not self._sync_once(self.REQUEST_NO_PROV,
+                self.SYNC_CONFIRMED_PROV,
+                [self.SYNC_CONFIRMED_NO_PROV,
+                self.SYNC_FAILED_NO_PROV,
+                self.SYNC_FAILED_PROV]):
+
                 self._vp("Not yet provisioned!", logging.error)
                 raise NotProvisioned
-        self._push_msg("GO\00")
-        self._vp("Connection synced")
+
+        self._push_msg(self.SYNCED)
 
     def open(self):
         time.sleep(.1)
