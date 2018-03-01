@@ -31,6 +31,12 @@
 #define EMPTY "EMPTY"
 #define EMPTY_BILL "*****EMPTY*****"
 
+#define INITIATE_PROVISION 0x25
+#define REQUEST_PROVISION 0x26
+#define INITIATE_BILLS_REQUEST 0x27
+#define BILLS_REQUEST 0x28
+#define BILL_RECEIVED 0x29
+
 /* 
  * How to read from EEPROM (persistent memory):
  * 
@@ -48,6 +54,16 @@
 static const uint8 MONEY[MAX_BILLS][BILL_LEN] = {EMPTY_BILL};
 static const uint8 UUID[UUID_LEN + 1] = {'b', 'l', 'a', 'n', 'k', ' ', 
 										'u', 'u', 'i', 'd', '!', 0x00 };
+static const uint8 ENC_KEY[32] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+                                  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+                                  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+                                  0x00, 0x00, 0x00, 0x00};
+static const uint8 RAND_KEY[32] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+                                  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+                                  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+                                  0x00, 0x00, 0x00, 0x00};
 static const uint8 BILLS_LEFT[1] = {0x00};
 
 // New consts below - see protocol_details.txt
@@ -83,39 +99,53 @@ CY_ISR(Reset_ISR)
 void provision()
 {
 	int i;
-	uint8 message[64], numbills;
+	uint8 message[101], numbills;
 
 	for(i = 0; i < 128; i++) {
 		PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[i], BILL_LEN);
 	}
 
-    	// Synchronize with ATM
-	syncConnection(SYNC_PROV);
+    // Synchronize with ATM
+	syncConnection(0);
 
 	// Push provisioning message
-	memset(message, 0u, 64);
-	strcpy((char*)message, PROV_MSG);
-	pushMessage(message, (uint8)strlen(PROV_MSG));
+	pushMessage((uint8*)INITIATE_PROVISION, (uint8)1);
 
-    	// Set UUID
-	pullMessage(message, 1);
-	PIGGY_BANK_Write(message, UUID, strlen((char*)message) + 1);
-	pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
-
-    	// Get number of bills
-	pullMessage(message, 1);
-	numbills = message[0];
+    pullMessage((uint8*)message, (uint8)101);
+    
+    if (message[0] != REQUEST_PROVISION) {
+        // THROW ERROR
+    }
+    // message:
+    // code (1 byte) | enc key (32 bytes) | rand key (32 byte) | UUID (36 bytes) 
+    
+    // Set enc key
+    PIGGY_BANK_Write(&message[1], ENC_KEY, (uint8)32);
+    
+    // Set rand key
+    PIGGY_BANK_Write(&message[33], RAND_KEY, (uint8)32);
+    
+    // Set UUID
+	PIGGY_BANK_Write(&message[65], UUID, (uint8)36);
+    
+    pushMessage((uint8*)INITIATE_BILLS_REQUEST, (uint8)1);
+    
+    pullMessage((uint8*)message, (uint8)2);
+    
+    if (message[0] != BILLS_REQUEST) {
+        pushMessage(&REJECTED, (uint8)1);
+    }
+    
+    // Get number of bills
+    numbills = message[1];
 	PIGGY_BANK_Write(&numbills, BILLS_LEFT, 1u);
-	pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 
-    	// Load bills
+    // Load bills
 	for (i = 0; i < numbills; i++) {
 		pullMessage(message, 1);
 		PIGGY_BANK_Write(message, MONEY[i], BILL_LEN);
-		pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
+        pushMessage((uint8*)BILL_RECEIVED, (uint8)1);
 	}
-
-    // TODO: Generate shared secret with server
 }
 
 
@@ -182,7 +212,7 @@ int main(void)
         /* Application code */
 
         // Synchronize with bank
-    	syncConnection(SYNC_NORM);
+    	syncConnection(1);
 
         // Receive message (expecting nonce request)
     	pullMessage(message, (uint8)1);
@@ -219,13 +249,12 @@ int main(void)
 
         	case (int)WITHDRAWAL_REQUEST:
 	        	// Verify signed request
-    	        	pullMessage(message, ENCRYPTED_MESSAGE_LEN);
-	        	uint8_t message [MESSAGE_LEN];
-	        	uint8_t* ciphertext = &request;
+    	        pullMessage(message, ENCRYPTED_MESSAGE_LEN);
+	        	uint8_t plaintext[MESSAGE_LEN];
 
 			// Check if message is forged
-	        	if (hydro_secretbox_decrypt(message, ciphertext, CIPHERTEXT_LEN,
-	        		(uint64_t) 0, "WITHDRAW", secret_key)!=0) {
+	        	if (hydro_secretbox_decrypt(plaintext, message, CIPHERTEXT_LEN,
+	        		(uint64_t) 0, "WITHDRAW", ENC_KEY)!=0) {
                     		pushMessage(&REJECTED,1);
 	        		break;
 	        	}		
@@ -233,19 +262,19 @@ int main(void)
 		        else {
 		        	// Verify nonce
 		        	for (j = 1; j < 33; j++) {
-		        		if (message[j] != current_nonce[j - 1]) {
+		        		if (plaintext[j] != current_nonce[j - 1]) {
 		        			flag = 1;
 		        		}
 		        	}
 
 				// Send message if request is not a withdrawal request
-                    		if (message[0]!=WITHDRAWAL_REQUEST){
+                    		if (plaintext[0]!=WITHDRAWAL_REQUEST){
                         		pushMessage(&REJECTED,1);
                     		}
 
 				// If nonce checked passed 
 		        	if (flag == 0) { 
-			        	uint8 numbills = message[1 + 32]; // (WITHDRAW (1 byte)| nonce (32 bytes)| amount)
+			        	uint8 numbills = plaintext[1 + 32]; // (WITHDRAW (1 byte)| nonce (32 bytes)| amount)
 			        	ptr = BILLS_LEFT;
 
 			        	if (*ptr < numbills) {
