@@ -23,6 +23,7 @@
 #define NONCE_LEN 32
 #define SIG_LEN 32
 #define PK_LEN 32
+#define RN_LEN 32
 
 
 #define PINCHG_SUC "SUCCESS"
@@ -56,10 +57,11 @@
 
 // global EEPROM read variables
 static const uint8 R[R_LEN] = {};
+static const uint8 RN[RN_LEN] = {};
 static const uint8 UUID[UUID_LEN] = {0x37, 0x33, 0x36, 0x35, 0x36, 0x33, 0x37, 0x35, 0x37, 0x32, 0x36, 0x39, 0x37, 0x34, 0x37, 0x39}; //security
 
 // more variables
-uint8_t request[100]; // when HSM receives message
+//uint8_t request[100]; // when HSM receives message
 uint8_t response[100]; // when HSM sends out a message
 uint8_t message_type;
 uint8_t r[32];
@@ -90,9 +92,14 @@ void provision()
     pushMessage((uint8*)PROV_MSG, (uint8)strlen(PROV_MSG));
     
     // get r (random)
-    pullMessage2(message, R_LEN);
+    pullMessage(message, R_LEN);
     USER_INFO_Write(message, R, R_LEN);
     pushMessage((uint8*)RECV_OK, strlen(RECV_OK));         
+
+    // get random number
+    pullMessage(message, RN_LEN);
+    USER_INFO_Write(message, RN, RN_LEN);
+    pushMessage((uint8*)RECV_OK, strlen(RECV_OK));
 
     // set account number
     pullMessage2(message, UUID_LEN);
@@ -111,7 +118,7 @@ int main(void)
     
     /* Declare vairables here */
     uint8 i;
-    uint8 message[128];
+    uint8 request[128];
     
     // local EEPROM read variable
     static const uint8 PROVISIONED[1] = {0x00};
@@ -139,7 +146,7 @@ int main(void)
     while (1) {
         //get message type
         syncConnection(SYNC_NORM);
-        pullMessage(message, (uint8)1);
+        pullMessage(request, (uint8)1);
 	    message_type = request[0];
 	    
         int j;
