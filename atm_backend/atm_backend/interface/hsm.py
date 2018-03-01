@@ -19,7 +19,7 @@ class HSM(Psoc):
     def __init__(self, port=None, verbose=False, dummy=False):
         self.port = port
         self.verbose = verbose
-        dummy = False 
+        self.dummy = dummy
         
     def initialize(self):
         super(HSM, self).__init__('HSM', self.port, self.verbose)

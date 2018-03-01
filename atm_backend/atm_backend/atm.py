@@ -38,6 +38,10 @@ class ATM(object):
         self.WITHDRAW                    = 0x13
 
 
+    def hello(self):
+        logging.info("Got hello request")
+        return "hello"
+
 
     def check_balance(self, pin): #secured
         """Tries to check the balance of the account associated with the

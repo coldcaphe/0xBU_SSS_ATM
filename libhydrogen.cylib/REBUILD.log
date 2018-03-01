@@ -1,0 +1,8 @@
+--------------- Rebuild Started: 02/28/2018 20:39:44 Project: libhydrogen, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+Deleting file ".\CortexM0\ARM_GCC_541\Debug\hydrogen.o"
+Deleting file ".\CortexM0\ARM_GCC_541\Debug\libhydrogen.a"
+Deleting file ".\CortexM0\ARM_GCC_541\Debug\.deps\SOURCE_C__ARM_GCC_GENERIC.P"
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/hydrogen.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c libhydrogen\hydrogen.c -o .\CortexM0\ARM_GCC_541\Debug\hydrogen.o
+arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_541\Debug\libhydrogen.a C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Debug\hydrogen.o
+arm-none-eabi-ar.exe: creating .\CortexM0\ARM_GCC_541\Debug\libhydrogen.a
+--------------- Rebuild Succeeded: 02/28/2018 20:39:46 ---------------

@@ -123,6 +123,8 @@ int main(void)
     USER_INFO_Start();
     USB_UART_Start();
     
+    pushMessage("test", 5);
+    
     // Provision card if on first boot
     ptr = PROVISIONED;
     if (*ptr == 0x00) {
