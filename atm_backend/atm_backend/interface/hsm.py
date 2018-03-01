@@ -30,6 +30,7 @@ class HSM(Psoc):
         self._vp('Initialized')
         self.RETURN_WITHDRAWAL      = 0x09
         self.RETURN_BALANCE         = 0x0B
+        self.RETURN_BALANCE         = 0x0A
         self.ACCEPTED               = 0x20
         self.REJECTED               = 0x21
         self.INITIATE_PROVISION     = 0x25
@@ -90,7 +91,7 @@ class HSM(Psoc):
         resp = self.read(size=1)
         responseAction = struct.unpack('b',resp)
         
-        if responseAction == self.RETURN_BALANCE: #handles case depending on byte
+        if responseAction == self.REQUEST_BALANCE: #handles case depending on byte
             resp = self.read(size=1) #determine if request was bad and should keep reading
             acceptByte =struct.unpack('b',resp)
             
@@ -226,8 +227,8 @@ class DummyHSM(HSM):
     '''
     def send_action(self,transaction,encrypted_data):
         packed = (struct.pack('b',transaction)+encrypted_data)
-        responseAction = self.RETURN_BALANCE if transaction == 0x0A else self.RETURN_WITHDRAWAL
-        if responseAction == self.RETURN_BALANCE: #handles case depending on byte
+        responseAction = self.REQUEST_BALANCE if transaction == 0x0A else self.RETURN_WITHDRAWAL
+        if responseAction == self.REQUEST_BALANCE: #handles case depending on byte
             acceptByte = self.ACCEPTED
             if acceptByte==self.ACCEPTED:
                 balance = 5000 
