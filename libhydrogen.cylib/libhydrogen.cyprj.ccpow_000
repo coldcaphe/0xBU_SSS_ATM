@@ -60,6 +60,41 @@
 <dependency_info name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" xml_contents_version="2">
 <CyGuid_1173175f-1b9b-4ad4-a065-754a48a27021 type_name="CyDesigner.Common.Base.CyFileDeps" version="1">
 <file name=".\CortexM0\ARM_GCC_541\Release\hydrogen.o">
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\ATM_UART.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\ATM_UART_IntClock.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\CyFlash.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\CyLFClk.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\CyLib.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\Reset_isr.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\SW1.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\SW1_aliases.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_BOOT.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_PINS.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_PVT.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SCBCLK.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SCB_IRQ.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SPI_UART.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SPI_UART_PVT.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_rx.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_rx_aliases.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_tx.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_tx_aliases.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\USER_INFO.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cmsis_armcc.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cmsis_gcc.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\core_cm0.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\core_cm0_psoc4.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\core_cmFunc.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\core_cmInstr.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cyPm.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cydisabledsheets.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cyfitter.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cyfitter_cfg.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cypins.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\cytypes.h" />
+<dep name="..\CARD.cydsn\Generated_Source\PSoC4\project.h" />
 <dep name=".\libhydrogen\hydrogen.c" />
 <dep name=".\libhydrogen\hydrogen.h" />
 <dep name=".\libhydrogen\impl\common.h" />
@@ -75,6 +110,41 @@
 <dep name=".\libhydrogen\impl\sign.h" />
 <dep name=".\libhydrogen\impl\x25519.h" />
 </file>
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\ATM_UART.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\ATM_UART_IntClock.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\CyFlash.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\CyLFClk.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\CyLib.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\Reset_isr.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\SW1.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\SW1_aliases.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_BOOT.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_PINS.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_PVT.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SCBCLK.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SCB_IRQ.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SPI_UART.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_SPI_UART_PVT.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_rx.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_rx_aliases.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_tx.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USB_UART_tx_aliases.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\USER_INFO.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cmsis_armcc.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cmsis_gcc.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\core_cm0.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\core_cm0_psoc4.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\core_cmFunc.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\core_cmInstr.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cyPm.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cydevice_trm.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cydisabledsheets.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cyfitter.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cyfitter_cfg.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cypins.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\cytypes.h" />
+<file name="..\CARD.cydsn\Generated_Source\PSoC4\project.h" />
 <file name=".\libhydrogen\hydrogen.c" />
 <file name=".\libhydrogen\hydrogen.h" />
 <file name=".\libhydrogen\impl\common.h" />
@@ -138,7 +208,7 @@
 <name v="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0">
 <name_val_pair name="..\bank_server\wrapper\libhydrogen\hydrogen.c" v="-mcpu=cortex-m0 -mthumb -I. -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D NDEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Os" />
 <name_val_pair name="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\libhydrogen.a" v="-rs .\CortexM0\ARM_GCC_541\Release\libhydrogen.a C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Release\hydrogen.o" />
-<name_val_pair name="libhydrogen\hydrogen.c" v="-mcpu=cortex-m0 -mthumb -I. -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D NDEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Os" />
+<name_val_pair name="libhydrogen\hydrogen.c" v="-mcpu=cortex-m0 -mthumb -I..\CARD.cydsn\Generated_Source\PSoC4 -I. -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D NDEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Os" />
 </name>
 </genericCmdLineData>
 <codeGenCmdLineTag v="" />

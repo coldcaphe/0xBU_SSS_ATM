@@ -24,7 +24,7 @@
 #define SYNC_CONFIRMED_NO_PROV 0x1A
 #define SYNCED 0x1B
 #define SYNC_TYPE_HSM_P 0x1C
-#define SYNC_TYPE_HSM_P 0x3C
+#define SYNC_TYPE_HSM_N 0x3C
 #define PSOC_DEVICE_REQUEST 0x1E
 
 
@@ -71,7 +71,7 @@ uint8 pullMessage(uint8 data[], uint8 length)
  */
 void syncConnection(int prov) 
 {
-    uint8* message;
+    uint8 message[200];
     
     do {
         pullMessage(message, (uint8)1);                              
@@ -87,7 +87,7 @@ void syncConnection(int prov)
             }
             else if (*message == PSOC_DEVICE_REQUEST) {
                 pushMessage((uint8*)SYNC_TYPE_HSM_P, (uint8)1);
-                return
+                return;
             }
         }
         else {
@@ -102,7 +102,7 @@ void syncConnection(int prov)
             }
             else if (*message == PSOC_DEVICE_REQUEST) {
                 pushMessage((uint8*)SYNC_TYPE_HSM_N, (uint8)1);
-                return
+                return;
             }
         }
     }

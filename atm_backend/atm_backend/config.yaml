@@ -10,7 +10,7 @@ devices:
     host: 127.0.0.1
     port: 1337
   hsm:
-    dummy: false
+    dummy: true
   card:
     dummy: false
 

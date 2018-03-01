@@ -890,6 +890,46 @@
 <file name="..\libhydrogen.cylib\libhydrogen\hydrogen.h" />
 <file name=".\main.c" />
 <file name=".\usbserialprotocol.h" />
+<file name=".\CortexM0\ARM_GCC_541\Release\usbserialprotocol.o">
+<dep name=".\Generated_Source\PSoC4\ATM_UART.h" />
+<dep name=".\Generated_Source\PSoC4\ATM_UART_IntClock.h" />
+<dep name=".\Generated_Source\PSoC4\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\Reset_isr.h" />
+<dep name=".\Generated_Source\PSoC4\SW1.h" />
+<dep name=".\Generated_Source\PSoC4\SW1_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_BOOT.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_PINS.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_PVT.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_SCBCLK.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_SCB_IRQ.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_SPI_UART.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_SPI_UART_PVT.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_rx.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_rx_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_tx.h" />
+<dep name=".\Generated_Source\PSoC4\USB_UART_tx_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\USER_INFO.h" />
+<dep name=".\Generated_Source\PSoC4\cmsis_armcc.h" />
+<dep name=".\Generated_Source\PSoC4\cmsis_gcc.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmFunc.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmInstr.h" />
+<dep name=".\Generated_Source\PSoC4\cyPm.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cydisabledsheets.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter_cfg.h" />
+<dep name=".\Generated_Source\PSoC4\cypins.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+<dep name=".\Generated_Source\PSoC4\project.h" />
+<dep name=".\usbserialprotocol.c" />
+<dep name=".\usbserialprotocol.h" />
+</file>
+<file name=".\usbserialprotocol.c" />
 <file name=".\CortexM0\ARM_GCC_541\Release\ATM_UART.o">
 <dep name=".\Generated_Source\PSoC4\ATM_UART.c" />
 <dep name=".\Generated_Source\PSoC4\ATM_UART.h" />
@@ -1257,46 +1297,6 @@
 <dep name=".\Generated_Source\PSoC4\cyutils.c" />
 </file>
 <file name=".\Generated_Source\PSoC4\cyutils.c" />
-<file name=".\CortexM0\ARM_GCC_541\Release\usbserialprotocol.o">
-<dep name=".\Generated_Source\PSoC4\cmsis_armcc.h" />
-<dep name=".\Generated_Source\PSoC4\cmsis_gcc.h" />
-<dep name=".\Generated_Source\PSoC4\core_cm0.h" />
-<dep name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
-<dep name=".\Generated_Source\PSoC4\core_cmFunc.h" />
-<dep name=".\Generated_Source\PSoC4\core_cmInstr.h" />
-<dep name=".\Generated_Source\PSoC4\cydisabledsheets.h" />
-<dep name=".\Generated_Source\PSoC4\project.h" />
-<dep name=".\Generated_Source\PSoC4\ATM_UART.h" />
-<dep name=".\Generated_Source\PSoC4\ATM_UART_IntClock.h" />
-<dep name=".\Generated_Source\PSoC4\CyFlash.h" />
-<dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
-<dep name=".\Generated_Source\PSoC4\CyLib.h" />
-<dep name=".\Generated_Source\PSoC4\Reset_isr.h" />
-<dep name=".\Generated_Source\PSoC4\SW1.h" />
-<dep name=".\Generated_Source\PSoC4\SW1_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_BOOT.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_PINS.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_PVT.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_SCBCLK.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_SCB_IRQ.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_SPI_UART.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_SPI_UART_PVT.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_rx.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_rx_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_tx.h" />
-<dep name=".\Generated_Source\PSoC4\USB_UART_tx_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\USER_INFO.h" />
-<dep name=".\Generated_Source\PSoC4\cyPm.h" />
-<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter_cfg.h" />
-<dep name=".\Generated_Source\PSoC4\cypins.h" />
-<dep name=".\Generated_Source\PSoC4\cytypes.h" />
-<dep name=".\usbserialprotocol.c" />
-<dep name=".\usbserialprotocol.h" />
-</file>
-<file name=".\usbserialprotocol.c" />
 <file name=".\CortexM0\ARM_GCC_541\Release\CyBootAsmGnu.o">
 <dep name=".\Generated_Source\PSoC4\CyBootAsmGnu.s" />
 <dep name=".\Generated_Source\PSoC4\cydevicegnu_trm.inc" />
@@ -1483,7 +1483,7 @@
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
 <link_deps_times>
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0" v="131643442077270470" />
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" v="131643464368913769" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" v="131643992861744491" />
 </link_deps_times>
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>

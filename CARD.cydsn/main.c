@@ -39,10 +39,13 @@
 #define REQUEST_NEW_PK          0x0C
 #define RETURN_NEW_PK           0x0D
 #define INITIATE_PROVISION      0x25
-#define REQUEST_PROVISION	0x26
+#define REQUEST_PROVISION	    0x26
 
-#define ACCEPTED		0x20
-#define REJECTED		0x21
+#define ACCEPTED		        0x20
+#define REJECTED		        0x21
+
+#define SYNC_TYPE_CARD_P		0x1D
+#define SYNC_TYPE_CARD_N		0x3D
 
 //CARD
 
@@ -93,7 +96,7 @@ void provision()
     // synchronize with bank
     syncConnection(SYNC_PROV);
  
-    pushMessage((uint8*)INITIATE_PROVISION_CARD, (uint8)1);
+    pushMessage((uint8*)SYNC_TYPE_CARD_P, (uint8)1);
     
     // get r (random) + random number + account number
     pullMessage(message, R_LEN + RN_LEN + UUID_LEN + 1);
