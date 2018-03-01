@@ -38,7 +38,7 @@
 #define RETURN_CARD_SIGNATURE   0x03
 #define REQUEST_NEW_PK          0x0C
 #define RETURN_NEW_PK           0x0D
-#define INITIATE_PROVISION	0x25
+#define INITIATE_PROVISION_CARD	0x2A
 #define REQUEST_PROVISION	0x26
 
 #define ACCEPTED		0x20
@@ -93,7 +93,7 @@ void provision()
     // synchronize with bank
     syncConnection(SYNC_PROV);
  
-    pushMessage((uint8*)INITIATE_PROVISION, (uint8)strlen(INITIATE_PROVISION));
+    pushMessage((uint8*)INITIATE_PROVISION_CARD, (uint8)1);
     
     // get r (random) + random number + account number
     pullMessage(message, R_LEN + RN_LEN + UUID_LEN + 1);
@@ -139,7 +139,7 @@ int main(void)
     USER_INFO_Start();
     USB_UART_Start();
     
-    pushMessage("test", 5);
+    //pushMessage("test", 5);
     
     // Provision card if on first boot
     ptr = PROVISIONED;

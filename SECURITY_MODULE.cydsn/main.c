@@ -67,22 +67,26 @@ static const uint8 RAND_KEY[32] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 static const uint8 BILLS_LEFT[1] = {0x00};
 
 // New consts below - see protocol_details.txt
-static const int CIPHERTEXT_LEN = 256;
-static const int MESSAGE_LEN = 256; 
+static const int CIPHERTEXT_LEN = 112;
+static const int WITHDRAW_MESSAGE_LEN = 74; 
+static const int CHECK_BALANCE_MESSAGE_LEN = 73;
 static const uint8 UUID_REQUEST = 0x06; 
 static const uint8 UUID_RESPONSE = 0x07; 
 static const uint8 NONCE_REQUEST = 0x04;
 static const uint8 NONCE_RESPONSE = 0x05;
 static const uint8 WITHDRAWAL_REQUEST = 0x08; 
 static const uint8 RETURN_WITHDRAWAL = 0x09;
+static const uint8 REQUEST_BALANCE = 0x0A;
+static const uint8 RETURN_BALANCE = 0x0B;
 static const uint8 REJECTED = 0x21; 
-static const uint8 ACCEPTED = 0x20; 
+static const uint8 ACCEPTED = 0x20;
+static const char EIGHT_ZERO_BYTES[8] = {0x00, 0x00, 0x00, 0x00,
+                                       0x00, 0x00, 0x00, 0x00};
 
 uint8_t request[100]; // When HSM receives message
 uint8_t response[100]; // When HSM sends out a message
 uint8 message_type;
 uint32_t current_nonce[32];
-uint32_t secret_key; // This will be stored/accessed in the eeprom
 
 // Reset interrupt on button press
 CY_ISR(Reset_ISR)
@@ -99,7 +103,7 @@ CY_ISR(Reset_ISR)
 void provision()
 {
 	int i;
-	uint8 message[101], numbills;
+	uint8 message[112], numbills;
 
 	for(i = 0; i < 128; i++) {
 		PIGGY_BANK_Write((uint8*)EMPTY_BILL, MONEY[i], BILL_LEN);
@@ -178,8 +182,8 @@ int main(void)
 	Reset_isr_StartEx(Reset_ISR);
 
     	// Declare variables here
-	uint8 numbills, i, bills_left;
-	uint8 message[64];
+	uint8 i, bills_left;
+	uint8 message[49]; // code (1 byte) | ciphertext (48 bytes)
 
     /*
      * Note:
@@ -227,6 +231,7 @@ int main(void)
         switch(message_type)
         {
         	case (int)UUID_REQUEST:
+            {
 	        	response[0] = UUID_RESPONSE;
 
 	        	for (i = 0; i < UUID_LEN; i++) {
@@ -235,8 +240,9 @@ int main(void)
 
 	        	pushMessage(response,UUID_LEN);
 	        	break;
-
+            }
         	case (int)NONCE_REQUEST:
+            {
 	        	// Generate nonce
 	        	hydro_random_buf(&current_nonce, 32);
 	        	// Send nonce
@@ -248,15 +254,52 @@ int main(void)
 
 	        	pushMessage(response,NONCE_LEN);
 	        	break;
-
-        	case (int)WITHDRAWAL_REQUEST:
+            }
+            case (int)REQUEST_BALANCE:
+            {
 	        	// Verify signed request
-    	        pullMessage(message, ENCRYPTED_MESSAGE_LEN);
-	        	uint8_t plaintext[MESSAGE_LEN];
+    	        pullMessage(message, CHECK_BALANCE_MESSAGE_LEN);
+	        	uint8_t bal_plaintext[CHECK_BALANCE_MESSAGE_LEN];
+
+			// Check if message is forged
+	        	if (hydro_secretbox_decrypt(bal_plaintext, message, CHECK_BALANCE_MESSAGE_LEN,
+	        		(uint64_t) 0, EIGHT_ZERO_BYTES, ENC_KEY)!=0) {
+                    		pushMessage(&REJECTED,1);
+	        		break;
+	        	}		
+
+		        else {
+		        	// Verify nonce
+		        	for (j = 1; j < 33; j++) {
+		        		if (bal_plaintext[j] != current_nonce[j - 1]) {
+		        			flag = 1;
+		        		}
+		        	}
+
+				// Send message if request is not a withdrawal request
+                    		if (bal_plaintext[0]!= REQUEST_BALANCE){
+                        		pushMessage(&REJECTED,1);
+                    		}
+
+				// If nonce checked passed 
+		        	if (flag == 0) { 
+                        pushMessage(&bills_left, 1);
+
+					// Resets the nonce to prevent replays
+                        hydro_random_buf(&current_nonce, 32);
+		        		break;
+		        	}    
+                }
+            }
+        	case (int)WITHDRAWAL_REQUEST:
+            {
+	        	// Verify signed request
+    	        pullMessage(message, WITHDRAW_MESSAGE_LEN);
+	        	uint8_t plaintext[WITHDRAW_MESSAGE_LEN];
 
 			// Check if message is forged
 	        	if (hydro_secretbox_decrypt(plaintext, message, CIPHERTEXT_LEN,
-	        		(uint64_t) 0, "WITHDRAW", ENC_KEY)!=0) {
+	        		(uint64_t) 0, EIGHT_ZERO_BYTES, ENC_KEY)!=0) {
                     		pushMessage(&REJECTED,1);
 	        		break;
 	        	}		
@@ -276,7 +319,7 @@ int main(void)
 
 				// If nonce checked passed 
 		        	if (flag == 0) { 
-			        	uint8 numbills = plaintext[1 + 32]; // (WITHDRAW (1 byte)| nonce (32 bytes)| amount)
+			        	uint8 numbills = plaintext[1 + 32]; // WITHDRAW (1 byte)| nonce (32 bytes)| amount (1 byte)
 			        	ptr = BILLS_LEFT;
 
 			        	if (*ptr < numbills) {
@@ -303,6 +346,7 @@ int main(void)
 		        		break;
 		        	}
 	        	}
+            }
     	}
 	}
-}
+}   
