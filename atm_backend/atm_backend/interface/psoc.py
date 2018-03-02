@@ -5,6 +5,8 @@ import threading
 import serial
 import sys
 import os
+
+from binascii import hexlify
 from serial.tools.list_ports import comports as list_ports
 
 
@@ -43,6 +45,7 @@ class Psoc(object):
         self.port = ''
         self.baudrate = 115200
         self.old_ports = [port_info.device for port_info in list_ports()]
+
         self.SYNC_REQUEST_PROV         = 0x15
         self.SYNC_REQUEST_NO_PROV      = 0x16
         self.SYNC_CONFIRMED_PROV       = 0x17
@@ -83,7 +86,8 @@ class Psoc(object):
         Args:
             msg (str): message to be sent to the PSoC
         """
-        pkt = struct.pack("B%ds" % (len(msg)), len(msg), msg)
+        #pkt = struct.pack("B%ds" % (len(msg)), len(msg), msg)
+        pkt = struct.pack("%ds" % len(msg), msg)
         self.write(pkt)
         time.sleep(0.1)
 
@@ -94,7 +98,7 @@ class Psoc(object):
         Returns:
             string with message from PSoC
         """
-        hdr = self.read(1)
+        hdr = self.read(size=1)
         if len(hdr) != 1:
             self._vp("RECEIVED BAD HEADER: \'%s\'" % hdr, logging.error)
             return ''
@@ -103,14 +107,21 @@ class Psoc(object):
 
     def _sync_once(self,request,accept,wrong_states):
         resp = ''
-        while resp in accept:
-            self._push_msg(request)
-            resp = self.read(1)
+        while resp not in accept:
+            self._push_msg(chr(request))
+            resp = self.read(size=1)
+            print "resp=", hexlify(resp), resp
+            if resp == "":
+                continue
+            resp = ord(resp)
+
 
             # if in wrong state (provisioning/normal)
             if resp in wrong_states:
+                #self._vp(str(resp))
                 return False
 
+        self._vp(resp)
         return resp
 
     def _sync(self, provision):
@@ -125,8 +136,10 @@ class Psoc(object):
             AlreadyProvisioned if PSoC is unexpectedly already provisioned
         """
         if provision:
+            #self._push_msg(chr(self.SYNC_REQUEST_NO_PROV))
+
             if not self._sync_once(self.SYNC_REQUEST_PROV,
-                self.SYNC_CONFIRMED_NO_PROV,
+                [self.SYNC_CONFIRMED_NO_PROV],
                 [self.SYNC_CONFIRMED_PROV,
                 self.SYNC_FAILED_NO_PROV,
                 self.SYNC_FAILED_PROV]):
@@ -134,8 +147,8 @@ class Psoc(object):
                 self._vp("Already provisioned!", logging.error)
                 raise AlreadyProvisioned
         else:
-            if not self._sync_once(self.REQUEST_NO_PROV,
-                self.SYNC_CONFIRMED_PROV,
+            if not self._sync_once(self.SYNC_REQUEST_NO_PROV,
+                [self.SYNC_CONFIRMED_PROV],
                 [self.SYNC_CONFIRMED_NO_PROV,
                 self.SYNC_FAILED_NO_PROV,
                 self.SYNC_FAILED_PROV]):
@@ -143,20 +156,21 @@ class Psoc(object):
                 self._vp("Not yet provisioned!", logging.error)
                 raise NotProvisioned
 
-        self._push_msg(self.SYNCED)
+        self._push_msg(chr(self.SYNCED))
 
     def open(self):
         time.sleep(.1)
         self.ser = serial.Serial(self.port, baudrate=self.baudrate, timeout=1)
         resp = self._sync_once(self.PSOC_DEVICE_REQUEST,[self.SYNC_TYPE_HSM_P, self.SYNC_TYPE_HSM_N, self.SYNC_TYPE_CARD_P, self.SYNC_TYPE_CARD_N],[])
+        print "syncd", hexlify(resp), resp
         resp_f = "Error"
-        if resp == self.SYNC_TYPE_HSM_P:
+        if resp == chr(self.SYNC_TYPE_HSM_P):
             resp_f="HSM_P"
-        elif resp == self.SYNC_TYPE_HSM_N:
+        elif resp == chr(self.SYNC_TYPE_HSM_N):
             resp_f="HSM_N"
-        elif resp == self.SYNC_TYPE_CARD_P:
+        elif resp == chr(self.SYNC_TYPE_CARD_P):
             resp_f="CARD_P"
-        elif resp == self.SYNC_TYPE_CARD_N:
+        elif resp == chr(self.SYNC_TYPE_CARD_N):
             resp_f="CARD_N"
         if resp_f == self.sync_name_p or resp_f == self.sync_name_n:
             logging.info('DYNAMIC SERIAL: Connected to %s', resp)
@@ -222,6 +236,7 @@ class Psoc(object):
         try:
             self.lock.acquire()
             res = self.ser.read(size=size)
+            print "read: ", hexlify(res), res
             self.lock.release()
             return res
         except serial.SerialException:
@@ -244,6 +259,8 @@ class Psoc(object):
         try:
             self.lock.acquire()
             res = self.ser.write(data)
+            print "write: ", hexlify(data), data
+
             self.lock.release()
             return res
         except serial.SerialException:

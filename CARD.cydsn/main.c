@@ -93,6 +93,8 @@ void provision()
 {
     uint8 message[101];
     
+    syncConnection(SYNC_PROV);
+    
     // synchronize with bank
     syncConnection(SYNC_PROV);
  
@@ -141,8 +143,6 @@ int main(void)
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
     USER_INFO_Start();
     USB_UART_Start();
-    
-    //pushMessage("test", 5);
     
     // Provision card if on first boot
     ptr = PROVISIONED;

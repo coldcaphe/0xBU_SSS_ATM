@@ -39,6 +39,9 @@ class ProvisionTool(object):
         Returns:
             bool: True on Success, False on Failure
         """
+        card_blob = str(card_blob)
+        pin = str(pin)
+
         self.card.wait_for_insert()
         if not self.card.inserted():
             logging.error('provision_card: no card was inserted!')

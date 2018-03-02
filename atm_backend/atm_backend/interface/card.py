@@ -99,7 +99,7 @@ class Card(Psoc):
         """
         self._sync(True)
         self._push_msg(struct.pack('b',transaction)) 
-        response = self.read(s=1025)#reads 1025 bytes
+        response = self.read(size=1025)#reads 1025 bytes
         return struct.unpack('b1024s',response)[1]
     
     def sign_nonce(self,transaction, nonce, pin):
@@ -118,7 +118,7 @@ class Card(Psoc):
 
         self._sync(True)
         self._push_msg(struct.pack('b32s8s',transaction,nonce,pin)) 
-        signed_nonce = self.read(s=33)
+        signed_nonce = self.read(size=33)
 
         return struct.unpack('b32s',signed_nonce)[1]
 
@@ -135,7 +135,7 @@ class Card(Psoc):
         """
         self._sync(True)
         self._push(struct.pack('b8s',transaction,new_pin))
-        public_key = self.read(s=33)
+        public_key = self.read(size=33)
         return struct.unpack('b32s',public_key)
 
     def provision(self, r, rand_key, uuid):
@@ -150,19 +150,21 @@ class Card(Psoc):
         Returns:
             bool: True if provisioning succeeded, False otherwise
         """
+        print "fuk0"
         self._sync(True)
 
+        print "fuk"
         msg = self.read(1)
         if msg != self.INITIATE_PROVISION:
             return False
 
-        
+        print "fuk2"
         self._push_msg(struct.pack("32s", r))
         self._push_msg(struct.pack("32s", rand_key))
         self._push_msg(struct.pack("36s", uuid))
 
         msg = self.read(1)
-        if msg!=self.ACCEPTED:
+        if msg != self.ACCEPTED:
             return False
         return True
 

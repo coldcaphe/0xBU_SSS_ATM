@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="ectf-workspace\CARD\Source Files\main.c">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="ectf-workspace\CARD\Header Files\usbserialprotocol.h">
 <ExpandedNodeIds>
 <v>ectf-workspace</v>
 <v>ectf-workspace\CARD</v>
@@ -52,7 +52,6 @@
 <v>ectf-workspace\libhydrogen\Header Files\x25519.h</v>
 <v>ectf-workspace\libhydrogen\Source Files</v>
 <v>ectf-workspace\libhydrogen\Source Files\hydrogen.c</v>
-<v>ectf-workspace\SECURITY_MODULE</v>
 <v>ectf-workspace\SECURITY_MODULE\TopDesign</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Pins</v>
@@ -109,16 +108,6 @@
 <v>ectf-workspace\libhydrogen\Source Files</v>
 <v>ectf-workspace\libhydrogen\Source Files\hydrogen.c</v>
 <v>ectf-workspace\SECURITY_MODULE</v>
-<v>ectf-workspace\SECURITY_MODULE\TopDesign</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Pins</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Analog</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Clocks</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Interrupts</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\System</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Directives</v>
-<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Flash Security</v>
-<v>ectf-workspace\SECURITY_MODULE\Header Files</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">

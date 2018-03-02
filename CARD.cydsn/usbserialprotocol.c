@@ -17,13 +17,13 @@
 
 #define SYNC_REQUEST_PROV 0x15
 #define SYNC_REQUEST_NO_PROV 0x16
-#define SYNC_FAILED_PROV 0x17
-#define SYNC_FAILED_NO_PROV 0x18
-#define SYNC_CONFIRMED_PROV 0x19
-#define SYNC_CONFIRMED_NO_PROV 0x1A
+#define SYNC_CONFIRMED_PROV 0x17
+#define SYNC_CONFIRMED_NO_PROV 0x18
+#define SYNC_FAILED_NO_PROV 0x19
+#define SYNC_FAILED_PROV 0x1A
 #define SYNCED 0x1B
-#define SYNC_TYPE_CARD_P 0x1D
-#define SYNC_TYPE_CARD_N 0x3D
+#define SYNC_TYPE_CARD_N 0x1D
+#define SYNC_TYPE_CARD_P 0x3D
 #define PSOC_DEVICE_REQUEST 0x1E
 
 
@@ -70,36 +70,36 @@ uint8 pullMessage(uint8 data[], uint8 length)
  */
 void syncConnection(int prov) 
 {
-    uint8* message;
+    uint8 message[1];
     
     do {
         pullMessage(message, (uint8)1);                              
         if (prov) {
-            if (*message == SYNC_REQUEST_NO_PROV) {
+            if (message[0] == SYNC_REQUEST_NO_PROV) {
                 pushMessage((uint8*)SYNC_CONFIRMED_PROV, (uint8)1);
                 return;
                 
             }
-            else if (*message == SYNC_REQUEST_PROV) {
-                pushMessage((uint8*)SYNC_FAILED_PROV, (uint8)1);
+            else if (message[0] == SYNC_REQUEST_PROV) {
+                pushMessage((uint8*)SYNC_CONFIRMED_NO_PROV, (uint8)1);
                 return;
             }
-            else if (*message == PSOC_DEVICE_REQUEST) {
+            else if (message[0] == PSOC_DEVICE_REQUEST) {
                 pushMessage((uint8*)SYNC_TYPE_CARD_P, (uint8)1);
                 return;
             }
         }
         else {
-            if (*message == SYNC_REQUEST_PROV) {
+            if (message[0] == SYNC_REQUEST_PROV) {
                 pushMessage((uint8*)SYNC_CONFIRMED_NO_PROV, (uint8)1);
                 return;
                 
             }
-            else if (*message == SYNC_REQUEST_NO_PROV) {
-                pushMessage((uint8*)SYNC_FAILED_NO_PROV, (uint8)1);
+            else if (message[0] == SYNC_REQUEST_NO_PROV) {
+                pushMessage((uint8*)SYNC_CONFIRMED_PROV, (uint8)1);
                 return;
             }
-            else if (*message == PSOC_DEVICE_REQUEST) {
+            else if (message[0] == PSOC_DEVICE_REQUEST) {
                 pushMessage((uint8*)SYNC_TYPE_CARD_N, (uint8)1);
                 return;
             }
