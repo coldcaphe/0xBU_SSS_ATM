@@ -96,12 +96,11 @@ atm\_backend and the bank\_server.
 | Value | Type/Size |
 |-----------|------|
 |Card ID | 36 ascii characters |
-|HSM ID | 4 byte integer|
+|HSM ID | 36 ascii characters|
 |Nonces| 32 bytes |
 |PINs| 8 ascii characters |
-|Balance Amount| 4 byte integer |
-|Withdraw Amount | 4 byte integer |
-|Encrypted Message| Length of data rounded up to the nearest multiple of 16 + a 16 byte authentication tag|
+|Balance Amount| 4 byte unsigned integer |
+|Withdraw Amount | 1 byte unsigned integer |
 
 ### Enum values used:
 | Message Type | Value| Description |
