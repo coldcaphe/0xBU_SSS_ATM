@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
   19:usbserialprotocol.c ****     while(USB_UART_SpiUartGetRxBufferSize() < 1); // wait for byte
   37              		.loc 1 19 0 discriminator 1
   38 0002 FFF7FEFF 		bl	USB_UART_SpiUartGetRxBufferSize
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 2
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 2
 
 
   39              	.LVL0:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
   84              	.LVL6:
   27:usbserialprotocol.c ****     for (uint8 i = 0; i < size; i++) {
   85              		.loc 1 27 0 discriminator 3
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 3
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 3
 
 
   86 0010 0134     		adds	r4, r4, #1
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
   35:usbserialprotocol.c ****         data[i] = getValidByte();   
  133              		.loc 1 35 0 discriminator 3
  134 000a 3D19     		adds	r5, r7, r4
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 4
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 4
 
 
  135 000c FFF7FEFF 		bl	getValidByte
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  173 0002 82B0     		sub	sp, sp, #8
  174              		.cfi_def_cfa_offset 16
  175 0004 0400     		movs	r4, r0
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 5
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 5
 
 
  176              	.LVL20:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  217              	.LVL24:
  218 0042 16E0     		b	.L12
  219              	.L10:
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 6
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 6
 
 
   63:usbserialprotocol.c ****             }
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  257              		.loc 1 79 0
  258 007a 02B0     		add	sp, sp, #8
  259              		@ sp needed
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 7
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 7
 
 
  260              	.LVL28:
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  314 0033 02       		.uleb128 0x2
  315 0034 02       		.byte	0x2
  316 0035 05       		.byte	0x5
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 8
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 8
 
 
  317 0036 F3020000 		.4byte	.LASF2
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  371 009b 35030000 		.4byte	.LASF14
  372 009f 02       		.uleb128 0x2
  373 00a0 04       		.byte	0x4
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 9
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 9
 
 
  374 00a1 07       		.byte	0x7
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  428 0122 12000000 		.4byte	.LBE2-.LBB2
  429 0126 0D       		.uleb128 0xd
  430 0127 6900     		.ascii	"i\000"
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 10
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 10
 
 
  431 0129 01       		.byte	0x1
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  485 01a8 84000000 		.4byte	.LFE38-.LFB38
  486 01ac 01       		.uleb128 0x1
  487 01ad 9C       		.byte	0x9c
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 11
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 11
 
 
  488 01ae 8D020000 		.4byte	0x28d
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  542 0214 05       		.uleb128 0x5
  543 0215 03       		.byte	0x3
  544 0216 01000000 		.4byte	.LANCHOR0+1
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 12
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 12
 
 
  545 021a 0F       		.uleb128 0xf
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  599 0274 10       		.uleb128 0x10
  600 0275 72000000 		.4byte	.LVL27
  601 0279 EA000000 		.4byte	0xea
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 13
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 13
 
 
  602 027d 0F       		.uleb128 0xf
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  656 02e0 44010000 		.4byte	0x144
  657 02e4 15       		.byte	0x15
  658 02e5 13       		.uleb128 0x13
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 14
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 14
 
 
  659 02e6 A1020000 		.4byte	.LASF32
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  713 0355 02000000 		.4byte	SYNC_TYPE_CARD_P
  714 0359 13       		.uleb128 0x13
  715 035a E0000000 		.4byte	.LASF40
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 15
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 15
 
 
  716 035e 03       		.byte	0x3
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  770 03ca 00       		.byte	0
  771              		.section	.debug_abbrev,"",%progbits
  772              	.Ldebug_abbrev0:
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 16
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 16
 
 
  773 0000 01       		.uleb128 0x1
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  827 0036 05       		.uleb128 0x5
  828 0037 26       		.uleb128 0x26
  829 0038 00       		.byte	0
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 17
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 17
 
 
  830 0039 49       		.uleb128 0x49
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  884 0070 898201   		.uleb128 0x4109
  885 0073 00       		.byte	0
  886 0074 11       		.uleb128 0x11
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 18
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 18
 
 
  887 0075 01       		.uleb128 0x1
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  941 00ac 0D       		.uleb128 0xd
  942 00ad 34       		.uleb128 0x34
  943 00ae 00       		.byte	0
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 19
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 19
 
 
  944 00af 03       		.uleb128 0x3
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  998 00ec 13       		.uleb128 0x13
  999 00ed 2F       		.uleb128 0x2f
  1000 00ee 0B       		.uleb128 0xb
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 20
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 20
 
 
  1001 00ef 00       		.byte	0
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  1055 0004 0A000000 		.4byte	.LVL5
  1056 0008 0100     		.2byte	0x1
  1057 000a 50       		.byte	0x50
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 21
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 21
 
 
  1058 000b 0A000000 		.4byte	.LVL5
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  1112 0095 0400     		.2byte	0x4
  1113 0097 F3       		.byte	0xf3
  1114 0098 01       		.uleb128 0x1
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 22
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 22
 
 
  1115 0099 50       		.byte	0x50
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  1169 0004 0200     		.2byte	0x2
  1170 0006 00000000 		.4byte	.Ldebug_info0
  1171 000a 04       		.byte	0x4
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 23
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 23
 
 
  1172 000b 00       		.byte	0
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  1209      00
  1210              	.LASF39:
  1211 0041 53594E43 		.ascii	"SYNC_TYPE_CARD_P\000"
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 24
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 24
 
 
  1211      5F545950 
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  1234              	.LASF40:
  1235 00e0 53594E43 		.ascii	"SYNC_TYPE_HSM_N\000"
  1235      5F545950 
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 25
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 25
 
 
  1235      455F4853 
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  1259 0187 5553425F 		.ascii	"USB_UART_SpiUartWriteTxData\000"
  1259      55415254 
  1259      5F537069 
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 26
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 26
 
 
  1259      55617274 
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 1
  1277              	.LASF6:
  1278 02cb 6C6F6E67 		.ascii	"long long int\000"
  1278      206C6F6E 
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccw3hzeE.s 			page 27
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccklcHTX.s 			page 27
 
 
  1278      6720696E 
