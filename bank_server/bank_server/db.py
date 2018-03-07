@@ -5,12 +5,14 @@ need access to database. (sqlite3 does not gurantee concurrent operations)"""
 
 import sqlite3
 import os
+from datetime import timedelta, datetime
+
 
 class DB(object):
     """Implements a Database interface for the bank server and admin interface"""
     def __init__(self, db_mutex=None, db_init=None, db_path=None):
         super(DB, self).__init__()
-        self.db_conn = sqlite3.connect(os.getcwd() + db_path)
+        self.db_conn = sqlite3.connect(os.getcwd() + db_path, detect_types=sqlite3.PARSE_DECLTYPES)
         self.db_mutex = db_mutex
         self.cur = self.db_conn.cursor()
         if db_init and not os.path.isfile(os.getcwd() + db_path):
@@ -60,8 +62,8 @@ class DB(object):
         """
         self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE account_name = (?) LIMIT 1);', (name,))
         
-        result = self.cur.fetchone()
-        if result[0] == 0:
+        result = self.cur.fetchone()[0]
+        if result == 0:
             return False
 
         return True
@@ -73,19 +75,21 @@ class DB(object):
         """
         self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE card_id = (?) LIMIT 1);', (card_id,))
         
-        result = self.cur.fetchone()
-        if result[0] == 0:
+        result = self.cur.fetchone()[0]
+        if result == 0:
             return False
 
         return True
 
     @lock_db
     def check_expired_and_update_nonce(self, card_id, nonce):
-        (_, timestamp, used) = get_nonce_data(card_id)
+        res = self.get_nonce_data(card_id)
+        if res is not None: #If this isnt' the first nocne
+            (_, timestamp, used) = res
 
-        #if card has unused nonce that hasn't expired, return error
-        if not used and self.check_timestamp_valid(timestamp):
-            return False
+            #if card has unused nonce that hasn't expired, return error
+            if not used and self.check_timestamp_valid(timestamp):
+                return False
 
         return self.modify("UPDATE cards SET nonce=(?), used=0, timestamp=DATETIME('now','localtime') WHERE card_id=(?);", 
                         (sqlite3.Binary(nonce), card_id,))
@@ -97,7 +101,7 @@ class DB(object):
 
     @lock_db
     def get_hsm_key(self, hsm_id):
-        self.cur.execute('SELECT k_hsm FROM atms WHERE hsm_id = (?);', (hsm_id,))
+        self.cur.execute('SELECT hsm_key FROM atms WHERE hsm_id = (?);', (hsm_id,))
         
         result = self.cur.fetchone()
         if result == None:
@@ -138,7 +142,10 @@ class DB(object):
 
     @lock_db
     def read_set_nonce_used(self, card_id, nonce):
-        (db_nonce, timestamp, used) = get_nonce_data(card_id)
+        res = self.get_nonce_data(card_id)
+        if res is None:
+            return False
+        (db_nonce, timestamp, used) = res
 
         if used:
             return False
@@ -146,7 +153,7 @@ class DB(object):
         if db_nonce != nonce:
             return False
 
-        if not check_timestamp_valid(timestamp):
+        if not self.check_timestamp_valid(timestamp):
             return False
 
         return self.modify("UPDATE cards SET nonce=(?), used=0, timestamp=DATETIME('now','localtime') WHERE card_id=(?);", 
@@ -163,7 +170,7 @@ class DB(object):
         return result[0]
 
     @lock_db
-    def set_first_pk(card_id, pk):
+    def set_first_pk(self, card_id, pk):
         #check that card exists and has null pk
         self.cur.execute('SELECT EXISTS(SELECT 1 FROM cards WHERE card_id = (?) AND pk IS NULL LIMIT 1);', (card_id,))
         
@@ -172,20 +179,51 @@ class DB(object):
             return False
 
         return self.modify("UPDATE cards SET pk=(?) WHERE card_id=(?);", 
-            (sqlite3.Binary(new_pk), card_id,))
+            (sqlite3.Binary(pk), card_id,))
 
+    @lock_db
+    def set_initial_num_bills(self, hsm_id, num_bills):
+        #check that card exists and has null pk
+        self.cur.execute('SELECT EXISTS(SELECT 1 FROM atms WHERE hsm_id = (?) AND num_bills IS NULL LIMIT 1);', (hsm_id,))
+        
+        result = self.cur.fetchone()
+        if result[0] == 0:
+            print "hsm doesn't exist"
+            return False
+
+        return self.modify("UPDATE atms SET num_bills=(?) WHERE hsm_id=(?);", 
+            (num_bills, hsm_id,))
+
+    @lock_db
+    def get_balance(self, card_id):
+        self.cur.execute('SELECT balance FROM cards WHERE card_id = (?);', (card_id,))
+        
+        result = self.cur.fetchone()
+        if result == None:
+            return None
+
+        return result[0]
 
 
 ##########
 
-    def get_nonce_data(card_id):
+    def get_nonce_data(self, card_id):
         self.cur.execute('SELECT nonce, timestamp, used FROM cards WHERE card_id = (?);', (card_id,))
         (nonce, timestamp, used) = self.cur.fetchone()
 
-        if nonce == None or timestamp == None or timestamp == None or used == None:
+        if nonce == None or timestamp == None or used == None:
             return None
 
         return (nonce, timestamp, used)
+
+    def check_timestamp_valid(self, timestamp):
+        """
+        Check if the timestamp is more than 4 seconds old (expired)
+        """
+        if timestamp + timedelta(seconds=4) < datetime.now():
+            return False
+        else:
+            return True
 
 ###############################################################
     #############################
@@ -211,7 +249,7 @@ class DB(object):
             (bool): True on success, false otherwise
         """
 
-        return self.modify('INSERT INTO atms(hsm_id, hsm_key, num_bills) values (?,?,?);', (hsm_id, sqlite3.Binary(hsm_key), 128, ))
+        return self.modify('INSERT INTO atms(hsm_id, hsm_key) values (?,?);', (hsm_id, sqlite3.Binary(hsm_key),))
 
     @lock_db
     def admin_get_balance(self, account_name):

@@ -36,10 +36,12 @@ class Bank:
             str: Randomly generated nonce
         '''
         nonce = self.bank_rpc.get_nonce(card_id)
-        return nonce
+        if nonce is None:
+            return None
+        return str(nonce)
     
 
-    def check_balance(self,card_id,signed_nonce,hsm_nonce,hsm_id):
+    def check_balance(self, card_id, nonce, signature, hsm_id, hsm_nonce):
         '''
         Verifies that a nonce has been properly signed. 
         
@@ -52,12 +54,11 @@ class Bank:
         Returns:
             str: Response will be an encrypted message containing the account balance 
         '''
-        encoded_signed_nonce = xmlrpclib.Binary(signed_nonce)
-        encoded_hsm_nonce = xmlrpclib.Binary(hsm_id)
-        res = self.bank_rpc.check_balance(card_id,encoded_signed_nonce,encoded_hsm_nonce,hsm_id) #signed_nonce,transaction,extra_data
-        return res
+
+        return self.bank_rpc.check_balance(card_id, xmlrpclib.Binary(nonce), 
+                                xmlrpclib.Binary(signature), hsm_id, xmlrpclib.Binary(hsm_nonce))
     
-    def change_pin(self,card_id,signed_nonce,new_pk):
+    def change_pin(self, card_id, nonce, signature, new_pk):
         '''
         Changes the public key the server is using
     
@@ -68,11 +69,10 @@ class Bank:
         Returns:
             str: Response will be either an accept or reject message 
         '''
-        encoded_signed_nonce = xmlrpclib.Binary(signed_nonce)
-        res = self.bank_rpc.change_pin(card_id,encoded_signed_nonce,new_pk) 
+        res = self.bank_rpc.change_pin(card_id, xmlrpclib.Binary(nonce), xmlrpclib.Binary(signature), xmlrpclib.Binary(new_pk))
         return res
 
-    def withdraw(self,card_id,signed_nonce,hsm_nonce,hsm_id,amount):
+    def withdraw(self, card_id, nonce, signature, hsm_id, hsm_nonce, amount):
         '''
         Requests server to aproove a withdraw request. 
         Args:
@@ -84,9 +84,8 @@ class Bank:
         Returns:
             str: Response will be an encrypted message containing the acount balance 
         '''
-        encoded_signed_nonce = xmlrpclib.Binary(signed_nonce)
-        encoded_hsm_nonce = xmlrpclib.Binary(hsm_nonce)
-        res = self.bank_rpc.withdraw(card_id,encoded_signed_nonce,encoded_hsm_nonce,hsm_id,amount) 
+        res = self.bank_rpc.withdraw(card_id, xmlrpclib.Binary(nonce), xmlrpclib.Binary(signature),
+                                        hsm_id, xmlrpclib.Binary(hsm_nonce), amount) 
         return res
 
     def set_first_pk(self,card_id,pk):
@@ -100,6 +99,18 @@ class Bank:
             bool: True on success, False otherwise
         '''
         return self.bank_rpc.set_first_pk(card_id, pk) 
+
+    def set_initial_num_bills(self, hsm_id, num_bills):
+        '''
+        Requests server to set hsm's initial balance (for provisioning)
+        Args:
+            hsm_id (str): The hsm to set the num_bills for
+            num_bills (int): The bill count of the hsm
+
+        Returns:
+            bool: True on success, False otherwise
+        '''
+        return self.bank_rpc.set_initial_num_bills(hsm_id, num_bills) 
 
 class DummyBank:
     """Emulated bank for testing"""

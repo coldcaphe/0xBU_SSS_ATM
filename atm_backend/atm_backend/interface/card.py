@@ -21,88 +21,19 @@ class Card(Psoc):
     def initialize(self):
         super(Card, self).__init__('CARD', self.port, self.verbose)
 
-    def _authenticate(self, pin):
-        """
-        Requests authentication from the ATM card
-
-        Args:
-            pin (str): Challenge PIN
-
-        Returns:
-            bool: True if ATM card verified authentication, False otherwise
-        """
-
-        self._vp('Sending pin %s' % pin)
-        self._push_msg(pin)
-
-        resp = self._pull_msg()
-        self._vp('Card response was %s' % resp)
-        return resp == 'OK'
-
-    def _get_uuid(self):
-        """
-        Retrieves the UUID from the ATM card
-
-        Returns:
-            str: UUID of ATM card
-        """
-        uuid = self._pull_msg()
-        self._vp('Card sent UUID %s' % uuid)
-        return uuid
-
-    def _send_op(self, op):
-        """
-        Sends requested operation to ATM card
-
-        Args:
-            op (int): Operation to send from [self.CHECK_BAL, self.WITHDRAW,
-                self.CHANGE_PIN]
-        """
-        self._vp('Sending op %d' % op)
-        self._push_msg(str(op))
-
-        while self._pull_msg() != 'K':
-            self._vp('Card hasn\'t received op', logging.error)
-        self._vp('Card received op')
-
-    def change_pin(self, old_pin, new_pin):
-        """
-        Requests for a pin to be changed
-
-        Args:
-            old_pin (str): Challenge PIN
-            new_pin (str): New PIN to change to
-
-        Returns:
-            bool: True if PIN was changed, False otherwise
-        """
-        self._sync(False)
-
-        if not self._authenticate(old_pin): #if old pin entered was not correct
-            return False
-
-        self._send_op(self.CHANGE_PIN)
-
-        self._vp('Sending PIN %s' % new_pin)
-        self._push_msg(new_pin)
-
-        resp = self._pull_msg()
-        self._vp('Card sent response %s' % resp)
-        return resp == 'SUCCESS'
-
-    def get_card_id(self,transaction):
+    def get_card_id(self):
         """
         Checks the card balance
 
         Returns:
             str: UUID of ATM card on success
         """
-        self._sync(True)
-        self._push_msg(struct.pack('b',transaction)) 
-        response = self.read(size=1025)#reads 1025 bytes
-        return struct.unpack('b1024s',response)[1]
+        self._sync(False)
+        self._push_msg(struct.pack('b', self.REQUEST_NAME)) 
+        response = self.read(size=37)
+        return struct.unpack('b36s',response)[1]
     
-    def sign_nonce(self,transaction, nonce, pin):
+    def sign_nonce(self,nonce, pin):
         """
         Signs the random nonce, called when customer tries to perform
         an action of the account associated with the connected ATM card
@@ -116,13 +47,13 @@ class Card(Psoc):
             str: Signed nonce
         """
 
-        self._sync(True)
-        self._push_msg(struct.pack('b32s8s',transaction,nonce,pin)) 
-        signed_nonce = self.read(size=33)
+        self._sync(False)
+        self._push_msg(struct.pack('b32s8s', self.REQUEST_CARD_SIGNATURE, nonce, pin)) 
+        signed_nonce = self.read(size=65)
 
-        return struct.unpack('b32s',signed_nonce)[1]
+        return struct.unpack('b64s',signed_nonce)[1]
 
-    def request_new_public_key(self,transaction,new_pin):
+    def request_new_public_key(self, new_pin):
         """
         Calculates what the public key would be based on the pin sent
 
@@ -133,10 +64,11 @@ class Card(Psoc):
         Returns
             str: New Public Key
         """
-        self._sync(True)
-        self._push(struct.pack('b8s',transaction,new_pin))
+
+        self._sync(False)
+        self._push_msg(struct.pack('B8s', self.REQUEST_NEW_PK, new_pin))
         public_key = self.read(size=33)
-        return struct.unpack('b32s',public_key)
+        return struct.unpack('32s',public_key[1:])[0]
 
     def provision(self, r, rand_key, uuid):
         """
@@ -150,22 +82,16 @@ class Card(Psoc):
         Returns:
             bool: True if provisioning succeeded, False otherwise
         """
-        print "fuk0"
+
         self._sync(True)
-
-        print "fuk"
-        msg = self.read(1)
-        if msg != self.INITIATE_PROVISION:
-            return False
-
-        print "fuk2"
+        self._push_msg(struct.pack("1s", chr(self.REQUEST_PROVISION)))
         self._push_msg(struct.pack("32s", r))
         self._push_msg(struct.pack("32s", rand_key))
         self._push_msg(struct.pack("36s", uuid))
 
-        msg = self.read(1)
-        if msg != self.ACCEPTED:
+        if ord(self.read(1)) != self.ACCEPTED:
             return False
+
         return True
 
 import string
@@ -258,5 +184,4 @@ class DummyCard(Card):
         self._vp('Provisioning complete')
 
         return True
-
 

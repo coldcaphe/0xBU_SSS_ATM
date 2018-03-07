@@ -11,21 +11,7 @@
 */
 
 #include "usbserialprotocol.h"
-
-#define RECV_OK 0
-#define RECV_ER 1
-
-#define SYNC_REQUEST_PROV 0x15
-#define SYNC_REQUEST_NO_PROV 0x16
-#define SYNC_CONFIRMED_PROV 0x17
-#define SYNC_CONFIRMED_NO_PROV 0x18
-#define SYNC_FAILED_NO_PROV 0x19
-#define SYNC_FAILED_PROV 0x1A
-#define SYNCED 0x1B
-#define SYNC_TYPE_HSM_N 0x1C
-#define SYNC_TYPE_HSM_P 0x3C
-#define PSOC_DEVICE_REQUEST 0x1E
-
+#include "common.h"
 
 uint8 getValidByte()
 {
@@ -36,27 +22,18 @@ uint8 getValidByte()
 }
 
 
-int pushMessage(const uint8 data[], uint8 size)
+void pushMessage(const uint8 data[], uint8 size)
 {
-    int i;
-
-    DB_UART_UartPutChar(size);
-    
-    for (i = 0; i < size; i++) {
+    for (uint8 i = 0; i < size; i++) {
         DB_UART_UartPutChar(data[i]);   
     }
-    
-    return RECV_OK;
 }
 
-uint8 pullMessage(uint8 data[], uint8 length)
+void pullMessage(uint8 data[], uint8 length)
 {
-    uint8 i;
-    for (i = 0; i < length; i++) {
+    for (uint8 i = 0; i < length; i++) {
         data[i] = getValidByte();   
     }
-
-   return i;
 }
 
 /* 
@@ -70,43 +47,35 @@ uint8 pullMessage(uint8 data[], uint8 length)
  */
 void syncConnection(int prov) 
 {
-    uint8 message[200];
+    uint8 message[1];
     
     do {
         pullMessage(message, (uint8)1);                              
         if (prov) {
-            if (*message == SYNC_REQUEST_NO_PROV) {
-                pushMessage((uint8*)SYNC_CONFIRMED_PROV, (uint8)1);
-                return;
-                
+            if (message[0] == SYNC_REQUEST_NO_PROV) {
+                pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
             }
-            else if (*message == SYNC_REQUEST_PROV) {
-                pushMessage((uint8*)SYNC_FAILED_PROV, (uint8)1);
-                return;
+            else if (message[0] == SYNC_REQUEST_PROV) {
+                pushMessage(&SYNC_CONFIRMED_NO_PROV, (uint8)1);
             }
-            else if (*message == PSOC_DEVICE_REQUEST) {
-                pushMessage((uint8*)SYNC_TYPE_HSM_P, (uint8)1);
-                return;
+            else if (message[0] == PSOC_DEVICE_REQUEST) {
+                pushMessage(&SYNC_TYPE_HSM_P, (uint8)1);
             }
         }
         else {
-            if (*message == SYNC_REQUEST_PROV) {
-                pushMessage((uint8*)SYNC_CONFIRMED_NO_PROV, (uint8)1);
-                return;
-                
+            if (message[0] == SYNC_REQUEST_PROV) {
+                pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
             }
-            else if (*message == SYNC_REQUEST_NO_PROV) {
-                pushMessage((uint8*)SYNC_FAILED_NO_PROV, (uint8)1);
-                return;
+            else if (message[0] == SYNC_REQUEST_NO_PROV) {
+                pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
             }
-            else if (*message == PSOC_DEVICE_REQUEST) {
-                pushMessage((uint8*)SYNC_TYPE_HSM_N, (uint8)1);
-                return;
+            else if (message[0] == PSOC_DEVICE_REQUEST) {
+                pushMessage(&SYNC_TYPE_HSM_N, (uint8)1);
             }
         }
     }
+    while (message[0] != SYNCED);
     
-    while (*message != SYNCED);
 }
 
 /* [] END OF FILE */

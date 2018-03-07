@@ -58,10 +58,10 @@ import os
 import struct
 import datetime
 import base64
+import xmlrpclib
 
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from bank_server import DB
-from datetime import timedelta
 import crypto
 
 class Bank(object):
@@ -89,20 +89,27 @@ class Bank(object):
         self.db_mutex = db_mutex
         self.db_obj = DB(db_mutex=self.db_mutex, db_init=self.db_init, db_path=self.db_path)
         self.server = SimpleXMLRPCServer((self.bank_host, self.bank_port))
+
+
+        # Enum values for transaction opcodes
+        self.REQUEST_BALANCE = 0x0A
+        self.WITHDRAWAL_REQUEST = 0x08
+
+
         self.server.register_function(self.get_nonce)
         self.server.register_function(self.withdraw)
         self.server.register_function(self.check_balance)
         self.server.register_function(self.change_pin)
         self.server.register_function(self.set_first_pk)
+        self.server.register_function(self.set_initial_num_bills)
+
 
         # Bank is initialized. Tell AdminBackend to report that ready_for_atm
         # is True.
         ready_event.set()
         self.server.serve_forever()
 
-        # Enum values for transaction opcodes
-        self.CHECK_BALANCE = 0x11
-        self.WITHDRAW = 0x13
+
 
 ###############################################################################
 
@@ -124,7 +131,7 @@ class Bank(object):
         if not self.db_obj.check_expired_and_update_nonce(card_id, nonce):
             return "ERROR you already have an unexpired nonce"
 
-        return base64.base64encode(nonce)
+        return xmlrpclib.Binary(nonce)
 
     def change_pin(self, card_id, nonce, signature, new_pk):
         """
@@ -143,13 +150,13 @@ class Bank(object):
         """
         try:
             card_id = str(card_id)
-            nonce = base64.base64decode(str(nonce))
-            signature = base64.base64decode(str(signature))
-            new_pk = base64.base64decode(str(new_pk))
+            nonce = str(nonce)
+            signature = str(signature)
+            new_pk = str(new_pk)
         except ValueError:
-            return 'ERROR withdraw command usage: change_pin <card_id> <nonce> <signature> <new_pk>'
+            return 'ERROR change_pin command usage: change_pin <card_id> <nonce> <signature> <new_pk>'
 
-        if len(card_id) != 36 or len(nonce) != 32 or len(signature) != 32  or len(new_pk) != 32:
+        if len(card_id) != 36 or len(nonce) != 32 or len(signature) != 64  or len(new_pk) != 32:
             return "ERROR your inputs are not right long"
 
         try:
@@ -179,14 +186,14 @@ class Bank(object):
         """
         try:
             card_id = str(card_id)
-            nonce = base64.base64decode(str(nonce))
-            signature = base64.base64decode(str(signature))
-            hsm_id = int(hsm_id)
-            hsm_nonce = base64.base64decode(str(hsm_nonce))
+            nonce = str(nonce)
+            signature = str(signature)
+            hsm_id = str(hsm_id)
+            hsm_nonce = str(hsm_nonce)
         except ValueError:
             return 'ERROR check_balance command usage: check_balance <card_id> <nonce> <signature> <hsm_id> <hsm_nonce>'
 
-        if len(card_id) != 36 or len(nonce) != 32 or len(signature) != 32 or len(hsm_nonce) != 32:
+        if len(card_id) != 36 or len(nonce) != 32 or len(signature) != 64 or len(hsm_nonce) != 32:
             return "ERROR your inputs are not right long"
 
         try:
@@ -200,10 +207,10 @@ class Bank(object):
 
         balance = self.db_obj.get_balance(card_id)
 
-        message = struct.pack("1b32b4b", self.CHECK_BALANCE, hsm_nonce, balance)
+        message = struct.pack("s32sI", chr(self.REQUEST_BALANCE), hsm_nonce, balance)
         ctext = self.encrypt(key, message)
 
-        return ctext
+        return xmlrpclib.Binary(ctext)
 
     def withdraw(self, card_id, nonce, signature, hsm_id, hsm_nonce, amount):
         """
@@ -225,15 +232,15 @@ class Bank(object):
         """
         try:
             card_id = str(card_id)
-            nonce = base64.base64decode(str(nonce))
-            signature = base64.base64decode(str(signature))
-            hsm_id = int(hsm_id)
-            hsm_nonce = base64.base64decode(str(hsm_nonce))
+            nonce = str(nonce)
+            signature = str(signature)
+            hsm_id = str(hsm_id)
+            hsm_nonce = str(hsm_nonce)
             amount = int(amount)
         except ValueError:
             return 'ERROR check_balance command usage: check_balance <card_id> <nonce> <signature> <hsm_id> <hsm_nonce>'
 
-        if len(card_id) != 36 or len(nonce) != 32 or len(signature) != 32 or len(hsm_nonce) != 32 or amount > 128 or amount < 0:
+        if len(card_id) != 36 or len(nonce) != 32 or len(signature) != 64 or len(hsm_nonce) != 32 or amount > 128 or amount < 0:
             return "ERROR your inputs are not right long"
 
         try:
@@ -245,10 +252,13 @@ class Bank(object):
         if key == None:
             return "ERROR incorrect HSM id"
 
-        message = struct.pack("1b32b1b", self.WITHDRAW, hsm_nonce, amount)
+        if not self.db_obj.do_withdrawal(card_id, hsm_id, amount):
+            return "ERROR something went wrong with withdrawal"
+
+        message = struct.pack("s32sB", chr(self.WITHDRAWAL_REQUEST), hsm_nonce, amount)
         ctext = self.encrypt(key, message)
 
-        return ctext
+        return xmlrpclib.Binary(ctext)
 
     def set_first_pk(self, card_id, pk):
         """
@@ -261,7 +271,6 @@ class Bank(object):
         Return:
             bool: True on success, False otherwise
         """
-        #TODO: make sure that this doesn't allow you to update existing cards
         try:
             card_id = str(card_id)
             pk = str(pk)
@@ -272,10 +281,33 @@ class Bank(object):
             return "ERROR your inputs are not right long"
 
         if not self.db_obj.card_exists(card_id):
-            raise ValueError("ERROR ur card_id is not real")
+            return "ERROR ur card_id is not real"
 
         return self.db_obj.set_first_pk(card_id, pk)
 
+    def set_initial_num_bills(self, hsm_id, num_bills):
+        """
+        Sets the intial bill count of an atm (at provision time).
+
+        Args:
+            card_id (str)
+            num_bills (int)
+
+        Return:
+            bool: True on success, False otherwise
+        """
+        try:
+            hsm_id = str(hsm_id)
+            num_bills = int(num_bills)
+        except ValueError:
+            print "value error"
+            return False
+
+        if len(hsm_id) != 36 or num_bills < 0 or num_bills > 128:
+            print "input range err"
+            return False
+
+        return self.db_obj.set_initial_num_bills(hsm_id, num_bills)
 
 #################################################################
 #Helper functions
@@ -307,15 +339,6 @@ class Bank(object):
             raise ValueError("ERROR nonce is already used :'(")
 
         return True
-
-    def check_timestamp_valid(timestamp):
-        """
-        Check if the timestamp is more than 4 seconds old (expired)
-        """
-        if timestamp + timedelta(seconds=5) < datetime.now:
-            return False
-        else:
-            return True
 
 ###########################################################################
 #Crypto helper functions

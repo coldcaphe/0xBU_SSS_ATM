@@ -42,35 +42,33 @@ class ProvisionTool(object):
         card_blob = str(card_blob)
         pin = str(pin)
 
+        #if it doesn't contain a random PRF key for rng and a uuid
+        if len(card_blob) != 32 + 32 + 36:
+            return False
+
+        r = card_blob[:32]
+        rand_key = card_blob[32:64]
+        card_id = card_blob[64:]
+
         self.card.wait_for_insert()
         if not self.card.inserted():
             logging.error('provision_card: no card was inserted!')
             return False
 
         try:
-            logging.info('provision_card: generating card id')
-
-            #if it doesn't contain a random PRF key for rng and an id
-            if len(card_blob) != 32 + 32 + 36:
-                return False
-
-            r = card_blob[:32]
-            rand_key = card_blob[32:64]
-            card_id = card_blob[64:]
-
             logging.info('provision_card: sending info to card')
             if not self.card.provision(r, rand_key, card_id):
                 return False
 
             logging.info('provision_card: requesting pk from card')
-            pk = self.card.request_new_public_key(self.REQUEST_NEW_PK, pin)
+            pk = self.card.request_new_public_key(pin)
 
             logging.info('provision_card: setting pin on server side')
-            if not self.bank.set_first_pk(xmlrpclib.Binary(pk)):
+            if not self.bank.set_first_pk(card_id, xmlrpclib.Binary(pk)):
+                logging.error('provision_card: provisioning failed on the server')
                 return False
+            return True
 
-            logging.error('provision_card: provision card failed!')
-            return False
         except DeviceRemoved:
             logging.error('provision_card: card was removed!')
             return False
@@ -88,6 +86,17 @@ class ProvisionTool(object):
         Returns:
             bool: True on Success, False on Failure
         """
+
+        hsm_blob = str(hsm_blob)
+
+        #if it doesn't contain a 32 byte encryption key + a 32 byte rand key for rng + a uuid
+        if len(hsm_blob) != 32 + 32 + 36:
+                return False
+
+        hsm_key = hsm_blob[:32]
+        rand_key = hsm_blob[32:64]
+        hsm_id = hsm_blob[64:]
+
         if not isinstance(bills, list):
             logging.error('provision_atm: bills input must be array')
             return False
@@ -97,21 +106,20 @@ class ProvisionTool(object):
             logging.error('provision_hsm: no hsm was inserted!')
             return False
 
-        #if it doesn't contain a 32 byte encryption key + a rand key for rng + a uuid
-        if len(hsm_blob) != 32 + 32 + 36:
-                return False
-
-        hsm_key = hsm_blob[:32]
-        rand_key = hsm_blob[32:64]
-        hsm_id = hsm_blob[64:]
-
         try:
             logging.info('provision_atm: provisioning hsm with inputted bills')
-            if self.hsm.provision(hsm_key, rand_key, hsm_id, bills):
-                logging.info('provision_atm: provisioned hsm with inputted bills')
-                return True
-            logging.error('provision_atm: provision failed!')
-            return False
+            if not self.hsm.provision(hsm_key, rand_key, hsm_id, bills):
+                logging.error('provision_atm: provision failed!')
+                return False
+                
+            logging.info('provision_atm: provisioned hsm with inputted bills')
+
+            logging.info('provision_atm: setting num_bills on server side')
+            if not self.bank.set_initial_num_bills(hsm_id, len(bills)):
+                logging.error('provision_atm: provisioning failed on the server')
+                return False
+            return True
+
         except DeviceRemoved:
             logging.error('provision_atm: HSM was removed!')
             return False

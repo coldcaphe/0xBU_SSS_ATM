@@ -19,5 +19,5 @@ CREATE TABLE atms (
     hsm_id          text        PRIMARY KEY, 
 
     hsm_key         blob        NOT NULL CHECK (LENGTH(hsm_key) == 32),
-    num_bills       integer     NOT NULL CHECK (num_bills >= 0)
+    num_bills       integer     DEFAULT NULL CHECK (num_bills >= 0 AND num_bills <= 128)
 );

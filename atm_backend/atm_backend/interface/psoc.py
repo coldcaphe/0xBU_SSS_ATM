@@ -46,18 +46,42 @@ class Psoc(object):
         self.baudrate = 115200
         self.old_ports = [port_info.device for port_info in list_ports()]
 
-        self.SYNC_REQUEST_PROV         = 0x15
-        self.SYNC_REQUEST_NO_PROV      = 0x16
-        self.SYNC_CONFIRMED_PROV       = 0x17
-        self.SYNC_CONFIRMED_NO_PROV    = 0x18
-        self.SYNC_FAILED_NO_PROV       = 0x19
-        self.SYNC_FAILED_PROV          = 0x1A
-        self.SYNCED                    = 0x1B
-        self.SYNC_TYPE_HSM_N           = 0x1C
-        self.SYNC_TYPE_HSM_P           = 0x3C
-        self.SYNC_TYPE_CARD_N          = 0x1D
-        self.SYNC_TYPE_CARD_P          = 0x3D
-        self.PSOC_DEVICE_REQUEST       = 0x1E
+        #enum values for message types
+        self.REQUEST_NAME               = 0x00
+        self.RETURN_NAME                = 0x01
+        self.REQUEST_CARD_SIGNATURE     = 0x02
+        self.RETURN_CARD_SIGNATURE      = 0x03
+        self.REQUEST_HSM_NONCE          = 0x04
+        self.RETURN_HSM_NONCE           = 0x05
+        self.REQUEST_HSM_UUID           = 0x06
+        self.RETURN_HSM_UUID            = 0x07
+        self.REQUEST_WITHDRAWAL         = 0x08
+        self.RETURN_WITHDRAWAL          = 0x09
+        self.REQUEST_BALANCE            = 0x0A
+        self.RETURN_BALANCE             = 0x0B
+        self.REQUEST_NEW_PK             = 0x0C
+        self.RETURN_NEW_PK              = 0x0D
+        self.SYNC_REQUEST_PROV          = 0x15
+        self.SYNC_REQUEST_NO_PROV       = 0x16
+        self.SYNC_CONFIRMED_PROV        = 0x17
+        self.SYNC_CONFIRMED_NO_PROV     = 0x18
+        self.SYNC_FAILED_NO_PROV        = 0x19
+        self.SYNC_FAILED_PROV           = 0x1A
+        self.SYNCED                     = 0x1B
+        self.SYNC_TYPE_HSM_N            = 0x1C
+        self.SYNC_TYPE_HSM_P            = 0x3C
+        self.SYNC_TYPE_CARD_N           = 0x1D
+        self.SYNC_TYPE_CARD_P           = 0x3D
+        self.PSOC_DEVICE_REQUEST        = 0x1E
+        self.INITIATE_PROVISION         = 0x25
+        self.REQUEST_PROVISION          = 0x26
+        self.INITIATE_BILLS_REQUEST     = 0x27
+        self.BILLS_REQUEST              = 0x28
+        self.BILL_RECEIVED              = 0x29
+
+        # General enums for accepted/rejected flags
+        self.ACCEPTED                   = 0x20
+        self.REJECTED                   = 0x21
 
         self.sync_name_n = '%s_N' % name
         self.sync_name_p = '%s_P' % name
@@ -91,26 +115,16 @@ class Psoc(object):
         self.write(pkt)
         time.sleep(0.1)
 
-    def _pull_msg(self):
-        """
-        Pulls message form the PSoC
-
-        Returns:
-            string with message from PSoC
-        """
-        hdr = self.read(size=1)
-        if len(hdr) != 1:
-            self._vp("RECEIVED BAD HEADER: \'%s\'" % hdr, logging.error)
-            return ''
-        pkt_len = struct.unpack('B', hdr)[0]
-        return self.read(pkt_len)
+    def _push_op(self, opcode):
+        _push_msg(struct.pack("B", opcode))
 
     def _sync_once(self,request,accept,wrong_states):
         resp = ''
+
         while resp not in accept:
             self._push_msg(chr(request))
+
             resp = self.read(size=1)
-            print "resp=", hexlify(resp), resp
             if resp == "":
                 continue
             resp = ord(resp)
@@ -118,9 +132,9 @@ class Psoc(object):
 
             # if in wrong state (provisioning/normal)
             if resp in wrong_states:
-                #self._vp(str(resp))
                 return False
 
+        self._push_msg(chr(self.SYNCED))
         self._vp(resp)
         return resp
 
@@ -156,24 +170,24 @@ class Psoc(object):
                 self._vp("Not yet provisioned!", logging.error)
                 raise NotProvisioned
 
-        self._push_msg(chr(self.SYNCED))
+        #self._push_msg(struct.pack("1s", chr(self.SYNCED)))
 
     def open(self):
         time.sleep(.1)
         self.ser = serial.Serial(self.port, baudrate=self.baudrate, timeout=1)
         resp = self._sync_once(self.PSOC_DEVICE_REQUEST,[self.SYNC_TYPE_HSM_P, self.SYNC_TYPE_HSM_N, self.SYNC_TYPE_CARD_P, self.SYNC_TYPE_CARD_N],[])
-        print "syncd", hexlify(resp), resp
         resp_f = "Error"
-        if resp == chr(self.SYNC_TYPE_HSM_P):
-            resp_f="HSM_P"
-        elif resp == chr(self.SYNC_TYPE_HSM_N):
-            resp_f="HSM_N"
-        elif resp == chr(self.SYNC_TYPE_CARD_P):
-            resp_f="CARD_P"
-        elif resp == chr(self.SYNC_TYPE_CARD_N):
-            resp_f="CARD_N"
+        if resp == self.SYNC_TYPE_HSM_P:
+            resp_f = "HSM_P"
+        elif resp == self.SYNC_TYPE_HSM_N:
+            resp_f = "HSM_N"
+        elif resp == self.SYNC_TYPE_CARD_P:
+            resp_f = "CARD_P"
+        elif resp == self.SYNC_TYPE_CARD_N:
+            resp_f = "CARD_N"
+
         if resp_f == self.sync_name_p or resp_f == self.sync_name_n:
-            logging.info('DYNAMIC SERIAL: Connected to %s', resp)
+            logging.info('DYNAMIC SERIAL: Connected to %s', resp_f)
             self.connected = True
         else:
             logging.info('DYNAMIC SERIAL: Expected %s or %s', self.sync_name_p,
@@ -235,8 +249,10 @@ class Psoc(object):
         """
         try:
             self.lock.acquire()
-            res = self.ser.read(size=size)
-            print "read: ", hexlify(res), res
+            res = ""
+            while res == "":
+                res = self.ser.read(size=size)
+            
             self.lock.release()
             return res
         except serial.SerialException:
@@ -259,7 +275,6 @@ class Psoc(object):
         try:
             self.lock.acquire()
             res = self.ser.write(data)
-            print "write: ", hexlify(data), data
 
             self.lock.release()
             return res

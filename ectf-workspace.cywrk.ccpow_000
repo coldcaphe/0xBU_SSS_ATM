@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="ectf-workspace\CARD\Header Files\usbserialprotocol.h">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="ectf-workspace\CARD">
 <ExpandedNodeIds>
 <v>ectf-workspace</v>
 <v>ectf-workspace\CARD</v>
@@ -27,13 +27,13 @@
 <v>ectf-workspace\CARD\CARD.cydwr\Directives</v>
 <v>ectf-workspace\CARD\CARD.cydwr\Flash Security</v>
 <v>ectf-workspace\CARD\Header Files</v>
+<v>ectf-workspace\CARD\Header Files\common.h</v>
 <v>ectf-workspace\CARD\Header Files\cyapicallbacks.h</v>
 <v>ectf-workspace\CARD\Header Files\usbserialprotocol.h</v>
 <v>ectf-workspace\CARD\Source Files</v>
 <v>ectf-workspace\CARD\Source Files\main.c</v>
 <v>ectf-workspace\CARD\Source Files\usbserialprotocol.c</v>
 <v>ectf-workspace\CARD\Generated_Source\PSoC4</v>
-<v>ectf-workspace\libhydrogen</v>
 <v>ectf-workspace\libhydrogen\Header Files</v>
 <v>ectf-workspace\libhydrogen\Header Files\common.h</v>
 <v>ectf-workspace\libhydrogen\Header Files\core.h</v>
@@ -52,6 +52,7 @@
 <v>ectf-workspace\libhydrogen\Header Files\x25519.h</v>
 <v>ectf-workspace\libhydrogen\Source Files</v>
 <v>ectf-workspace\libhydrogen\Source Files\hydrogen.c</v>
+<v>ectf-workspace\SECURITY_MODULE</v>
 <v>ectf-workspace\SECURITY_MODULE\TopDesign</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Pins</v>
@@ -62,6 +63,7 @@
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Directives</v>
 <v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Flash Security</v>
 <v>ectf-workspace\SECURITY_MODULE\Header Files</v>
+<v>ectf-workspace\SECURITY_MODULE\Header Files\common.h</v>
 <v>ectf-workspace\SECURITY_MODULE\Header Files\cyapicallbacks.h</v>
 <v>ectf-workspace\SECURITY_MODULE\Header Files\usbserialprotocol.h</v>
 <v>ectf-workspace\SECURITY_MODULE\Source Files</v>
@@ -82,6 +84,7 @@
 <v>ectf-workspace\CARD\CARD.cydwr\Directives</v>
 <v>ectf-workspace\CARD\CARD.cydwr\Flash Security</v>
 <v>ectf-workspace\CARD\Header Files</v>
+<v>ectf-workspace\CARD\Header Files\common.h</v>
 <v>ectf-workspace\CARD\Header Files\cyapicallbacks.h</v>
 <v>ectf-workspace\CARD\Header Files\usbserialprotocol.h</v>
 <v>ectf-workspace\CARD\Source Files</v>
@@ -89,25 +92,24 @@
 <v>ectf-workspace\CARD\Source Files\usbserialprotocol.c</v>
 <v>ectf-workspace\CARD\Generated_Source</v>
 <v>ectf-workspace\libhydrogen</v>
-<v>ectf-workspace\libhydrogen\Header Files</v>
-<v>ectf-workspace\libhydrogen\Header Files\common.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\core.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\gimli-core.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\hash.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\hydrogen.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\hydrogen_p.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\kdf.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\kx.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\portable.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\pwhash.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\random.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\secretbox.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\sign.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\ssse3.h</v>
-<v>ectf-workspace\libhydrogen\Header Files\x25519.h</v>
-<v>ectf-workspace\libhydrogen\Source Files</v>
-<v>ectf-workspace\libhydrogen\Source Files\hydrogen.c</v>
 <v>ectf-workspace\SECURITY_MODULE</v>
+<v>ectf-workspace\SECURITY_MODULE\TopDesign</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Pins</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Analog</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Clocks</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Interrupts</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\System</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Directives</v>
+<v>ectf-workspace\SECURITY_MODULE\SECURITY_MODULE.cydwr\Flash Security</v>
+<v>ectf-workspace\SECURITY_MODULE\Header Files</v>
+<v>ectf-workspace\SECURITY_MODULE\Header Files\common.h</v>
+<v>ectf-workspace\SECURITY_MODULE\Header Files\cyapicallbacks.h</v>
+<v>ectf-workspace\SECURITY_MODULE\Header Files\usbserialprotocol.h</v>
+<v>ectf-workspace\SECURITY_MODULE\Source Files</v>
+<v>ectf-workspace\SECURITY_MODULE\Source Files\main.c</v>
+<v>ectf-workspace\SECURITY_MODULE\Source Files\usbserialprotocol.c</v>
+<v>ectf-workspace\SECURITY_MODULE\Generated_Source</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -450,8 +452,8 @@
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
 <OpenDocs>
-<name v=".\CARD.cydsn\main.c" />
-<name v=".\SECURITY_MODULE.cydsn\usbserialprotocol.c" />
+<name v=".\SECURITY_MODULE.cydsn\common.h" />
+<name v=".\SECURITY_MODULE.cydsn\main.c" />
 </OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
@@ -459,8 +461,8 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1406, 486" SelectedTabbedMdiWindow="64814922-30a5-43d7-a42d-90e98dac11fc"><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\main.c" Guid="55822174-1544-420d-ba20-08a2d8157f73" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\usbserialprotocol.c" Guid="64814922-30a5-43d7-a42d-90e98dac11fc" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
-<config v="Release" />
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1406, 486" SelectedTabbedMdiWindow="2c4ef15e-c9a4-423f-886c-082ddd9b35ac"><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\common.h" Guid="10857c7b-2540-4aaf-b603-af6beaa7621a" /><DocumentWindow Key="C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\SECURITY_MODULE.cydsn\main.c" Guid="2c4ef15e-c9a4-423f-886c-082ddd9b35ac" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="Debug" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
 </CyXmlSerializer>

@@ -1,4 +1,5 @@
 import logging
+import xmlrpclib
 from interface.psoc import DeviceRemoved, NotProvisioned
 
 
@@ -17,25 +18,11 @@ class ATM(object):
         self.bank = bank
         self.hsm = hsm
         self.card = card
-        #transaction IDs
-        #enum values for message types
-        self.REQUEST_NAME                = 0x00
-        self.RETURN_NAME                 = 0x01
-        self.REQUEST_CARD_SIGNATURE      = 0x02
-        self.RETURN_CARD_SIGNATURE       = 0x03
-        self.REQUEST_HSM_NONCE           = 0x04
-        self.RETURN_HSM_NONCE            = 0x05
-        self.REQUEST_HSM_UUID            = 0x06
-        self.RETURN_HSM_UUID             = 0x07
-        self.REQUEST_WITHDRAWAL          = 0x08
-        self.RETURN_WITHDRAWAL           = 0x09
-        self.REQUEST_BALANCE             = 0x0A
-        self.RETURN_BALANCE              = 0x0B
-        self.REQUEST_NEW_PK              = 0x0C
-        self.RETURN_NEW_PK               = 0x0D
 
         #enum values for transaction opcodes
         self.CHECK_BALANCE               = 0x11
+        self.REQUEST_WITHDRAWAL         = 0x08
+        self.REQUEST_BALANCE            = 0x0A
         self.WITHDRAW                    = 0x13
 
 
@@ -63,22 +50,29 @@ class ATM(object):
 
         try:
             logging.info('check_balance: Requesting card_id using inputted pin')
-            card_id = self.card.get_card_id(self.REQUEST_NAME)
-
+            card_id = self.card.get_card_id()
 
             # request nonce from server
-            if card_id is not None: #checks that it's not none
-                hsm_id = self.hsm.get_uuid(self.REQUEST_HSM_UUID)
-                hsm_nonce = self.hsm.get_nonce(self.REQUEST_HSM_NONCE) 
-                nonce = self.bank.get_nonce(card_id) 
-                signed_nonce = self.card.sign_nonce(self.REQUEST_CARD_SIGNATURE,nonce,pin) #signs the random nonce
-                response = self.bank.check_balance(card_id,signed_nonce,hsm_nonce,hsm_id) #this response will contain the signed nonce from the server
+            if card_id is not None:
+                hsm_id = self.hsm.get_uuid()
+                hsm_nonce = self.hsm.get_nonce() 
 
-                if response is not None: #checks that it's not None
-                    hsm_resp = self.hsm.send_action(self.REQUEST_BALANCE,response)
-                    if hsm_resp is not None:
-                        return hsm_resp # returns bank balance
-                    return response                 
+                nonce = self.bank.get_nonce(card_id) 
+                if nonce is None:
+                    print "check_balance: didn't get nonce :("
+
+                signature = self.card.sign_nonce(nonce, pin)
+                response = str(self.bank.check_balance(card_id, nonce, signature, hsm_id, hsm_nonce))
+
+                if "ERROR" == response[:len("ERROR")]:
+                    return False
+
+                hsm_resp = self.hsm.handle_balance_check(response)
+
+                if hsm_resp is not None:
+                    return hsm_resp # returns bank balance
+                return response
+
             logging.info('check_balance failed')
             return False
 
@@ -103,32 +97,35 @@ class ATM(object):
             bool: True on successful PIN change
             bool: False on failure
         """
-        try:
-            card_id = self.card.get_card_id(self.REQUEST_NAME)
-            
-            # request nonce from server
-            if card_id is not None: #checks that it's not none
-                logging.info('Requesting nonce')
-                nonce = self.bank.get_nonce(card_id) #encrypted nonce
-                signed_nonce = self.card.sign_nonce(self.REQUEST_CARD_SIGNATURE,nonce,old_pin) #signs the random nonce
-                new_pk = self.card.request_new_public_key(self.REQUEST_NEW_PK,new_pin)
-                response = self.bank.change_pin(card_id,signed_nonce,new_pk)
-                
-                if response is not None:
-                    return response #returns if nonce is verified and pin change is successful 
-                
-        except DeviceRemoved:
-            logging.info('ATM card was removed!')
-            return False 
-        
         if not self.card.inserted():
             logging.info('No card inserted')
             return False
+
         try:
-            logging.info('change_pin: Sending PIN change request to card')
-            if self.card.change_pin(old_pin, new_pin):
-                return True
-            logging.info('change_pin failed')
+            logging.info('check_balance: Requesting card_id using inputted pin')
+            card_id = self.card.get_card_id()
+
+            # request nonce from server
+            if card_id is not None:
+
+                nonce = self.bank.get_nonce(card_id) 
+                if nonce is None:
+                    print "check_balance: didn't get nonce :("
+
+                new_pk = self.card.request_new_public_key(new_pin)
+                signature = self.card.sign_nonce(nonce, old_pin)
+                response = str(self.bank.change_pin(card_id, nonce, signature, new_pk))
+
+                if "ERROR" == response[:len("ERROR")]:
+                    return False
+
+                return response == "OKAY"
+
+            logging.info('check_balance failed')
+            return False
+
+        except DeviceRemoved:
+            logging.info('ATM card was removed!')
             return False
 
         except NotProvisioned:
@@ -159,21 +156,28 @@ class ATM(object):
             return False
 
         try:
-            card_id = self.card.get_card_id(self.REQUEST_NAME)
+            card_id = self.card.get_card_id()
             
-            # request nonce from server
             if card_id is not None: #checks that it's not none
                 logging.info('Requesting nonce')
-                hsm_id = self.hsm.get_uuid(self.REQUEST_HSM_UUID)
-                hsm_nonce = self.hsm.get_nonce(self.REQUEST_HSM_NONCE) #encrypted nonce
-                                                        
-                nonce = self.bank.get_nonce(card_id) #encrypted nonce
-                signed_nonce = self.card.sign_nonce(self.REQUEST_CARD_SIGNATURE,nonce,pin) #signs the random nonce
-                response = self.bank.withdraw(card_id,signed_nonce,hsm_nonce,hsm_id,amount) #this response will contain the signed nonce from the server
-                if response is not None: #hsm
-                    hsm_resp = self.hsm.send_action(self.REQUEST_WITHDRAWAL,response)
-                    if hsm_resp is not None:
-                        return hsm_resp #returns if nonce was verified by the HSM                    
+                hsm_id = self.hsm.get_uuid()
+                hsm_nonce = self.hsm.get_nonce()
+
+                #get server nonce and sign it                                                        
+                nonce = self.bank.get_nonce(card_id)
+                signed_nonce = self.card.sign_nonce(nonce,pin) 
+
+                #this response will contain the signed nonce from the server
+                response = str(self.bank.withdraw(card_id, nonce, signed_nonce, hsm_id, hsm_nonce, amount))
+
+                if "ERROR" == response[:len("ERROR")]:
+                    return False 
+
+                hsm_resp = self.hsm.handle_withdrawal(response)
+                if hsm_resp is not None:
+                    return hsm_resp #returns if nonce was verified by the HSM          
+
+                return False          
                 
         except DeviceRemoved:
             logging.info('ATM card was removed!')
