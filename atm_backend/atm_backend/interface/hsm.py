@@ -3,6 +3,7 @@ import struct
 from serial_emulator import HSMEmulator
 import logging
 import time
+from binascii import hexlify
 
 class HSM(Psoc):
     """
@@ -10,7 +11,7 @@ class HSM(Psoc):
 
     Args:
         port (str, optional): Serial port connected to HSM
-        verbose (bool, optional): Whether to print debug messages
+        verbose (bool, optional): Whether to logging.info( debug messages
 
     Note:
         Calls to get_uuid and withdraw must be alternated to remain in sync
@@ -41,8 +42,12 @@ class HSM(Psoc):
         '''
         self._sync(False)
         self._push_msg(struct.pack('b', self.REQUEST_HSM_NONCE))
-        resp = self.read(size=33) #read 33 bytes
-        return struct.unpack('b32s', resp)[1]
+        resp = self.read(size=33)
+        (opcode, nonce) = struct.unpack('b32s', resp)
+        if opcode != self.RETURN_HSM_NONCE:
+            logging.info("hsm.get_nonce: wrong opcode for response: " + hexlify(opcode) + " " + hexlify(nonce))
+            return None
+        return nonce
         
 
     def get_uuid(self):
@@ -55,21 +60,23 @@ class HSM(Psoc):
         self._sync(False)
         self._push_msg(struct.pack('b', self.REQUEST_HSM_UUID))
         resp = self.read(size=37) 
-        uuid = struct.unpack('b36s', resp)[1]
+        (opcode, uuid) = struct.unpack('b36s', resp)
+        if opcode != self.RETURN_HSM_UUID:
+            logging.info("hsm.get_uuid: wrong opcode: " + hexlify(opcode) + " " + hexlify(uuid))
+            return None
         return uuid
 
     def handle_balance_check(self, ciphertext):
         self._sync(False)
-
         self._push_msg(struct.pack('b', self.REQUEST_BALANCE))
         self._push_msg(ciphertext)
-        print "len:", len(ciphertext)
+
         if ord(self.read(1)) != self.RETURN_BALANCE:
+            logging.info("Error in handle_balance_check: " + hexlify(ciphertext))
             return None
 
         balance = struct.unpack(">I", self.read(4))[0]
         return balance
-
 
 
     def handle_withdrawal(self, ciphertext):
@@ -77,9 +84,9 @@ class HSM(Psoc):
 
         self._push_msg(struct.pack('b', self.REQUEST_WITHDRAWAL))
         self._push_msg(ciphertext)
-        print "len:", len(ciphertext)
 
         if ord(self.read(1)) != self.RETURN_WITHDRAWAL:
+            logging.info( "Error in handle_withdrawal: " + hexlify(ciphertext))
             return None
 
         bill_count = ord(self.read(1))
@@ -89,49 +96,6 @@ class HSM(Psoc):
             bills += [self.read(16)]
 
         return bills
-
-
-    def send_action(self,transaction,encrypted_data):
-        '''
-        Verifies the nonce was correctly signed and completes the transactions request
-
-        Args:
-            transaction(int): The transaction type. Lets the hsm know what is happening
-            encrypted_data(str): contains the data that the hsm will use for its transaction
-     
-        Returns:
-            var: Can either be an array of bills or a balance.
-        '''
-        self._push_msg(struct.pack('b',transaction)+encrypted_data)
-        resp = self.read(size=1)
-        responseAction = struct.unpack('b',resp)
-        
-        if responseAction == self.REQUEST_BALANCE: #handles case depending on byte
-            resp = self.read(size=1) #determine if request was bad and should keep reading
-            acceptByte =struct.unpack('b', resp)
-            
-            if acceptByte == self.ACCEPTED:
-                resp = self.read(size=4)
-                balance = struct.unpack('i', resp)
-                return balance #reveals acount balance to atm
-            elif acceptByte == self.REJECTED:
-                raise Exception('HSM Rejected request')
-            else:
-                raise ValueError('Unexpected Byte read from hsm (expected ACCEPT or REJECT byte) got: ' + str(acceptByte))
-                
-        elif responseAction == self.RETURN_WITHDRAWAL:
-            resp = self.read(size=4)
-            numBills = struct.unpack('i', resp) #number of bills to pull
-            bills = [] #array of bills
-            
-            for i in range(numBills):
-                resp = self.read(size=16)
-                bill = struct.unpack('16s', resp) #loads the 16 byte bill
-                bills.append(bill)
-            return bills
-        
-        else:
-            raise ValueError('Unexpected Byte read from hsm (expected Withdrawal or Check Balance byte ) got: ' + str(responseAction))
 
 
     def provision(self, hsm_key, rand_key, uuid, bills):
@@ -167,7 +131,7 @@ class HSM(Psoc):
         self._push_msg(struct.pack("B", len(bills)))
 
         for bill in bills:
-            self._push_msg(struct.pack("16s", bill[:-1]))
+            self._push_msg(struct.pack("16s", bill[:16]))
             if ord(self.read(1)) != self.BILL_RECEIVED:
                 return False
 
@@ -188,7 +152,7 @@ class DummyHSM(HSM):
     """Emulated HSM for testing
 
     Arguments:
-        verbose (bool, optional): Whether to print debug messages
+        verbose (bool, optional): Whether to logging.info( debug messages
         provision (bool, optional): Whether to start the HSM ready
             for provisioning
     """

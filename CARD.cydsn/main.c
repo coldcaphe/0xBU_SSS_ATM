@@ -21,7 +21,6 @@
 
 // global EEPROM read variables
 static const uint8 R[R_LEN]                 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-static const uint8 RAND_KEY[RAND_KEY_LEN]   = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static const uint8 UUID[UUID_LEN]           = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static const uint8 PROVISIONED[1]           = {0x00};
 
@@ -59,7 +58,7 @@ void provision()
 
     // write them to eeprom
 	USER_INFO_Write(r_buf, R, R_LEN);
-	USER_INFO_Write(rand_key_buf, RAND_KEY, RAND_KEY_LEN);
+	USER_INFO_Write(rand_key_buf, rand_key, RAND_KEY_LEN);
 	USER_INFO_Write(uuid_buf, UUID, UUID_LEN);
 
 	pushMessage(&ACCEPTED, 1);

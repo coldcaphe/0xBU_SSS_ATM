@@ -550,6 +550,7 @@
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 <dep name=".\Generated_Source\PSoC4\project.h" />
 <dep name="..\libhydrogen.cylib\libhydrogen\hydrogen.h" />
+<dep name=".\common.h" />
 <dep name=".\main.c" />
 <dep name=".\usbserialprotocol.h" />
 </file>
@@ -589,6 +590,7 @@
 <file name=".\Generated_Source\PSoC4\cytypes.h" />
 <file name=".\Generated_Source\PSoC4\project.h" />
 <file name="..\libhydrogen.cylib\libhydrogen\hydrogen.h" />
+<file name=".\common.h" />
 <file name=".\main.c" />
 <file name=".\usbserialprotocol.h" />
 <file name=".\CortexM0\ARM_GCC_541\Release\usbserialprotocol.o">
@@ -627,6 +629,7 @@
 <dep name=".\Generated_Source\PSoC4\cypins.h" />
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 <dep name=".\Generated_Source\PSoC4\project.h" />
+<dep name=".\common.h" />
 <dep name=".\usbserialprotocol.c" />
 <dep name=".\usbserialprotocol.h" />
 </file>
@@ -1183,8 +1186,8 @@
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
 <link_deps_times>
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0" v="131648593969119728" />
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" v="131645255717070654" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0" v="131651057532809332" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" v="131651090300656905" />
 </link_deps_times>
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>

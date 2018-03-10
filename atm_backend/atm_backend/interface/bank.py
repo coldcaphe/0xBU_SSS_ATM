@@ -33,12 +33,13 @@ class Bank:
             card_id(int): The id on the card. will be used to help the bank find the shared secret to decrypt.
         
         Returns:
-            str: Randomly generated nonce
+            str: Randomly generated nonce or None if an error occurred
         '''
-        nonce = self.bank_rpc.get_nonce(card_id)
-        if nonce is None:
+        nonce = str(self.bank_rpc.get_nonce(card_id))
+        if "ERROR" == nonce[:len("ERROR")]:
+            logging.info("Error in get_nonce: " + nonce)
             return None
-        return str(nonce)
+        return nonce
     
 
     def check_balance(self, card_id, nonce, signature, hsm_id, hsm_nonce):
@@ -52,11 +53,16 @@ class Bank:
             hsm_id: ID of the hsm
         
         Returns:
-            str: Response will be an encrypted message containing the account balance 
+            str: Response will be an encrypted message containing the account balance or None if the request failed
         '''
 
-        return self.bank_rpc.check_balance(card_id, xmlrpclib.Binary(nonce), 
-                                xmlrpclib.Binary(signature), hsm_id, xmlrpclib.Binary(hsm_nonce))
+        encrypted_balance = str(self.bank_rpc.check_balance(card_id, xmlrpclib.Binary(nonce), 
+                                xmlrpclib.Binary(signature), hsm_id, xmlrpclib.Binary(hsm_nonce)))
+        if "ERROR" == encrypted_balance[:len("ERROR")]:
+            logging.info("Error in check_balance: " + encrypted_balance)
+            return None
+        return encrypted_balance
+
     
     def change_pin(self, card_id, nonce, signature, new_pk):
         '''
@@ -69,7 +75,10 @@ class Bank:
         Returns:
             str: Response will be either an accept or reject message 
         '''
-        res = self.bank_rpc.change_pin(card_id, xmlrpclib.Binary(nonce), xmlrpclib.Binary(signature), xmlrpclib.Binary(new_pk))
+        res = str(self.bank_rpc.change_pin(card_id, xmlrpclib.Binary(nonce), xmlrpclib.Binary(signature), xmlrpclib.Binary(new_pk)))
+        if "ERROR" == res[:len("ERROR")]:
+            logging.info("Error in change_pin: " + res)
+            return None
         return res
 
     def withdraw(self, card_id, nonce, signature, hsm_id, hsm_nonce, amount):
@@ -84,8 +93,11 @@ class Bank:
         Returns:
             str: Response will be an encrypted message containing the acount balance 
         '''
-        res = self.bank_rpc.withdraw(card_id, xmlrpclib.Binary(nonce), xmlrpclib.Binary(signature),
-                                        hsm_id, xmlrpclib.Binary(hsm_nonce), amount) 
+        res = str(self.bank_rpc.withdraw(card_id, xmlrpclib.Binary(nonce), xmlrpclib.Binary(signature),
+                                        hsm_id, xmlrpclib.Binary(hsm_nonce), amount))
+        if "ERROR" == res[:len("ERROR")]:
+            logging.info("Error in withdraw: " + res)
+            return None
         return res
 
     def set_first_pk(self,card_id,pk):
@@ -98,7 +110,7 @@ class Bank:
         Returns:
             bool: True on success, False otherwise
         '''
-        return self.bank_rpc.set_first_pk(card_id, pk) 
+        return self.bank_rpc.set_first_pk(card_id, xmlrpclib.Binary(pk)) 
 
     def set_initial_num_bills(self, hsm_id, num_bills):
         '''

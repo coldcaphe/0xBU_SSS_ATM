@@ -26,7 +26,6 @@
 static const uint8 MONEY[MAX_BILLS][BILL_LEN]   = {EMPTY_BILL};
 static const uint8 UUID[UUID_LEN]               = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static const uint8 ENC_KEY[HSM_KEY_LEN]         = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-static const uint8 RAND_KEY[RAND_KEY_LEN]       = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static const uint8 BILLS_LEFT[1]                = {0x00};
 static const uint8 PROVISIONED[1]               = {0x00};
 static const uint8 CURRENT_NONCE[NONCE_LEN]     = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -83,7 +82,7 @@ void provision()
     
     //write them to eeprom
     PIGGY_BANK_Write(hsm_key_buf, ENC_KEY, HSM_KEY_LEN);
-    PIGGY_BANK_Write(rand_key_buf, RAND_KEY, RAND_KEY_LEN);
+    PIGGY_BANK_Write(rand_key_buf, rand_key, RAND_KEY_LEN);
 	PIGGY_BANK_Write(uuid_buf, UUID, UUID_LEN);
     
     pushMessage(&INITIATE_BILLS_REQUEST, 1);

@@ -6,6 +6,7 @@ need access to database. (sqlite3 does not gurantee concurrent operations)"""
 import sqlite3
 import os
 from datetime import timedelta, datetime
+from binascii import hexlify
 
 
 class DB(object):
@@ -144,20 +145,24 @@ class DB(object):
     def read_set_nonce_used(self, card_id, nonce):
         res = self.get_nonce_data(card_id)
         if res is None:
+            print "res was none"
             return False
         (db_nonce, timestamp, used) = res
 
         if used:
+            print "nonce was already used"
             return False
 
-        if db_nonce != nonce:
+        if str(db_nonce) != str(nonce):
+            print "nonce was wrong nonce"
+            print hexlify(nonce), hexlify(db_nonce)
             return False
 
         if not self.check_timestamp_valid(timestamp):
+            print "timestamp is expired"
             return False
 
-        return self.modify("UPDATE cards SET nonce=(?), used=0, timestamp=DATETIME('now','localtime') WHERE card_id=(?);", 
-                        (sqlite3.Binary(nonce), card_id,))
+        return self.modify("UPDATE cards SET used=1 WHERE card_id=(?);", (card_id,))
 
     @lock_db
     def get_pk(self, card_id):
@@ -220,9 +225,11 @@ class DB(object):
         """
         Check if the timestamp is more than 4 seconds old (expired)
         """
-        if timestamp + timedelta(seconds=4) < datetime.now():
+        if timestamp + timedelta(seconds=5) < datetime.now():
+            print "timestamp not valid"
             return False
         else:
+            print "timestamp valid"
             return True
 
 ###############################################################

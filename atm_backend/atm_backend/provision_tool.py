@@ -64,7 +64,7 @@ class ProvisionTool(object):
             pk = self.card.request_new_public_key(pin)
 
             logging.info('provision_card: setting pin on server side')
-            if not self.bank.set_first_pk(card_id, xmlrpclib.Binary(pk)):
+            if not self.bank.set_first_pk(card_id, pk):
                 logging.error('provision_card: provisioning failed on the server')
                 return False
             return True

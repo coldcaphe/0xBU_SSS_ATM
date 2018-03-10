@@ -1,5 +1,6 @@
 from psoc import Psoc
 from serial_emulator import CardEmulator
+from binascii import hexlify
 import logging
 import struct
 
@@ -31,7 +32,11 @@ class Card(Psoc):
         self._sync(False)
         self._push_msg(struct.pack('b', self.REQUEST_NAME)) 
         response = self.read(size=37)
-        return struct.unpack('b36s',response)[1]
+        (opcode, uuid) = struct.unpack('b36s', response)
+        if opcode != self.RETURN_NAME:
+            print "get_card_id: wrong opcode:",  hexlify(opcode), hexlify(uuid)
+            return None
+        return uuid
     
     def sign_nonce(self,nonce, pin):
         """
@@ -49,9 +54,13 @@ class Card(Psoc):
 
         self._sync(False)
         self._push_msg(struct.pack('b32s8s', self.REQUEST_CARD_SIGNATURE, nonce, pin)) 
-        signed_nonce = self.read(size=65)
+        response = self.read(size=65)
+        (opcode, signature) = struct.unpack('b64s', response)
+        if opcode != self.RETURN_CARD_SIGNATURE:
+            print "sign_nonce: wrong opcode for response:", hexlify(opcode), hexlify(signature)
+            return None
 
-        return struct.unpack('b64s',signed_nonce)[1]
+        return signature
 
     def request_new_public_key(self, new_pin):
         """
@@ -67,8 +76,13 @@ class Card(Psoc):
 
         self._sync(False)
         self._push_msg(struct.pack('B8s', self.REQUEST_NEW_PK, new_pin))
-        public_key = self.read(size=33)
-        return struct.unpack('32s',public_key[1:])[0]
+        response = self.read(size=33)
+
+        (opcode, new_pk) = struct.unpack('b32s', response)
+        if opcode != self.RETURN_NEW_PK:
+            print "request_new_public_key: wrong opcode for response:", hexlify(opcode), hexlify(new_pk)
+            return None
+        return new_pk
 
     def provision(self, r, rand_key, uuid):
         """

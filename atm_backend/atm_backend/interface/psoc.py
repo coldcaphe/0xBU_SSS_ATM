@@ -115,9 +115,6 @@ class Psoc(object):
         self.write(pkt)
         time.sleep(0.1)
 
-    def _push_op(self, opcode):
-        _push_msg(struct.pack("B", opcode))
-
     def _sync_once(self,request,accept,wrong_states):
         resp = ''
 
@@ -150,8 +147,6 @@ class Psoc(object):
             AlreadyProvisioned if PSoC is unexpectedly already provisioned
         """
         if provision:
-            #self._push_msg(chr(self.SYNC_REQUEST_NO_PROV))
-
             if not self._sync_once(self.SYNC_REQUEST_PROV,
                 [self.SYNC_CONFIRMED_NO_PROV],
                 [self.SYNC_CONFIRMED_PROV,
@@ -250,8 +245,8 @@ class Psoc(object):
         try:
             self.lock.acquire()
             res = ""
-            while res == "":
-                res = self.ser.read(size=size)
+            while len(res) != size:
+                res += self.ser.read(size=size - len(res))
             
             self.lock.release()
             return res

@@ -1,8 +1,47 @@
---------------- Rebuild Started: 02/28/2018 20:39:44 Project: libhydrogen, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Rebuild Started: 03/09/2018 03:37:20 Project: libhydrogen, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\hydrogen.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\libhydrogen.a"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\.deps\SOURCE_C__ARM_GCC_GENERIC.P"
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/hydrogen.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c libhydrogen\hydrogen.c -o .\CortexM0\ARM_GCC_541\Debug\hydrogen.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I..\CARD.cydsn\Generated_Source\PSoC4 -I. -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/hydrogen.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c libhydrogen\hydrogen.c -o .\CortexM0\ARM_GCC_541\Debug\hydrogen.o
+In file included from libhydrogen\hydrogen.c:8:0:
+libhydrogen\impl/random.h: In function 'weird_prg':
+libhydrogen\impl/random.h:20:15: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+     memcpy(m, ptr, 16);
+               ^
+In file included from d:\programs\psoccreator\psoc creator\4.1\psoc creator\import\gnu\arm\5.4.1\arm-none-eabi\include\stdlib.h:11:0,
+                 from libhydrogen\hydrogen.h:7,
+                 from libhydrogen\hydrogen.c:1:
+d:\programs\psoccreator\psoc creator\4.1\psoc creator\import\gnu\arm\5.4.1\arm-none-eabi\include\string.h:23:8: note: expected 'const void * restrict' but argument is of type 'const volatile uint8 * {aka const volatile unsigned char *}'
+ _PTR   _EXFUN(memcpy,(_PTR __restrict, const _PTR __restrict, size_t));
+        ^
+In file included from libhydrogen\hydrogen.c:8:0:
+libhydrogen\impl/random.h:23:15: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+     memcpy(m, p_key, 16);
+               ^
+In file included from d:\programs\psoccreator\psoc creator\4.1\psoc creator\import\gnu\arm\5.4.1\arm-none-eabi\include\stdlib.h:11:0,
+                 from libhydrogen\hydrogen.h:7,
+                 from libhydrogen\hydrogen.c:1:
+d:\programs\psoccreator\psoc creator\4.1\psoc creator\import\gnu\arm\5.4.1\arm-none-eabi\include\string.h:23:8: note: expected 'const void * restrict' but argument is of type 'const volatile uint8 * {aka const volatile unsigned char *}'
+ _PTR   _EXFUN(memcpy,(_PTR __restrict, const _PTR __restrict, size_t));
+        ^
+In file included from libhydrogen\hydrogen.c:8:0:
+libhydrogen\impl/random.h:25:41: warning: passing argument 2 of 'hydro_secretbox_encrypt' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+     hydro_secretbox_encrypt(ciphertext, ptr, 16, 0, "IDCIDCID", key);
+                                         ^
+In file included from libhydrogen\hydrogen.c:1:0:
+libhydrogen\hydrogen.h:101:5: note: expected 'const void *' but argument is of type 'const volatile uint8 * {aka const volatile unsigned char *}'
+ int hydro_secretbox_encrypt(uint8_t *c, const void *m_, size_t mlen, uint64_t msg_id,
+     ^
+In file included from libhydrogen\hydrogen.c:8:0:
+libhydrogen\impl/random.h:30:15: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+     memcpy(m, ptr, 16);
+               ^
+In file included from d:\programs\psoccreator\psoc creator\4.1\psoc creator\import\gnu\arm\5.4.1\arm-none-eabi\include\stdlib.h:11:0,
+                 from libhydrogen\hydrogen.h:7,
+                 from libhydrogen\hydrogen.c:1:
+d:\programs\psoccreator\psoc creator\4.1\psoc creator\import\gnu\arm\5.4.1\arm-none-eabi\include\string.h:23:8: note: expected 'const void * restrict' but argument is of type 'const volatile uint8 * {aka const volatile unsigned char *}'
+ _PTR   _EXFUN(memcpy,(_PTR __restrict, const _PTR __restrict, size_t));
+        ^
 arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_541\Debug\libhydrogen.a C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\libhydrogen.cylib\CortexM0\ARM_GCC_541\Debug\hydrogen.o
 arm-none-eabi-ar.exe: creating .\CortexM0\ARM_GCC_541\Debug\libhydrogen.a
---------------- Rebuild Succeeded: 02/28/2018 20:39:46 ---------------
+--------------- Rebuild Succeeded: 03/09/2018 03:37:22 ---------------

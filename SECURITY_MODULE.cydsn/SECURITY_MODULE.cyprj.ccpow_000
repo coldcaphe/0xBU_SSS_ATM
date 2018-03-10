@@ -512,7 +512,7 @@
 </dependency_info>
 <dependency_info name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" xml_contents_version="2">
 <CyGuid_1173175f-1b9b-4ad4-a065-754a48a27021 type_name="CyDesigner.Common.Base.CyFileDeps" version="1">
-<file name=".\CortexM0\ARM_GCC_541\Release\usbserialprotocol.o">
+<file name=".\CortexM0\ARM_GCC_541\Release\main.o">
 <dep name=".\Generated_Source\PSoC4\CARD_UART.h" />
 <dep name=".\Generated_Source\PSoC4\CARD_UART_IntClock.h" />
 <dep name=".\Generated_Source\PSoC4\CyFlash.h" />
@@ -548,7 +548,9 @@
 <dep name=".\Generated_Source\PSoC4\cypins.h" />
 <dep name=".\Generated_Source\PSoC4\cytypes.h" />
 <dep name=".\Generated_Source\PSoC4\project.h" />
-<dep name=".\usbserialprotocol.c" />
+<dep name="..\libhydrogen.cylib\libhydrogen\hydrogen.h" />
+<dep name=".\common.h" />
+<dep name=".\main.c" />
 <dep name=".\usbserialprotocol.h" />
 </file>
 <file name=".\Generated_Source\PSoC4\CARD_UART.h" />
@@ -586,8 +588,51 @@
 <file name=".\Generated_Source\PSoC4\cypins.h" />
 <file name=".\Generated_Source\PSoC4\cytypes.h" />
 <file name=".\Generated_Source\PSoC4\project.h" />
-<file name=".\usbserialprotocol.c" />
+<file name="..\libhydrogen.cylib\libhydrogen\hydrogen.h" />
+<file name=".\common.h" />
+<file name=".\main.c" />
 <file name=".\usbserialprotocol.h" />
+<file name=".\CortexM0\ARM_GCC_541\Release\usbserialprotocol.o">
+<dep name=".\Generated_Source\PSoC4\CARD_UART.h" />
+<dep name=".\Generated_Source\PSoC4\CARD_UART_IntClock.h" />
+<dep name=".\Generated_Source\PSoC4\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
+<dep name=".\Generated_Source\PSoC4\CyLib.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_BOOT.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_PINS.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_PVT.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_SCBCLK.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_SCB_IRQ.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_SPI_UART.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_SPI_UART_PVT.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_rx.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_rx_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_tx.h" />
+<dep name=".\Generated_Source\PSoC4\DB_UART_tx_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\PIGGY_BANK.h" />
+<dep name=".\Generated_Source\PSoC4\Reset_isr.h" />
+<dep name=".\Generated_Source\PSoC4\SW1.h" />
+<dep name=".\Generated_Source\PSoC4\SW1_aliases.h" />
+<dep name=".\Generated_Source\PSoC4\cmsis_armcc.h" />
+<dep name=".\Generated_Source\PSoC4\cmsis_gcc.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0.h" />
+<dep name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmFunc.h" />
+<dep name=".\Generated_Source\PSoC4\core_cmInstr.h" />
+<dep name=".\Generated_Source\PSoC4\cyPm.h" />
+<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC4\cydisabledsheets.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC4\cyfitter_cfg.h" />
+<dep name=".\Generated_Source\PSoC4\cypins.h" />
+<dep name=".\Generated_Source\PSoC4\cytypes.h" />
+<dep name=".\Generated_Source\PSoC4\project.h" />
+<dep name=".\common.h" />
+<dep name=".\usbserialprotocol.c" />
+<dep name=".\usbserialprotocol.h" />
+</file>
+<file name=".\usbserialprotocol.c" />
 <file name=".\CortexM0\ARM_GCC_541\Release\CARD_UART.o">
 <dep name=".\Generated_Source\PSoC4\CARD_UART.c" />
 <dep name=".\Generated_Source\PSoC4\CARD_UART.h" />
@@ -955,48 +1000,6 @@
 <dep name=".\Generated_Source\PSoC4\cyutils.c" />
 </file>
 <file name=".\Generated_Source\PSoC4\cyutils.c" />
-<file name=".\CortexM0\ARM_GCC_541\Release\main.o">
-<dep name=".\Generated_Source\PSoC4\cmsis_armcc.h" />
-<dep name=".\Generated_Source\PSoC4\cmsis_gcc.h" />
-<dep name=".\Generated_Source\PSoC4\core_cm0.h" />
-<dep name=".\Generated_Source\PSoC4\core_cm0_psoc4.h" />
-<dep name=".\Generated_Source\PSoC4\core_cmFunc.h" />
-<dep name=".\Generated_Source\PSoC4\core_cmInstr.h" />
-<dep name=".\Generated_Source\PSoC4\cydisabledsheets.h" />
-<dep name=".\Generated_Source\PSoC4\project.h" />
-<dep name="..\libhydrogen.cylib\libhydrogen\hydrogen.h" />
-<dep name=".\Generated_Source\PSoC4\CARD_UART.h" />
-<dep name=".\Generated_Source\PSoC4\CARD_UART_IntClock.h" />
-<dep name=".\Generated_Source\PSoC4\CyFlash.h" />
-<dep name=".\Generated_Source\PSoC4\CyLFClk.h" />
-<dep name=".\Generated_Source\PSoC4\CyLib.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_BOOT.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_PINS.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_PVT.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_SCBCLK.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_SCB_IRQ.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_SPI_UART.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_SPI_UART_PVT.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_rx.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_rx_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_tx.h" />
-<dep name=".\Generated_Source\PSoC4\DB_UART_tx_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\PIGGY_BANK.h" />
-<dep name=".\Generated_Source\PSoC4\Reset_isr.h" />
-<dep name=".\Generated_Source\PSoC4\SW1.h" />
-<dep name=".\Generated_Source\PSoC4\SW1_aliases.h" />
-<dep name=".\Generated_Source\PSoC4\cyPm.h" />
-<dep name=".\Generated_Source\PSoC4\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC4\cyfitter_cfg.h" />
-<dep name=".\Generated_Source\PSoC4\cypins.h" />
-<dep name=".\Generated_Source\PSoC4\cytypes.h" />
-<dep name=".\main.c" />
-<dep name=".\usbserialprotocol.h" />
-</file>
-<file name="..\libhydrogen.cylib\libhydrogen\hydrogen.h" />
-<file name=".\main.c" />
 <file name=".\CortexM0\ARM_GCC_541\Release\CyBootAsmGnu.o">
 <dep name=".\Generated_Source\PSoC4\CyBootAsmGnu.s" />
 <dep name=".\Generated_Source\PSoC4\cydevicegnu_trm.inc" />
@@ -1181,8 +1184,8 @@
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
 <link_deps_times>
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0" v="131648594328377119" />
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" v="131644324658050786" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0" v="131651056633567763" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Release@CortexM0" v="131651090143179164" />
 </link_deps_times>
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>

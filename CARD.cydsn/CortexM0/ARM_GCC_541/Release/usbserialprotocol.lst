@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 1
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 1
 
 
    1              		.syntax unified
@@ -26,7 +26,7 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 1
   23              		.thumb_func
   24              		.type	getValidByte, %function
   25              	getValidByte:
-  26              	.LFB34:
+  26              	.LFB35:
   27              		.file 1 "usbserialprotocol.c"
    1:usbserialprotocol.c **** /* ========================================
    2:usbserialprotocol.c ****  *
@@ -41,29 +41,11 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 1
   11:usbserialprotocol.c **** */
   12:usbserialprotocol.c **** 
   13:usbserialprotocol.c **** #include "usbserialprotocol.h"
-  14:usbserialprotocol.c **** 
-  15:usbserialprotocol.c **** #define RECV_OK 0
-  16:usbserialprotocol.c **** #define RECV_ER 1
-  17:usbserialprotocol.c **** 
-  18:usbserialprotocol.c **** static const uint8 SYNC_REQUEST_PROV = 0x15;
-  19:usbserialprotocol.c **** static const uint8 SYNC_REQUEST_NO_PROV = 0x16;
-  20:usbserialprotocol.c **** static const uint8 SYNC_CONFIRMED_PROV = 0x17;
-  21:usbserialprotocol.c **** static const uint8 SYNC_CONFIRMED_NO_PROV = 0x18;
-  22:usbserialprotocol.c **** static const uint8 SYNC_FAILED_NO_PROV = 0x19;
-  23:usbserialprotocol.c **** static const uint8 SYNC_FAILED_PROV = 0x1A;
-  24:usbserialprotocol.c **** static const uint8 SYNCED = 0x1B;
-  25:usbserialprotocol.c **** static const uint8 SYNC_TYPE_CARD_N = 0x1D;
-  26:usbserialprotocol.c **** static const uint8 SYNC_TYPE_CARD_P = 0x3D;
-  27:usbserialprotocol.c **** static const uint8 PSOC_DEVICE_REQUEST = 0x1E;
-  28:usbserialprotocol.c **** 
-  29:usbserialprotocol.c **** 
-  30:usbserialprotocol.c **** 
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 2
-
-
-  31:usbserialprotocol.c **** uint8 getValidByte()
-  32:usbserialprotocol.c **** {
-  28              		.loc 1 32 0
+  14:usbserialprotocol.c **** #include "common.h"
+  15:usbserialprotocol.c **** 
+  16:usbserialprotocol.c **** uint8 getValidByte()
+  17:usbserialprotocol.c **** {
+  28              		.loc 1 17 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -72,28 +54,31 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 1
   34              		.cfi_offset 4, -8
   35              		.cfi_offset 14, -4
   36              	.L2:
-  33:usbserialprotocol.c ****     uint8 retval = 0u;
-  34:usbserialprotocol.c ****     while(USB_UART_SpiUartGetRxBufferSize() < 1); // wait for byte
-  37              		.loc 1 34 0 discriminator 1
+  18:usbserialprotocol.c ****     uint8 retval = 0u;
+  19:usbserialprotocol.c ****     while(USB_UART_SpiUartGetRxBufferSize() < 1); // wait for byte
+  37              		.loc 1 19 0 discriminator 1
   38 0002 FFF7FEFF 		bl	USB_UART_SpiUartGetRxBufferSize
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 2
+
+
   39              	.LVL0:
   40 0006 0028     		cmp	r0, #0
   41 0008 FBD0     		beq	.L2
-  35:usbserialprotocol.c ****     retval = USB_UART_UartGetByte();
-  42              		.loc 1 35 0
+  20:usbserialprotocol.c ****     retval = USB_UART_UartGetByte();
+  42              		.loc 1 20 0
   43 000a FFF7FEFF 		bl	USB_UART_UartGetByte
   44              	.LVL1:
-  36:usbserialprotocol.c ****     return retval;
-  37:usbserialprotocol.c **** }
-  45              		.loc 1 37 0
+  21:usbserialprotocol.c ****     return retval;
+  22:usbserialprotocol.c **** }
+  45              		.loc 1 22 0
   46              		@ sp needed
-  36:usbserialprotocol.c ****     return retval;
-  47              		.loc 1 36 0
+  21:usbserialprotocol.c ****     return retval;
+  47              		.loc 1 21 0
   48 000e C0B2     		uxtb	r0, r0
-  49              		.loc 1 37 0
+  49              		.loc 1 22 0
   50 0010 10BD     		pop	{r4, pc}
   51              		.cfi_endproc
-  52              	.LFE34:
+  52              	.LFE35:
   53              		.size	getValidByte, .-getValidByte
   54              		.section	.text.pushMessage,"ax",%progbits
   55              		.align	1
@@ -102,12 +87,12 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 1
   58              		.thumb_func
   59              		.type	pushMessage, %function
   60              	pushMessage:
-  61              	.LFB35:
-  38:usbserialprotocol.c **** 
-  39:usbserialprotocol.c **** 
-  40:usbserialprotocol.c **** int pushMessage(const uint8 data[], uint8 size)
-  41:usbserialprotocol.c **** {
-  62              		.loc 1 41 0
+  61              	.LFB36:
+  23:usbserialprotocol.c **** 
+  24:usbserialprotocol.c **** 
+  25:usbserialprotocol.c **** void pushMessage(const uint8 data[], uint8 size)
+  26:usbserialprotocol.c **** {
+  62              		.loc 1 26 0
   63              		.cfi_startproc
   64              		@ args = 0, pretend = 0, frame = 0
   65              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -118,1313 +103,1412 @@ ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 1
   70              		.cfi_offset 5, -12
   71              		.cfi_offset 6, -8
   72              		.cfi_offset 14, -4
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 3
+  73 0002 0400     		movs	r4, r0
+  74 0004 4518     		adds	r5, r0, r1
+  75              	.LVL3:
+  76              	.L7:
+  77              	.LBB2:
+  27:usbserialprotocol.c ****     for (uint8 i = 0; i < size; i++) {
+  78              		.loc 1 27 0 discriminator 1
+  79 0006 AC42     		cmp	r4, r5
+  80 0008 04D0     		beq	.L9
+  28:usbserialprotocol.c ****         USB_UART_UartPutChar(data[i]);   
+  81              		.loc 1 28 0 discriminator 3
+  82 000a 2078     		ldrb	r0, [r4]
+  83 000c FFF7FEFF 		bl	USB_UART_SpiUartWriteTxData
+  84              	.LVL4:
+  85 0010 0134     		adds	r4, r4, #1
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 3
 
 
-  73              		.loc 1 41 0
-  74 0002 0500     		movs	r5, r0
-  75 0004 0E00     		movs	r6, r1
-  42:usbserialprotocol.c ****     int i;
-  43:usbserialprotocol.c **** 
-  44:usbserialprotocol.c ****     //USB_UART_UartPutChar(size);
-  45:usbserialprotocol.c ****     
-  46:usbserialprotocol.c ****     for (i = 0; i < size; i++) {
-  76              		.loc 1 46 0
-  77 0006 0400     		movs	r4, r0
-  78              	.LVL3:
-  79              	.L7:
-  80              		.loc 1 46 0 is_stmt 0 discriminator 1
-  81 0008 631B     		subs	r3, r4, r5
-  82 000a 9E42     		cmp	r6, r3
-  83 000c 04DD     		ble	.L9
-  47:usbserialprotocol.c ****         USB_UART_UartPutChar(data[i]);   
-  84              		.loc 1 47 0 is_stmt 1 discriminator 3
-  85 000e 2078     		ldrb	r0, [r4]
-  86 0010 FFF7FEFF 		bl	USB_UART_SpiUartWriteTxData
-  87              	.LVL4:
-  88 0014 0134     		adds	r4, r4, #1
-  89              	.LVL5:
-  90 0016 F7E7     		b	.L7
-  91              	.L9:
-  48:usbserialprotocol.c ****     }
-  49:usbserialprotocol.c ****     
-  50:usbserialprotocol.c ****     return RECV_OK;
-  51:usbserialprotocol.c **** }
-  92              		.loc 1 51 0
-  93 0018 0020     		movs	r0, #0
-  94              		@ sp needed
-  95              	.LVL6:
-  96              	.LVL7:
-  97 001a 70BD     		pop	{r4, r5, r6, pc}
-  98              		.cfi_endproc
-  99              	.LFE35:
- 100              		.size	pushMessage, .-pushMessage
- 101              		.section	.text.pullMessage,"ax",%progbits
- 102              		.align	1
- 103              		.global	pullMessage
- 104              		.code	16
- 105              		.thumb_func
- 106              		.type	pullMessage, %function
- 107              	pullMessage:
- 108              	.LFB36:
-  52:usbserialprotocol.c **** 
-  53:usbserialprotocol.c **** uint8 pullMessage(uint8 data[], uint8 length)
-  54:usbserialprotocol.c **** {
- 109              		.loc 1 54 0
- 110              		.cfi_startproc
- 111              		@ args = 0, pretend = 0, frame = 0
- 112              		@ frame_needed = 0, uses_anonymous_args = 0
- 113              	.LVL8:
- 114 0000 70B5     		push	{r4, r5, r6, lr}
- 115              		.cfi_def_cfa_offset 16
- 116              		.cfi_offset 4, -16
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 4
+  86              	.LVL5:
+  87 0012 F8E7     		b	.L7
+  88              	.LVL6:
+  89              	.L9:
+  90              	.LBE2:
+  29:usbserialprotocol.c ****     }
+  30:usbserialprotocol.c **** }
+  91              		.loc 1 30 0
+  92              		@ sp needed
+  93              	.LVL7:
+  94 0014 70BD     		pop	{r4, r5, r6, pc}
+  95              		.cfi_endproc
+  96              	.LFE36:
+  97              		.size	pushMessage, .-pushMessage
+  98              		.section	.text.pullMessage,"ax",%progbits
+  99              		.align	1
+ 100              		.global	pullMessage
+ 101              		.code	16
+ 102              		.thumb_func
+ 103              		.type	pullMessage, %function
+ 104              	pullMessage:
+ 105              	.LFB37:
+  31:usbserialprotocol.c **** 
+  32:usbserialprotocol.c **** void pullMessage(uint8 data[], uint8 length)
+  33:usbserialprotocol.c **** {
+ 106              		.loc 1 33 0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110              	.LVL8:
+ 111 0000 70B5     		push	{r4, r5, r6, lr}
+ 112              		.cfi_def_cfa_offset 16
+ 113              		.cfi_offset 4, -16
+ 114              		.cfi_offset 5, -12
+ 115              		.cfi_offset 6, -8
+ 116              		.cfi_offset 14, -4
+ 117 0002 0400     		movs	r4, r0
+ 118 0004 4518     		adds	r5, r0, r1
+ 119              	.LVL9:
+ 120              	.L11:
+ 121              	.LBB3:
+  34:usbserialprotocol.c ****     for (uint8 i = 0; i < length; i++) {
+ 122              		.loc 1 34 0 discriminator 1
+ 123 0006 AC42     		cmp	r4, r5
+ 124 0008 04D0     		beq	.L13
+  35:usbserialprotocol.c ****         data[i] = getValidByte();   
+ 125              		.loc 1 35 0 discriminator 3
+ 126 000a FFF7FEFF 		bl	getValidByte
+ 127              	.LVL10:
+ 128 000e 2070     		strb	r0, [r4]
+ 129              	.LVL11:
+ 130 0010 0134     		adds	r4, r4, #1
+ 131              	.LVL12:
+ 132 0012 F8E7     		b	.L11
+ 133              	.LVL13:
+ 134              	.L13:
+ 135              	.LBE3:
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 4
 
 
- 117              		.cfi_offset 5, -12
- 118              		.cfi_offset 6, -8
- 119              		.cfi_offset 14, -4
- 120              		.loc 1 54 0
- 121 0002 0D00     		movs	r5, r1
- 122 0004 0400     		movs	r4, r0
- 123 0006 4618     		adds	r6, r0, r1
- 124              	.LVL9:
- 125              	.L11:
-  55:usbserialprotocol.c ****     uint8 i;
-  56:usbserialprotocol.c ****     for (i = 0; i < length; i++) {
- 126              		.loc 1 56 0 discriminator 1
- 127 0008 B442     		cmp	r4, r6
- 128 000a 04D0     		beq	.L13
-  57:usbserialprotocol.c ****         data[i] = getValidByte();   
- 129              		.loc 1 57 0 discriminator 3
- 130 000c FFF7FEFF 		bl	getValidByte
- 131              	.LVL10:
- 132 0010 2070     		strb	r0, [r4]
- 133              	.LVL11:
- 134 0012 0134     		adds	r4, r4, #1
- 135              	.LVL12:
- 136 0014 F8E7     		b	.L11
- 137              	.LVL13:
- 138              	.L13:
-  58:usbserialprotocol.c ****     }
-  59:usbserialprotocol.c **** 
-  60:usbserialprotocol.c ****    return i;
-  61:usbserialprotocol.c **** }
- 139              		.loc 1 61 0
- 140 0016 2800     		movs	r0, r5
- 141              		@ sp needed
- 142              	.LVL14:
- 143 0018 70BD     		pop	{r4, r5, r6, pc}
- 144              		.cfi_endproc
- 145              	.LFE36:
- 146              		.size	pullMessage, .-pullMessage
- 147              		.section	.text.syncConnection,"ax",%progbits
- 148              		.align	1
- 149              		.global	syncConnection
- 150              		.code	16
- 151              		.thumb_func
- 152              		.type	syncConnection, %function
- 153              	syncConnection:
- 154              	.LFB37:
-  62:usbserialprotocol.c **** 
-  63:usbserialprotocol.c **** /* 
-  64:usbserialprotocol.c ****  * synchronization protocol:
-  65:usbserialprotocol.c ****  *
-  66:usbserialprotocol.c ****  * 1) ATM -> "READY" -> PSoC
-  67:usbserialprotocol.c ****  * 2) if bad:  PSoC -> received bad message -> ATM; goto 1)
-  68:usbserialprotocol.c ****  *    if good: PSoC -> PSoC name (prov/norm) -> ATM
-  69:usbserialprotocol.c ****  * 3) ATM -> "GO" -> PSoC
-  70:usbserialprotocol.c ****  * 4) if bad: goto 1)
-  71:usbserialprotocol.c ****  */
-  72:usbserialprotocol.c **** void syncConnection(int prov) 
-  73:usbserialprotocol.c **** {
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 5
+  36:usbserialprotocol.c ****     }
+  37:usbserialprotocol.c **** }
+ 136              		.loc 1 37 0
+ 137              		@ sp needed
+ 138              	.LVL14:
+ 139 0014 70BD     		pop	{r4, r5, r6, pc}
+ 140              		.cfi_endproc
+ 141              	.LFE37:
+ 142              		.size	pullMessage, .-pullMessage
+ 143              		.section	.text.syncConnection,"ax",%progbits
+ 144              		.align	1
+ 145              		.global	syncConnection
+ 146              		.code	16
+ 147              		.thumb_func
+ 148              		.type	syncConnection, %function
+ 149              	syncConnection:
+ 150              	.LFB38:
+  38:usbserialprotocol.c **** 
+  39:usbserialprotocol.c **** /* 
+  40:usbserialprotocol.c ****  * synchronization protocol:
+  41:usbserialprotocol.c ****  *
+  42:usbserialprotocol.c ****  * 1) ATM -> "READY" -> PSoC
+  43:usbserialprotocol.c ****  * 2) if bad:  PSoC -> received bad message -> ATM; goto 1)
+  44:usbserialprotocol.c ****  *    if good: PSoC -> PSoC name (prov/norm) -> ATM
+  45:usbserialprotocol.c ****  * 3) ATM -> "GO" -> PSoC
+  46:usbserialprotocol.c ****  * 4) if bad: goto 1)
+  47:usbserialprotocol.c ****  */
+  48:usbserialprotocol.c **** void syncConnection(int prov) 
+  49:usbserialprotocol.c **** {
+ 151              		.loc 1 49 0
+ 152              		.cfi_startproc
+ 153              		@ args = 0, pretend = 0, frame = 8
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 155              	.LVL15:
+ 156 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 157              		.cfi_def_cfa_offset 24
+ 158              		.cfi_offset 0, -24
+ 159              		.cfi_offset 1, -20
+ 160              		.cfi_offset 2, -16
+ 161              		.cfi_offset 4, -12
+ 162              		.cfi_offset 5, -8
+ 163              		.cfi_offset 14, -4
+ 164 0002 0500     		movs	r5, r0
+ 165              	.LVL16:
+ 166              	.L20:
+  50:usbserialprotocol.c ****     uint8 message[1];
+  51:usbserialprotocol.c ****     
+  52:usbserialprotocol.c ****     do {
+  53:usbserialprotocol.c ****         pullMessage(message, (uint8)1);                              
+ 167              		.loc 1 53 0
+ 168 0004 01AC     		add	r4, sp, #4
+ 169 0006 0121     		movs	r1, #1
+ 170 0008 2000     		movs	r0, r4
+ 171 000a FFF7FEFF 		bl	pullMessage
+ 172              	.LVL17:
+ 173 000e 2378     		ldrb	r3, [r4]
+  54:usbserialprotocol.c ****         if (prov) {
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 5
 
 
- 155              		.loc 1 73 0
- 156              		.cfi_startproc
- 157              		@ args = 0, pretend = 0, frame = 8
- 158              		@ frame_needed = 0, uses_anonymous_args = 0
- 159              	.LVL15:
- 160 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
- 161              		.cfi_def_cfa_offset 24
- 162              		.cfi_offset 0, -24
- 163              		.cfi_offset 1, -20
- 164              		.cfi_offset 2, -16
- 165              		.cfi_offset 4, -12
- 166              		.cfi_offset 5, -8
- 167              		.cfi_offset 14, -4
- 168 0002 0500     		movs	r5, r0
- 169              	.LVL16:
- 170              	.L20:
-  74:usbserialprotocol.c ****     uint8 message[1];
-  75:usbserialprotocol.c ****     
-  76:usbserialprotocol.c ****     do {
-  77:usbserialprotocol.c ****         pullMessage(message, (uint8)1);                              
- 171              		.loc 1 77 0
- 172 0004 01AC     		add	r4, sp, #4
- 173 0006 0121     		movs	r1, #1
- 174 0008 2000     		movs	r0, r4
- 175 000a FFF7FEFF 		bl	pullMessage
- 176              	.LVL17:
- 177 000e 2378     		ldrb	r3, [r4]
-  78:usbserialprotocol.c ****         if (prov) {
- 178              		.loc 1 78 0
- 179 0010 002D     		cmp	r5, #0
- 180 0012 10D0     		beq	.L15
-  79:usbserialprotocol.c ****             if (message[0] == SYNC_REQUEST_NO_PROV) {
- 181              		.loc 1 79 0
- 182 0014 162B     		cmp	r3, #22
- 183 0016 02D1     		bne	.L16
- 184              	.L19:
-  80:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
- 185              		.loc 1 80 0
- 186 0018 0121     		movs	r1, #1
- 187 001a 0E48     		ldr	r0, .L23
- 188 001c 14E0     		b	.L22
- 189              	.L16:
-  81:usbserialprotocol.c ****             }
-  82:usbserialprotocol.c ****             else if (message[0] == SYNC_REQUEST_PROV) {
- 190              		.loc 1 82 0
- 191 001e 152B     		cmp	r3, #21
- 192 0020 03D1     		bne	.L18
-  83:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_NO_PROV, (uint8)1);
- 193              		.loc 1 83 0
- 194 0022 0121     		movs	r1, #1
- 195 0024 0B48     		ldr	r0, .L23
- 196 0026 4018     		adds	r0, r0, r1
- 197 0028 0EE0     		b	.L22
- 198              	.L18:
-  84:usbserialprotocol.c ****             }
-  85:usbserialprotocol.c ****             else if (message[0] == PSOC_DEVICE_REQUEST) {
- 199              		.loc 1 85 0
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 6
+ 174              		.loc 1 54 0
+ 175 0010 002D     		cmp	r5, #0
+ 176 0012 10D0     		beq	.L15
+  55:usbserialprotocol.c ****             if (message[0] == SYNC_REQUEST_NO_PROV) {
+ 177              		.loc 1 55 0
+ 178 0014 162B     		cmp	r3, #22
+ 179 0016 02D1     		bne	.L16
+ 180              	.L19:
+  56:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
+ 181              		.loc 1 56 0
+ 182 0018 0121     		movs	r1, #1
+ 183 001a 0E48     		ldr	r0, .L23
+ 184 001c 14E0     		b	.L22
+ 185              	.L16:
+  57:usbserialprotocol.c ****             }
+  58:usbserialprotocol.c ****             else if (message[0] == SYNC_REQUEST_PROV) {
+ 186              		.loc 1 58 0
+ 187 001e 152B     		cmp	r3, #21
+ 188 0020 03D1     		bne	.L18
+  59:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_NO_PROV, (uint8)1);
+ 189              		.loc 1 59 0
+ 190 0022 0121     		movs	r1, #1
+ 191 0024 0B48     		ldr	r0, .L23
+ 192 0026 4018     		adds	r0, r0, r1
+ 193 0028 0EE0     		b	.L22
+ 194              	.L18:
+  60:usbserialprotocol.c ****             }
+  61:usbserialprotocol.c ****             else if (message[0] == PSOC_DEVICE_REQUEST) {
+ 195              		.loc 1 61 0
+ 196 002a 1E2B     		cmp	r3, #30
+ 197 002c 0ED1     		bne	.L17
+  62:usbserialprotocol.c ****                 pushMessage(&SYNC_TYPE_CARD_P, (uint8)1);
+ 198              		.loc 1 62 0
+ 199 002e 0948     		ldr	r0, .L23
+ 200 0030 0121     		movs	r1, #1
+ 201 0032 0230     		adds	r0, r0, #2
+ 202 0034 08E0     		b	.L22
+ 203              	.L15:
+  63:usbserialprotocol.c ****             }
+  64:usbserialprotocol.c ****         }
+  65:usbserialprotocol.c ****         else {
+  66:usbserialprotocol.c ****             if (message[0] == SYNC_REQUEST_PROV) {
+ 204              		.loc 1 66 0
+ 205 0036 1A00     		movs	r2, r3
+ 206 0038 153A     		subs	r2, r2, #21
+ 207 003a 012A     		cmp	r2, #1
+ 208 003c ECD9     		bls	.L19
+  67:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
+  68:usbserialprotocol.c ****             }
+  69:usbserialprotocol.c ****             else if (message[0] == SYNC_REQUEST_NO_PROV) {
+  70:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
+  71:usbserialprotocol.c ****             }
+  72:usbserialprotocol.c ****             else if (message[0] == PSOC_DEVICE_REQUEST) {
+ 209              		.loc 1 72 0
+ 210 003e 1E2B     		cmp	r3, #30
+ 211 0040 04D1     		bne	.L17
+  73:usbserialprotocol.c ****                 pushMessage(&SYNC_TYPE_CARD_N, (uint8)1);
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 6
 
 
- 200 002a 1E2B     		cmp	r3, #30
- 201 002c 0ED1     		bne	.L17
-  86:usbserialprotocol.c ****                 pushMessage(&SYNC_TYPE_CARD_P, (uint8)1);
- 202              		.loc 1 86 0
- 203 002e 0948     		ldr	r0, .L23
- 204 0030 0121     		movs	r1, #1
- 205 0032 0230     		adds	r0, r0, #2
- 206 0034 08E0     		b	.L22
- 207              	.L15:
-  87:usbserialprotocol.c ****             }
-  88:usbserialprotocol.c ****         }
-  89:usbserialprotocol.c ****         else {
-  90:usbserialprotocol.c ****             if (message[0] == SYNC_REQUEST_PROV) {
- 208              		.loc 1 90 0
- 209 0036 1A00     		movs	r2, r3
- 210 0038 153A     		subs	r2, r2, #21
- 211 003a 012A     		cmp	r2, #1
- 212 003c ECD9     		bls	.L19
-  91:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
-  92:usbserialprotocol.c ****             }
-  93:usbserialprotocol.c ****             else if (message[0] == SYNC_REQUEST_NO_PROV) {
-  94:usbserialprotocol.c ****                 pushMessage(&SYNC_CONFIRMED_PROV, (uint8)1);
-  95:usbserialprotocol.c ****             }
-  96:usbserialprotocol.c ****             else if (message[0] == PSOC_DEVICE_REQUEST) {
- 213              		.loc 1 96 0
- 214 003e 1E2B     		cmp	r3, #30
- 215 0040 04D1     		bne	.L17
-  97:usbserialprotocol.c ****                 pushMessage(&SYNC_TYPE_CARD_N, (uint8)1);
- 216              		.loc 1 97 0
- 217 0042 0121     		movs	r1, #1
- 218 0044 0348     		ldr	r0, .L23
- 219 0046 0330     		adds	r0, r0, #3
- 220              	.L22:
- 221 0048 FFF7FEFF 		bl	pushMessage
- 222              	.LVL18:
- 223              	.L17:
-  98:usbserialprotocol.c ****             }
-  99:usbserialprotocol.c ****         }
- 100:usbserialprotocol.c ****     }
- 101:usbserialprotocol.c ****     while (message[0] != SYNCED);
- 224              		.loc 1 101 0
- 225 004c 2378     		ldrb	r3, [r4]
- 226 004e 1B2B     		cmp	r3, #27
- 227 0050 D8D1     		bne	.L20
- 102:usbserialprotocol.c ****     
- 103:usbserialprotocol.c **** }
- 228              		.loc 1 103 0
- 229              		@ sp needed
- 230              	.LVL19:
- 231 0052 37BD     		pop	{r0, r1, r2, r4, r5, pc}
- 232              	.L24:
- 233              		.align	2
- 234              	.L23:
- 235 0054 00000000 		.word	.LANCHOR0
- 236              		.cfi_endproc
- 237              	.LFE37:
- 238              		.size	syncConnection, .-syncConnection
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 7
+ 212              		.loc 1 73 0
+ 213 0042 0121     		movs	r1, #1
+ 214 0044 0348     		ldr	r0, .L23
+ 215 0046 0330     		adds	r0, r0, #3
+ 216              	.L22:
+ 217 0048 FFF7FEFF 		bl	pushMessage
+ 218              	.LVL18:
+ 219              	.L17:
+  74:usbserialprotocol.c ****             }
+  75:usbserialprotocol.c ****         }
+  76:usbserialprotocol.c ****     }
+  77:usbserialprotocol.c ****     while (message[0] != SYNCED);
+ 220              		.loc 1 77 0
+ 221 004c 2378     		ldrb	r3, [r4]
+ 222 004e 1B2B     		cmp	r3, #27
+ 223 0050 D8D1     		bne	.L20
+  78:usbserialprotocol.c ****     
+  79:usbserialprotocol.c **** }
+ 224              		.loc 1 79 0
+ 225              		@ sp needed
+ 226              	.LVL19:
+ 227 0052 37BD     		pop	{r0, r1, r2, r4, r5, pc}
+ 228              	.L24:
+ 229              		.align	2
+ 230              	.L23:
+ 231 0054 00000000 		.word	.LANCHOR0
+ 232              		.cfi_endproc
+ 233              	.LFE38:
+ 234              		.size	syncConnection, .-syncConnection
+ 235              		.section	.rodata
+ 236              		.set	.LANCHOR0,. + 0
+ 237              		.type	SYNC_CONFIRMED_PROV, %object
+ 238              		.size	SYNC_CONFIRMED_PROV, 1
+ 239              	SYNC_CONFIRMED_PROV:
+ 240 0000 17       		.byte	23
+ 241              		.type	SYNC_CONFIRMED_NO_PROV, %object
+ 242              		.size	SYNC_CONFIRMED_NO_PROV, 1
+ 243              	SYNC_CONFIRMED_NO_PROV:
+ 244 0001 18       		.byte	24
+ 245              		.type	SYNC_TYPE_CARD_P, %object
+ 246              		.size	SYNC_TYPE_CARD_P, 1
+ 247              	SYNC_TYPE_CARD_P:
+ 248 0002 3D       		.byte	61
+ 249              		.type	SYNC_TYPE_CARD_N, %object
+ 250              		.size	SYNC_TYPE_CARD_N, 1
+ 251              	SYNC_TYPE_CARD_N:
+ 252 0003 1D       		.byte	29
+ 253              		.text
+ 254              	.Letext0:
+ 255              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 256              		.file 3 "common.h"
+ 257              		.file 4 "Generated_Source\\PSoC4/USB_UART_SPI_UART.h"
+ 258              		.section	.debug_info,"",%progbits
+ 259              	.Ldebug_info0:
+ 260 0000 2C030000 		.4byte	0x32c
+ 261 0004 0400     		.2byte	0x4
+ 262 0006 00000000 		.4byte	.Ldebug_abbrev0
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 7
 
 
- 239              		.section	.rodata
- 240              		.set	.LANCHOR0,. + 0
- 241              		.type	SYNC_CONFIRMED_PROV, %object
- 242              		.size	SYNC_CONFIRMED_PROV, 1
- 243              	SYNC_CONFIRMED_PROV:
- 244 0000 17       		.byte	23
- 245              		.type	SYNC_CONFIRMED_NO_PROV, %object
- 246              		.size	SYNC_CONFIRMED_NO_PROV, 1
- 247              	SYNC_CONFIRMED_NO_PROV:
- 248 0001 18       		.byte	24
- 249              		.type	SYNC_TYPE_CARD_P, %object
- 250              		.size	SYNC_TYPE_CARD_P, 1
- 251              	SYNC_TYPE_CARD_P:
- 252 0002 3D       		.byte	61
- 253              		.type	SYNC_TYPE_CARD_N, %object
- 254              		.size	SYNC_TYPE_CARD_N, 1
- 255              	SYNC_TYPE_CARD_N:
- 256 0003 1D       		.byte	29
- 257              		.text
- 258              	.Letext0:
- 259              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
- 260              		.file 3 "Generated_Source\\PSoC4/USB_UART_SPI_UART.h"
- 261              		.section	.debug_info,"",%progbits
- 262              	.Ldebug_info0:
- 263 0000 9E020000 		.4byte	0x29e
- 264 0004 0400     		.2byte	0x4
- 265 0006 00000000 		.4byte	.Ldebug_abbrev0
- 266 000a 04       		.byte	0x4
- 267 000b 01       		.uleb128 0x1
- 268 000c 5A020000 		.4byte	.LASF39
- 269 0010 0C       		.byte	0xc
- 270 0011 A8010000 		.4byte	.LASF40
- 271 0015 6C010000 		.4byte	.LASF41
- 272 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 273 001d 00000000 		.4byte	0
- 274 0021 00000000 		.4byte	.Ldebug_line0
- 275 0025 02       		.uleb128 0x2
- 276 0026 01       		.byte	0x1
- 277 0027 06       		.byte	0x6
- 278 0028 4E020000 		.4byte	.LASF0
- 279 002c 02       		.uleb128 0x2
- 280 002d 01       		.byte	0x1
- 281 002e 08       		.byte	0x8
- 282 002f CE000000 		.4byte	.LASF1
- 283 0033 02       		.uleb128 0x2
- 284 0034 02       		.byte	0x2
- 285 0035 05       		.byte	0x5
- 286 0036 00020000 		.4byte	.LASF2
- 287 003a 02       		.uleb128 0x2
- 288 003b 02       		.byte	0x2
- 289 003c 07       		.byte	0x7
- 290 003d 5C000000 		.4byte	.LASF3
- 291 0041 02       		.uleb128 0x2
- 292 0042 04       		.byte	0x4
- 293 0043 05       		.byte	0x5
- 294 0044 39020000 		.4byte	.LASF4
- 295 0048 02       		.uleb128 0x2
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 8
+ 263 000a 04       		.byte	0x4
+ 264 000b 01       		.uleb128 0x1
+ 265 000c C4020000 		.4byte	.LASF47
+ 266 0010 0C       		.byte	0xc
+ 267 0011 FF010000 		.4byte	.LASF48
+ 268 0015 C3010000 		.4byte	.LASF49
+ 269 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 270 001d 00000000 		.4byte	0
+ 271 0021 00000000 		.4byte	.Ldebug_line0
+ 272 0025 02       		.uleb128 0x2
+ 273 0026 01       		.byte	0x1
+ 274 0027 06       		.byte	0x6
+ 275 0028 B3020000 		.4byte	.LASF0
+ 276 002c 02       		.uleb128 0x2
+ 277 002d 01       		.byte	0x1
+ 278 002e 08       		.byte	0x8
+ 279 002f 06010000 		.4byte	.LASF1
+ 280 0033 02       		.uleb128 0x2
+ 281 0034 02       		.byte	0x2
+ 282 0035 05       		.byte	0x5
+ 283 0036 65020000 		.4byte	.LASF2
+ 284 003a 02       		.uleb128 0x2
+ 285 003b 02       		.byte	0x2
+ 286 003c 07       		.byte	0x7
+ 287 003d 64000000 		.4byte	.LASF3
+ 288 0041 02       		.uleb128 0x2
+ 289 0042 04       		.byte	0x4
+ 290 0043 05       		.byte	0x5
+ 291 0044 9E020000 		.4byte	.LASF4
+ 292 0048 02       		.uleb128 0x2
+ 293 0049 04       		.byte	0x4
+ 294 004a 07       		.byte	0x7
+ 295 004b CE000000 		.4byte	.LASF5
+ 296 004f 02       		.uleb128 0x2
+ 297 0050 08       		.byte	0x8
+ 298 0051 05       		.byte	0x5
+ 299 0052 3D020000 		.4byte	.LASF6
+ 300 0056 02       		.uleb128 0x2
+ 301 0057 08       		.byte	0x8
+ 302 0058 07       		.byte	0x7
+ 303 0059 63010000 		.4byte	.LASF7
+ 304 005d 03       		.uleb128 0x3
+ 305 005e 04       		.byte	0x4
+ 306 005f 05       		.byte	0x5
+ 307 0060 696E7400 		.ascii	"int\000"
+ 308 0064 02       		.uleb128 0x2
+ 309 0065 04       		.byte	0x4
+ 310 0066 07       		.byte	0x7
+ 311 0067 4D010000 		.4byte	.LASF8
+ 312 006b 04       		.uleb128 0x4
+ 313 006c F0000000 		.4byte	.LASF9
+ 314 0070 02       		.byte	0x2
+ 315 0071 B901     		.2byte	0x1b9
+ 316 0073 2C000000 		.4byte	0x2c
+ 317 0077 04       		.uleb128 0x4
+ 318 0078 46010000 		.4byte	.LASF10
+ 319 007c 02       		.byte	0x2
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 8
 
 
- 296 0049 04       		.byte	0x4
- 297 004a 07       		.byte	0x7
- 298 004b B6000000 		.4byte	.LASF5
- 299 004f 02       		.uleb128 0x2
- 300 0050 08       		.byte	0x8
- 301 0051 05       		.byte	0x5
- 302 0052 E6010000 		.4byte	.LASF6
- 303 0056 02       		.uleb128 0x2
- 304 0057 08       		.byte	0x8
- 305 0058 07       		.byte	0x7
- 306 0059 0C010000 		.4byte	.LASF7
- 307 005d 03       		.uleb128 0x3
- 308 005e 04       		.byte	0x4
- 309 005f 05       		.byte	0x5
- 310 0060 696E7400 		.ascii	"int\000"
- 311 0064 02       		.uleb128 0x2
- 312 0065 04       		.byte	0x4
- 313 0066 07       		.byte	0x7
- 314 0067 FF000000 		.4byte	.LASF8
- 315 006b 04       		.uleb128 0x4
- 316 006c C8000000 		.4byte	.LASF9
- 317 0070 02       		.byte	0x2
- 318 0071 B901     		.2byte	0x1b9
- 319 0073 2C000000 		.4byte	0x2c
- 320 0077 04       		.uleb128 0x4
- 321 0078 F8000000 		.4byte	.LASF10
- 322 007c 02       		.byte	0x2
- 323 007d BB01     		.2byte	0x1bb
- 324 007f 48000000 		.4byte	0x48
- 325 0083 02       		.uleb128 0x2
- 326 0084 04       		.byte	0x4
- 327 0085 04       		.byte	0x4
- 328 0086 8B000000 		.4byte	.LASF11
- 329 008a 02       		.uleb128 0x2
- 330 008b 08       		.byte	0x8
- 331 008c 04       		.byte	0x4
- 332 008d DC000000 		.4byte	.LASF12
- 333 0091 02       		.uleb128 0x2
- 334 0092 01       		.byte	0x1
- 335 0093 08       		.byte	0x8
- 336 0094 F4010000 		.4byte	.LASF13
- 337 0098 02       		.uleb128 0x2
- 338 0099 08       		.byte	0x8
- 339 009a 04       		.byte	0x4
- 340 009b 42020000 		.4byte	.LASF14
- 341 009f 02       		.uleb128 0x2
- 342 00a0 04       		.byte	0x4
- 343 00a1 07       		.byte	0x7
- 344 00a2 D1010000 		.4byte	.LASF15
- 345 00a6 05       		.uleb128 0x5
- 346 00a7 04       		.byte	0x4
- 347 00a8 6B000000 		.4byte	0x6b
- 348 00ac 06       		.uleb128 0x6
- 349 00ad 23010000 		.4byte	.LASF22
- 350 00b1 01       		.byte	0x1
- 351 00b2 1F       		.byte	0x1f
- 352 00b3 6B000000 		.4byte	0x6b
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 9
+ 320 007d BB01     		.2byte	0x1bb
+ 321 007f 48000000 		.4byte	0x48
+ 322 0083 02       		.uleb128 0x2
+ 323 0084 04       		.byte	0x4
+ 324 0085 04       		.byte	0x4
+ 325 0086 93000000 		.4byte	.LASF11
+ 326 008a 02       		.uleb128 0x2
+ 327 008b 08       		.byte	0x8
+ 328 008c 04       		.byte	0x4
+ 329 008d 14010000 		.4byte	.LASF12
+ 330 0091 02       		.uleb128 0x2
+ 331 0092 01       		.byte	0x1
+ 332 0093 08       		.byte	0x8
+ 333 0094 4B020000 		.4byte	.LASF13
+ 334 0098 02       		.uleb128 0x2
+ 335 0099 08       		.byte	0x8
+ 336 009a 04       		.byte	0x4
+ 337 009b A7020000 		.4byte	.LASF14
+ 338 009f 02       		.uleb128 0x2
+ 339 00a0 04       		.byte	0x4
+ 340 00a1 07       		.byte	0x7
+ 341 00a2 28020000 		.4byte	.LASF15
+ 342 00a6 05       		.uleb128 0x5
+ 343 00a7 91000000 		.4byte	0x91
+ 344 00ab 06       		.uleb128 0x6
+ 345 00ac 04       		.byte	0x4
+ 346 00ad 6B000000 		.4byte	0x6b
+ 347 00b1 07       		.uleb128 0x7
+ 348 00b2 7A010000 		.4byte	.LASF16
+ 349 00b6 01       		.byte	0x1
+ 350 00b7 10       		.byte	0x10
+ 351 00b8 6B000000 		.4byte	0x6b
+ 352 00bc 00000000 		.4byte	.LFB35
+ 353 00c0 12000000 		.4byte	.LFE35-.LFB35
+ 354 00c4 01       		.uleb128 0x1
+ 355 00c5 9C       		.byte	0x9c
+ 356 00c6 EA000000 		.4byte	0xea
+ 357 00ca 08       		.uleb128 0x8
+ 358 00cb BE000000 		.4byte	.LASF20
+ 359 00cf 01       		.byte	0x1
+ 360 00d0 12       		.byte	0x12
+ 361 00d1 6B000000 		.4byte	0x6b
+ 362 00d5 01       		.uleb128 0x1
+ 363 00d6 50       		.byte	0x50
+ 364 00d7 09       		.uleb128 0x9
+ 365 00d8 06000000 		.4byte	.LVL0
+ 366 00dc 0B030000 		.4byte	0x30b
+ 367 00e0 09       		.uleb128 0x9
+ 368 00e1 0E000000 		.4byte	.LVL1
+ 369 00e5 17030000 		.4byte	0x317
+ 370 00e9 00       		.byte	0
+ 371 00ea 0A       		.uleb128 0xa
+ 372 00eb 31020000 		.4byte	.LASF17
+ 373 00ef 01       		.byte	0x1
+ 374 00f0 19       		.byte	0x19
+ 375 00f1 00000000 		.4byte	.LFB36
+ 376 00f5 16000000 		.4byte	.LFE36-.LFB36
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 9
 
 
- 353 00b7 00000000 		.4byte	.LFB34
- 354 00bb 12000000 		.4byte	.LFE34-.LFB34
- 355 00bf 01       		.uleb128 0x1
- 356 00c0 9C       		.byte	0x9c
- 357 00c1 E5000000 		.4byte	0xe5
- 358 00c5 07       		.uleb128 0x7
- 359 00c6 AF000000 		.4byte	.LASF18
- 360 00ca 01       		.byte	0x1
- 361 00cb 21       		.byte	0x21
- 362 00cc 6B000000 		.4byte	0x6b
- 363 00d0 01       		.uleb128 0x1
- 364 00d1 50       		.byte	0x50
- 365 00d2 08       		.uleb128 0x8
- 366 00d3 06000000 		.4byte	.LVL0
- 367 00d7 7D020000 		.4byte	0x27d
- 368 00db 08       		.uleb128 0x8
- 369 00dc 0E000000 		.4byte	.LVL1
- 370 00e0 89020000 		.4byte	0x289
- 371 00e4 00       		.byte	0
- 372 00e5 09       		.uleb128 0x9
- 373 00e6 DA010000 		.4byte	.LASF19
- 374 00ea 01       		.byte	0x1
- 375 00eb 28       		.byte	0x28
- 376 00ec 5D000000 		.4byte	0x5d
- 377 00f0 00000000 		.4byte	.LFB35
- 378 00f4 1C000000 		.4byte	.LFE35-.LFB35
- 379 00f8 01       		.uleb128 0x1
- 380 00f9 9C       		.byte	0x9c
- 381 00fa 33010000 		.4byte	0x133
- 382 00fe 0A       		.uleb128 0xa
- 383 00ff 91000000 		.4byte	.LASF16
- 384 0103 01       		.byte	0x1
- 385 0104 28       		.byte	0x28
- 386 0105 33010000 		.4byte	0x133
- 387 0109 00000000 		.4byte	.LLST0
- 388 010d 0A       		.uleb128 0xa
- 389 010e AA000000 		.4byte	.LASF17
- 390 0112 01       		.byte	0x1
- 391 0113 28       		.byte	0x28
- 392 0114 6B000000 		.4byte	0x6b
- 393 0118 2C000000 		.4byte	.LLST1
- 394 011c 0B       		.uleb128 0xb
- 395 011d 6900     		.ascii	"i\000"
- 396 011f 01       		.byte	0x1
- 397 0120 2A       		.byte	0x2a
- 398 0121 5D000000 		.4byte	0x5d
- 399 0125 4D000000 		.4byte	.LLST2
- 400 0129 08       		.uleb128 0x8
- 401 012a 14000000 		.4byte	.LVL4
- 402 012e 95020000 		.4byte	0x295
- 403 0132 00       		.byte	0
- 404 0133 05       		.uleb128 0x5
- 405 0134 04       		.byte	0x4
- 406 0135 39010000 		.4byte	0x139
- 407 0139 0C       		.uleb128 0xc
- 408 013a 6B000000 		.4byte	0x6b
- 409 013e 09       		.uleb128 0x9
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 10
+ 377 00f9 01       		.uleb128 0x1
+ 378 00fa 9C       		.byte	0x9c
+ 379 00fb 3E010000 		.4byte	0x13e
+ 380 00ff 0B       		.uleb128 0xb
+ 381 0100 99000000 		.4byte	.LASF18
+ 382 0104 01       		.byte	0x1
+ 383 0105 19       		.byte	0x19
+ 384 0106 3E010000 		.4byte	0x13e
+ 385 010a 00000000 		.4byte	.LLST0
+ 386 010e 0B       		.uleb128 0xb
+ 387 010f BF020000 		.4byte	.LASF19
+ 388 0113 01       		.byte	0x1
+ 389 0114 19       		.byte	0x19
+ 390 0115 6B000000 		.4byte	0x6b
+ 391 0119 21000000 		.4byte	.LLST1
+ 392 011d 0C       		.uleb128 0xc
+ 393 011e 06000000 		.4byte	.LBB2
+ 394 0122 0E000000 		.4byte	.LBE2-.LBB2
+ 395 0126 0D       		.uleb128 0xd
+ 396 0127 6900     		.ascii	"i\000"
+ 397 0129 01       		.byte	0x1
+ 398 012a 1B       		.byte	0x1b
+ 399 012b 6B000000 		.4byte	0x6b
+ 400 012f 42000000 		.4byte	.LLST2
+ 401 0133 09       		.uleb128 0x9
+ 402 0134 10000000 		.4byte	.LVL4
+ 403 0138 23030000 		.4byte	0x323
+ 404 013c 00       		.byte	0
+ 405 013d 00       		.byte	0
+ 406 013e 06       		.uleb128 0x6
+ 407 013f 04       		.byte	0x4
+ 408 0140 44010000 		.4byte	0x144
+ 409 0144 05       		.uleb128 0x5
+ 410 0145 6B000000 		.4byte	0x6b
+ 411 0149 0A       		.uleb128 0xa
+ 412 014a 52030000 		.4byte	.LASF21
+ 413 014e 01       		.byte	0x1
+ 414 014f 20       		.byte	0x20
+ 415 0150 00000000 		.4byte	.LFB37
+ 416 0154 16000000 		.4byte	.LFE37-.LFB37
+ 417 0158 01       		.uleb128 0x1
+ 418 0159 9C       		.byte	0x9c
+ 419 015a 9D010000 		.4byte	0x19d
+ 420 015e 0B       		.uleb128 0xb
+ 421 015f 99000000 		.4byte	.LASF18
+ 422 0163 01       		.byte	0x1
+ 423 0164 20       		.byte	0x20
+ 424 0165 AB000000 		.4byte	0xab
+ 425 0169 8B000000 		.4byte	.LLST3
+ 426 016d 0B       		.uleb128 0xb
+ 427 016e 5E020000 		.4byte	.LASF22
+ 428 0172 01       		.byte	0x1
+ 429 0173 20       		.byte	0x20
+ 430 0174 6B000000 		.4byte	0x6b
+ 431 0178 AC000000 		.4byte	.LLST4
+ 432 017c 0C       		.uleb128 0xc
+ 433 017d 06000000 		.4byte	.LBB3
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 10
 
 
- 410 013f E8020000 		.4byte	.LASF20
- 411 0143 01       		.byte	0x1
- 412 0144 35       		.byte	0x35
- 413 0145 6B000000 		.4byte	0x6b
- 414 0149 00000000 		.4byte	.LFB36
- 415 014d 1A000000 		.4byte	.LFE36-.LFB36
- 416 0151 01       		.uleb128 0x1
- 417 0152 9C       		.byte	0x9c
- 418 0153 8C010000 		.4byte	0x18c
- 419 0157 0A       		.uleb128 0xa
- 420 0158 91000000 		.4byte	.LASF16
- 421 015c 01       		.byte	0x1
- 422 015d 35       		.byte	0x35
- 423 015e A6000000 		.4byte	0xa6
- 424 0162 93000000 		.4byte	.LLST3
- 425 0166 0A       		.uleb128 0xa
- 426 0167 F9010000 		.4byte	.LASF21
- 427 016b 01       		.byte	0x1
- 428 016c 35       		.byte	0x35
- 429 016d 6B000000 		.4byte	0x6b
- 430 0171 B4000000 		.4byte	.LLST4
- 431 0175 0B       		.uleb128 0xb
- 432 0176 6900     		.ascii	"i\000"
- 433 0178 01       		.byte	0x1
- 434 0179 37       		.byte	0x37
- 435 017a 6B000000 		.4byte	0x6b
- 436 017e D5000000 		.4byte	.LLST5
- 437 0182 08       		.uleb128 0x8
- 438 0183 10000000 		.4byte	.LVL10
- 439 0187 AC000000 		.4byte	0xac
- 440 018b 00       		.byte	0
- 441 018c 0D       		.uleb128 0xd
- 442 018d 19000000 		.4byte	.LASF23
- 443 0191 01       		.byte	0x1
- 444 0192 48       		.byte	0x48
- 445 0193 00000000 		.4byte	.LFB37
- 446 0197 58000000 		.4byte	.LFE37-.LFB37
- 447 019b 01       		.uleb128 0x1
- 448 019c 9C       		.byte	0x9c
- 449 019d E1010000 		.4byte	0x1e1
- 450 01a1 0A       		.uleb128 0xa
- 451 01a2 86000000 		.4byte	.LASF24
- 452 01a6 01       		.byte	0x1
- 453 01a7 48       		.byte	0x48
- 454 01a8 5D000000 		.4byte	0x5d
- 455 01ac 1E010000 		.4byte	.LLST6
- 456 01b0 07       		.uleb128 0x7
- 457 01b1 00000000 		.4byte	.LASF25
- 458 01b5 01       		.byte	0x1
- 459 01b6 4A       		.byte	0x4a
- 460 01b7 E1010000 		.4byte	0x1e1
- 461 01bb 02       		.uleb128 0x2
- 462 01bc 91       		.byte	0x91
- 463 01bd 6C       		.sleb128 -20
- 464 01be 0E       		.uleb128 0xe
- 465 01bf 0E000000 		.4byte	.LVL17
- 466 01c3 3E010000 		.4byte	0x13e
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 11
+ 434 0181 0E000000 		.4byte	.LBE3-.LBB3
+ 435 0185 0D       		.uleb128 0xd
+ 436 0186 6900     		.ascii	"i\000"
+ 437 0188 01       		.byte	0x1
+ 438 0189 22       		.byte	0x22
+ 439 018a 6B000000 		.4byte	0x6b
+ 440 018e CD000000 		.4byte	.LLST5
+ 441 0192 09       		.uleb128 0x9
+ 442 0193 0E000000 		.4byte	.LVL10
+ 443 0197 B1000000 		.4byte	0xb1
+ 444 019b 00       		.byte	0
+ 445 019c 00       		.byte	0
+ 446 019d 0A       		.uleb128 0xa
+ 447 019e 19000000 		.4byte	.LASF23
+ 448 01a2 01       		.byte	0x1
+ 449 01a3 30       		.byte	0x30
+ 450 01a4 00000000 		.4byte	.LFB38
+ 451 01a8 58000000 		.4byte	.LFE38-.LFB38
+ 452 01ac 01       		.uleb128 0x1
+ 453 01ad 9C       		.byte	0x9c
+ 454 01ae F2010000 		.4byte	0x1f2
+ 455 01b2 0B       		.uleb128 0xb
+ 456 01b3 8E000000 		.4byte	.LASF24
+ 457 01b7 01       		.byte	0x1
+ 458 01b8 30       		.byte	0x30
+ 459 01b9 5D000000 		.4byte	0x5d
+ 460 01bd 16010000 		.4byte	.LLST6
+ 461 01c1 08       		.uleb128 0x8
+ 462 01c2 00000000 		.4byte	.LASF25
+ 463 01c6 01       		.byte	0x1
+ 464 01c7 32       		.byte	0x32
+ 465 01c8 F2010000 		.4byte	0x1f2
+ 466 01cc 02       		.uleb128 0x2
+ 467 01cd 91       		.byte	0x91
+ 468 01ce 6C       		.sleb128 -20
+ 469 01cf 0E       		.uleb128 0xe
+ 470 01d0 0E000000 		.4byte	.LVL17
+ 471 01d4 49010000 		.4byte	0x149
+ 472 01d8 E8010000 		.4byte	0x1e8
+ 473 01dc 0F       		.uleb128 0xf
+ 474 01dd 01       		.uleb128 0x1
+ 475 01de 50       		.byte	0x50
+ 476 01df 02       		.uleb128 0x2
+ 477 01e0 74       		.byte	0x74
+ 478 01e1 00       		.sleb128 0
+ 479 01e2 0F       		.uleb128 0xf
+ 480 01e3 01       		.uleb128 0x1
+ 481 01e4 51       		.byte	0x51
+ 482 01e5 01       		.uleb128 0x1
+ 483 01e6 31       		.byte	0x31
+ 484 01e7 00       		.byte	0
+ 485 01e8 09       		.uleb128 0x9
+ 486 01e9 4C000000 		.4byte	.LVL18
+ 487 01ed EA000000 		.4byte	0xea
+ 488 01f1 00       		.byte	0
+ 489 01f2 10       		.uleb128 0x10
+ 490 01f3 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 11
 
 
- 467 01c7 D7010000 		.4byte	0x1d7
- 468 01cb 0F       		.uleb128 0xf
- 469 01cc 01       		.uleb128 0x1
- 470 01cd 50       		.byte	0x50
- 471 01ce 02       		.uleb128 0x2
- 472 01cf 74       		.byte	0x74
- 473 01d0 00       		.sleb128 0
- 474 01d1 0F       		.uleb128 0xf
- 475 01d2 01       		.uleb128 0x1
- 476 01d3 51       		.byte	0x51
- 477 01d4 01       		.uleb128 0x1
- 478 01d5 31       		.byte	0x31
- 479 01d6 00       		.byte	0
- 480 01d7 08       		.uleb128 0x8
- 481 01d8 4C000000 		.4byte	.LVL18
- 482 01dc E5000000 		.4byte	0xe5
- 483 01e0 00       		.byte	0
- 484 01e1 10       		.uleb128 0x10
- 485 01e2 6B000000 		.4byte	0x6b
- 486 01e6 F1010000 		.4byte	0x1f1
- 487 01ea 11       		.uleb128 0x11
- 488 01eb 9F000000 		.4byte	0x9f
- 489 01ef 00       		.byte	0
- 490 01f0 00       		.byte	0
- 491 01f1 12       		.uleb128 0x12
- 492 01f2 4A000000 		.4byte	.LASF26
- 493 01f6 01       		.byte	0x1
- 494 01f7 12       		.byte	0x12
- 495 01f8 39010000 		.4byte	0x139
- 496 01fc 15       		.byte	0x15
- 497 01fd 12       		.uleb128 0x12
- 498 01fe BC010000 		.4byte	.LASF27
- 499 0202 01       		.byte	0x1
- 500 0203 13       		.byte	0x13
- 501 0204 39010000 		.4byte	0x139
- 502 0208 16       		.byte	0x16
- 503 0209 07       		.uleb128 0x7
- 504 020a 0A020000 		.4byte	.LASF28
- 505 020e 01       		.byte	0x1
- 506 020f 14       		.byte	0x14
- 507 0210 39010000 		.4byte	0x139
- 508 0214 05       		.uleb128 0x5
- 509 0215 03       		.byte	0x3
- 510 0216 00000000 		.4byte	SYNC_CONFIRMED_PROV
- 511 021a 07       		.uleb128 0x7
- 512 021b 6F000000 		.4byte	.LASF29
- 513 021f 01       		.byte	0x1
- 514 0220 15       		.byte	0x15
- 515 0221 39010000 		.4byte	0x139
- 516 0225 05       		.uleb128 0x5
- 517 0226 03       		.byte	0x3
- 518 0227 01000000 		.4byte	SYNC_CONFIRMED_NO_PROV
- 519 022b 12       		.uleb128 0x12
- 520 022c 25020000 		.4byte	.LASF30
- 521 0230 01       		.byte	0x1
- 522 0231 16       		.byte	0x16
- 523 0232 39010000 		.4byte	0x139
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 12
+ 491 01f7 02020000 		.4byte	0x202
+ 492 01fb 11       		.uleb128 0x11
+ 493 01fc 9F000000 		.4byte	0x9f
+ 494 0200 00       		.byte	0
+ 495 0201 00       		.byte	0
+ 496 0202 12       		.uleb128 0x12
+ 497 0203 C5000000 		.4byte	.LASF26
+ 498 0207 03       		.byte	0x3
+ 499 0208 0F       		.byte	0xf
+ 500 0209 44010000 		.4byte	0x144
+ 501 020d 20       		.byte	0x20
+ 502 020e 12       		.uleb128 0x12
+ 503 020f 5A010000 		.4byte	.LASF27
+ 504 0213 03       		.byte	0x3
+ 505 0214 10       		.byte	0x10
+ 506 0215 44010000 		.4byte	0x144
+ 507 0219 21       		.byte	0x21
+ 508 021a 12       		.uleb128 0x12
+ 509 021b B2000000 		.4byte	.LASF28
+ 510 021f 03       		.byte	0x3
+ 511 0220 1B       		.byte	0x1b
+ 512 0221 44010000 		.4byte	0x144
+ 513 0225 01       		.byte	0x1
+ 514 0226 12       		.uleb128 0x12
+ 515 0227 1B010000 		.4byte	.LASF29
+ 516 022b 03       		.byte	0x3
+ 517 022c 1C       		.byte	0x1c
+ 518 022d 44010000 		.4byte	0x144
+ 519 0231 03       		.byte	0x3
+ 520 0232 12       		.uleb128 0x12
+ 521 0233 50020000 		.4byte	.LASF30
+ 522 0237 03       		.byte	0x3
+ 523 0238 1D       		.byte	0x1d
+ 524 0239 44010000 		.4byte	0x144
+ 525 023d 0D       		.byte	0xd
+ 526 023e 12       		.uleb128 0x12
+ 527 023f 52000000 		.4byte	.LASF31
+ 528 0243 03       		.byte	0x3
+ 529 0244 21       		.byte	0x21
+ 530 0245 44010000 		.4byte	0x144
+ 531 0249 15       		.byte	0x15
+ 532 024a 12       		.uleb128 0x12
+ 533 024b 13020000 		.4byte	.LASF32
+ 534 024f 03       		.byte	0x3
+ 535 0250 22       		.byte	0x22
+ 536 0251 44010000 		.4byte	0x144
+ 537 0255 16       		.byte	0x16
+ 538 0256 08       		.uleb128 0x8
+ 539 0257 6F020000 		.4byte	.LASF33
+ 540 025b 03       		.byte	0x3
+ 541 025c 23       		.byte	0x23
+ 542 025d 44010000 		.4byte	0x144
+ 543 0261 05       		.uleb128 0x5
+ 544 0262 03       		.byte	0x3
+ 545 0263 00000000 		.4byte	SYNC_CONFIRMED_PROV
+ 546 0267 08       		.uleb128 0x8
+ 547 0268 77000000 		.4byte	.LASF34
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 12
 
 
- 524 0236 19       		.byte	0x19
- 525 0237 12       		.uleb128 0x12
- 526 0238 08000000 		.4byte	.LASF31
- 527 023c 01       		.byte	0x1
- 528 023d 17       		.byte	0x17
- 529 023e 39010000 		.4byte	0x139
- 530 0242 1A       		.byte	0x1a
- 531 0243 12       		.uleb128 0x12
- 532 0244 1E020000 		.4byte	.LASF32
- 533 0248 01       		.byte	0x1
- 534 0249 18       		.byte	0x18
- 535 024a 39010000 		.4byte	0x139
- 536 024e 1B       		.byte	0x1b
- 537 024f 07       		.uleb128 0x7
- 538 0250 28000000 		.4byte	.LASF33
- 539 0254 01       		.byte	0x1
- 540 0255 19       		.byte	0x19
- 541 0256 39010000 		.4byte	0x139
- 542 025a 05       		.uleb128 0x5
- 543 025b 03       		.byte	0x3
- 544 025c 03000000 		.4byte	SYNC_TYPE_CARD_N
- 545 0260 07       		.uleb128 0x7
- 546 0261 39000000 		.4byte	.LASF34
- 547 0265 01       		.byte	0x1
- 548 0266 1A       		.byte	0x1a
- 549 0267 39010000 		.4byte	0x139
- 550 026b 05       		.uleb128 0x5
- 551 026c 03       		.byte	0x3
- 552 026d 02000000 		.4byte	SYNC_TYPE_CARD_P
- 553 0271 12       		.uleb128 0x12
- 554 0272 96000000 		.4byte	.LASF35
- 555 0276 01       		.byte	0x1
- 556 0277 1B       		.byte	0x1b
- 557 0278 39010000 		.4byte	0x139
- 558 027c 1E       		.byte	0x1e
- 559 027d 13       		.uleb128 0x13
- 560 027e 4C010000 		.4byte	.LASF36
- 561 0282 4C010000 		.4byte	.LASF36
- 562 0286 03       		.byte	0x3
- 563 0287 3403     		.2byte	0x334
- 564 0289 13       		.uleb128 0x13
- 565 028a E3000000 		.4byte	.LASF37
- 566 028e E3000000 		.4byte	.LASF37
- 567 0292 03       		.byte	0x3
- 568 0293 0703     		.2byte	0x307
- 569 0295 13       		.uleb128 0x13
- 570 0296 30010000 		.4byte	.LASF38
- 571 029a 30010000 		.4byte	.LASF38
- 572 029e 03       		.byte	0x3
- 573 029f 3A03     		.2byte	0x33a
- 574 02a1 00       		.byte	0
- 575              		.section	.debug_abbrev,"",%progbits
- 576              	.Ldebug_abbrev0:
- 577 0000 01       		.uleb128 0x1
- 578 0001 11       		.uleb128 0x11
- 579 0002 01       		.byte	0x1
- 580 0003 25       		.uleb128 0x25
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 13
+ 548 026c 03       		.byte	0x3
+ 549 026d 24       		.byte	0x24
+ 550 026e 44010000 		.4byte	0x144
+ 551 0272 05       		.uleb128 0x5
+ 552 0273 03       		.byte	0x3
+ 553 0274 01000000 		.4byte	SYNC_CONFIRMED_NO_PROV
+ 554 0278 12       		.uleb128 0x12
+ 555 0279 8A020000 		.4byte	.LASF35
+ 556 027d 03       		.byte	0x3
+ 557 027e 25       		.byte	0x25
+ 558 027f 44010000 		.4byte	0x144
+ 559 0283 19       		.byte	0x19
+ 560 0284 12       		.uleb128 0x12
+ 561 0285 08000000 		.4byte	.LASF36
+ 562 0289 03       		.byte	0x3
+ 563 028a 26       		.byte	0x26
+ 564 028b 44010000 		.4byte	0x144
+ 565 028f 1A       		.byte	0x1a
+ 566 0290 12       		.uleb128 0x12
+ 567 0291 83020000 		.4byte	.LASF37
+ 568 0295 03       		.byte	0x3
+ 569 0296 27       		.byte	0x27
+ 570 0297 44010000 		.4byte	0x144
+ 571 029b 1B       		.byte	0x1b
+ 572 029c 08       		.uleb128 0x8
+ 573 029d 30000000 		.4byte	.LASF38
+ 574 02a1 03       		.byte	0x3
+ 575 02a2 28       		.byte	0x28
+ 576 02a3 44010000 		.4byte	0x144
+ 577 02a7 05       		.uleb128 0x5
+ 578 02a8 03       		.byte	0x3
+ 579 02a9 03000000 		.4byte	SYNC_TYPE_CARD_N
+ 580 02ad 08       		.uleb128 0x8
+ 581 02ae 41000000 		.4byte	.LASF39
+ 582 02b2 03       		.byte	0x3
+ 583 02b3 29       		.byte	0x29
+ 584 02b4 44010000 		.4byte	0x144
+ 585 02b8 05       		.uleb128 0x5
+ 586 02b9 03       		.byte	0x3
+ 587 02ba 02000000 		.4byte	SYNC_TYPE_CARD_P
+ 588 02be 12       		.uleb128 0x12
+ 589 02bf E0000000 		.4byte	.LASF40
+ 590 02c3 03       		.byte	0x3
+ 591 02c4 2A       		.byte	0x2a
+ 592 02c5 44010000 		.4byte	0x144
+ 593 02c9 1C       		.byte	0x1c
+ 594 02ca 12       		.uleb128 0x12
+ 595 02cb F6000000 		.4byte	.LASF41
+ 596 02cf 03       		.byte	0x3
+ 597 02d0 2B       		.byte	0x2b
+ 598 02d1 44010000 		.4byte	0x144
+ 599 02d5 3C       		.byte	0x3c
+ 600 02d6 12       		.uleb128 0x12
+ 601 02d7 9E000000 		.4byte	.LASF42
+ 602 02db 03       		.byte	0x3
+ 603 02dc 2C       		.byte	0x2c
+ 604 02dd 44010000 		.4byte	0x144
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 13
 
 
- 581 0004 0E       		.uleb128 0xe
- 582 0005 13       		.uleb128 0x13
- 583 0006 0B       		.uleb128 0xb
- 584 0007 03       		.uleb128 0x3
- 585 0008 0E       		.uleb128 0xe
- 586 0009 1B       		.uleb128 0x1b
- 587 000a 0E       		.uleb128 0xe
- 588 000b 55       		.uleb128 0x55
- 589 000c 17       		.uleb128 0x17
- 590 000d 11       		.uleb128 0x11
- 591 000e 01       		.uleb128 0x1
- 592 000f 10       		.uleb128 0x10
- 593 0010 17       		.uleb128 0x17
- 594 0011 00       		.byte	0
- 595 0012 00       		.byte	0
- 596 0013 02       		.uleb128 0x2
- 597 0014 24       		.uleb128 0x24
- 598 0015 00       		.byte	0
- 599 0016 0B       		.uleb128 0xb
- 600 0017 0B       		.uleb128 0xb
- 601 0018 3E       		.uleb128 0x3e
- 602 0019 0B       		.uleb128 0xb
- 603 001a 03       		.uleb128 0x3
- 604 001b 0E       		.uleb128 0xe
- 605 001c 00       		.byte	0
- 606 001d 00       		.byte	0
- 607 001e 03       		.uleb128 0x3
- 608 001f 24       		.uleb128 0x24
- 609 0020 00       		.byte	0
- 610 0021 0B       		.uleb128 0xb
- 611 0022 0B       		.uleb128 0xb
- 612 0023 3E       		.uleb128 0x3e
- 613 0024 0B       		.uleb128 0xb
- 614 0025 03       		.uleb128 0x3
- 615 0026 08       		.uleb128 0x8
- 616 0027 00       		.byte	0
- 617 0028 00       		.byte	0
- 618 0029 04       		.uleb128 0x4
- 619 002a 16       		.uleb128 0x16
- 620 002b 00       		.byte	0
- 621 002c 03       		.uleb128 0x3
- 622 002d 0E       		.uleb128 0xe
- 623 002e 3A       		.uleb128 0x3a
- 624 002f 0B       		.uleb128 0xb
- 625 0030 3B       		.uleb128 0x3b
- 626 0031 05       		.uleb128 0x5
- 627 0032 49       		.uleb128 0x49
- 628 0033 13       		.uleb128 0x13
- 629 0034 00       		.byte	0
- 630 0035 00       		.byte	0
- 631 0036 05       		.uleb128 0x5
- 632 0037 0F       		.uleb128 0xf
- 633 0038 00       		.byte	0
- 634 0039 0B       		.uleb128 0xb
- 635 003a 0B       		.uleb128 0xb
- 636 003b 49       		.uleb128 0x49
- 637 003c 13       		.uleb128 0x13
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 14
+ 605 02e1 1E       		.byte	0x1e
+ 606 02e2 10       		.uleb128 0x10
+ 607 02e3 A6000000 		.4byte	0xa6
+ 608 02e7 F2020000 		.4byte	0x2f2
+ 609 02eb 11       		.uleb128 0x11
+ 610 02ec 9F000000 		.4byte	0x9f
+ 611 02f0 07       		.byte	0x7
+ 612 02f1 00       		.byte	0
+ 613 02f2 13       		.uleb128 0x13
+ 614 02f3 28000000 		.4byte	.LASF43
+ 615 02f7 03       		.byte	0x3
+ 616 02f8 34       		.byte	0x34
+ 617 02f9 06030000 		.4byte	0x306
+ 618 02fd 08       		.byte	0x8
+ 619 02fe 00       		.byte	0
+ 620 02ff 00       		.byte	0
+ 621 0300 00       		.byte	0
+ 622 0301 00       		.byte	0
+ 623 0302 00       		.byte	0
+ 624 0303 00       		.byte	0
+ 625 0304 00       		.byte	0
+ 626 0305 00       		.byte	0
+ 627 0306 05       		.uleb128 0x5
+ 628 0307 E2020000 		.4byte	0x2e2
+ 629 030b 14       		.uleb128 0x14
+ 630 030c A3010000 		.4byte	.LASF44
+ 631 0310 A3010000 		.4byte	.LASF44
+ 632 0314 04       		.byte	0x4
+ 633 0315 3403     		.2byte	0x334
+ 634 0317 14       		.uleb128 0x14
+ 635 0318 31010000 		.4byte	.LASF45
+ 636 031c 31010000 		.4byte	.LASF45
+ 637 0320 04       		.byte	0x4
+ 638 0321 0703     		.2byte	0x307
+ 639 0323 14       		.uleb128 0x14
+ 640 0324 87010000 		.4byte	.LASF46
+ 641 0328 87010000 		.4byte	.LASF46
+ 642 032c 04       		.byte	0x4
+ 643 032d 3A03     		.2byte	0x33a
+ 644 032f 00       		.byte	0
+ 645              		.section	.debug_abbrev,"",%progbits
+ 646              	.Ldebug_abbrev0:
+ 647 0000 01       		.uleb128 0x1
+ 648 0001 11       		.uleb128 0x11
+ 649 0002 01       		.byte	0x1
+ 650 0003 25       		.uleb128 0x25
+ 651 0004 0E       		.uleb128 0xe
+ 652 0005 13       		.uleb128 0x13
+ 653 0006 0B       		.uleb128 0xb
+ 654 0007 03       		.uleb128 0x3
+ 655 0008 0E       		.uleb128 0xe
+ 656 0009 1B       		.uleb128 0x1b
+ 657 000a 0E       		.uleb128 0xe
+ 658 000b 55       		.uleb128 0x55
+ 659 000c 17       		.uleb128 0x17
+ 660 000d 11       		.uleb128 0x11
+ 661 000e 01       		.uleb128 0x1
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 14
 
 
- 638 003d 00       		.byte	0
- 639 003e 00       		.byte	0
- 640 003f 06       		.uleb128 0x6
- 641 0040 2E       		.uleb128 0x2e
- 642 0041 01       		.byte	0x1
- 643 0042 3F       		.uleb128 0x3f
- 644 0043 19       		.uleb128 0x19
- 645 0044 03       		.uleb128 0x3
- 646 0045 0E       		.uleb128 0xe
- 647 0046 3A       		.uleb128 0x3a
- 648 0047 0B       		.uleb128 0xb
- 649 0048 3B       		.uleb128 0x3b
- 650 0049 0B       		.uleb128 0xb
- 651 004a 49       		.uleb128 0x49
- 652 004b 13       		.uleb128 0x13
- 653 004c 11       		.uleb128 0x11
- 654 004d 01       		.uleb128 0x1
- 655 004e 12       		.uleb128 0x12
- 656 004f 06       		.uleb128 0x6
- 657 0050 40       		.uleb128 0x40
- 658 0051 18       		.uleb128 0x18
- 659 0052 9742     		.uleb128 0x2117
- 660 0054 19       		.uleb128 0x19
- 661 0055 01       		.uleb128 0x1
- 662 0056 13       		.uleb128 0x13
- 663 0057 00       		.byte	0
- 664 0058 00       		.byte	0
- 665 0059 07       		.uleb128 0x7
- 666 005a 34       		.uleb128 0x34
- 667 005b 00       		.byte	0
- 668 005c 03       		.uleb128 0x3
- 669 005d 0E       		.uleb128 0xe
- 670 005e 3A       		.uleb128 0x3a
- 671 005f 0B       		.uleb128 0xb
- 672 0060 3B       		.uleb128 0x3b
- 673 0061 0B       		.uleb128 0xb
- 674 0062 49       		.uleb128 0x49
- 675 0063 13       		.uleb128 0x13
- 676 0064 02       		.uleb128 0x2
- 677 0065 18       		.uleb128 0x18
- 678 0066 00       		.byte	0
- 679 0067 00       		.byte	0
- 680 0068 08       		.uleb128 0x8
- 681 0069 898201   		.uleb128 0x4109
- 682 006c 00       		.byte	0
- 683 006d 11       		.uleb128 0x11
- 684 006e 01       		.uleb128 0x1
- 685 006f 31       		.uleb128 0x31
- 686 0070 13       		.uleb128 0x13
- 687 0071 00       		.byte	0
- 688 0072 00       		.byte	0
- 689 0073 09       		.uleb128 0x9
- 690 0074 2E       		.uleb128 0x2e
- 691 0075 01       		.byte	0x1
- 692 0076 3F       		.uleb128 0x3f
- 693 0077 19       		.uleb128 0x19
- 694 0078 03       		.uleb128 0x3
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 15
+ 662 000f 10       		.uleb128 0x10
+ 663 0010 17       		.uleb128 0x17
+ 664 0011 00       		.byte	0
+ 665 0012 00       		.byte	0
+ 666 0013 02       		.uleb128 0x2
+ 667 0014 24       		.uleb128 0x24
+ 668 0015 00       		.byte	0
+ 669 0016 0B       		.uleb128 0xb
+ 670 0017 0B       		.uleb128 0xb
+ 671 0018 3E       		.uleb128 0x3e
+ 672 0019 0B       		.uleb128 0xb
+ 673 001a 03       		.uleb128 0x3
+ 674 001b 0E       		.uleb128 0xe
+ 675 001c 00       		.byte	0
+ 676 001d 00       		.byte	0
+ 677 001e 03       		.uleb128 0x3
+ 678 001f 24       		.uleb128 0x24
+ 679 0020 00       		.byte	0
+ 680 0021 0B       		.uleb128 0xb
+ 681 0022 0B       		.uleb128 0xb
+ 682 0023 3E       		.uleb128 0x3e
+ 683 0024 0B       		.uleb128 0xb
+ 684 0025 03       		.uleb128 0x3
+ 685 0026 08       		.uleb128 0x8
+ 686 0027 00       		.byte	0
+ 687 0028 00       		.byte	0
+ 688 0029 04       		.uleb128 0x4
+ 689 002a 16       		.uleb128 0x16
+ 690 002b 00       		.byte	0
+ 691 002c 03       		.uleb128 0x3
+ 692 002d 0E       		.uleb128 0xe
+ 693 002e 3A       		.uleb128 0x3a
+ 694 002f 0B       		.uleb128 0xb
+ 695 0030 3B       		.uleb128 0x3b
+ 696 0031 05       		.uleb128 0x5
+ 697 0032 49       		.uleb128 0x49
+ 698 0033 13       		.uleb128 0x13
+ 699 0034 00       		.byte	0
+ 700 0035 00       		.byte	0
+ 701 0036 05       		.uleb128 0x5
+ 702 0037 26       		.uleb128 0x26
+ 703 0038 00       		.byte	0
+ 704 0039 49       		.uleb128 0x49
+ 705 003a 13       		.uleb128 0x13
+ 706 003b 00       		.byte	0
+ 707 003c 00       		.byte	0
+ 708 003d 06       		.uleb128 0x6
+ 709 003e 0F       		.uleb128 0xf
+ 710 003f 00       		.byte	0
+ 711 0040 0B       		.uleb128 0xb
+ 712 0041 0B       		.uleb128 0xb
+ 713 0042 49       		.uleb128 0x49
+ 714 0043 13       		.uleb128 0x13
+ 715 0044 00       		.byte	0
+ 716 0045 00       		.byte	0
+ 717 0046 07       		.uleb128 0x7
+ 718 0047 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 15
 
 
- 695 0079 0E       		.uleb128 0xe
- 696 007a 3A       		.uleb128 0x3a
- 697 007b 0B       		.uleb128 0xb
- 698 007c 3B       		.uleb128 0x3b
- 699 007d 0B       		.uleb128 0xb
- 700 007e 27       		.uleb128 0x27
- 701 007f 19       		.uleb128 0x19
- 702 0080 49       		.uleb128 0x49
- 703 0081 13       		.uleb128 0x13
- 704 0082 11       		.uleb128 0x11
- 705 0083 01       		.uleb128 0x1
- 706 0084 12       		.uleb128 0x12
- 707 0085 06       		.uleb128 0x6
- 708 0086 40       		.uleb128 0x40
- 709 0087 18       		.uleb128 0x18
- 710 0088 9742     		.uleb128 0x2117
- 711 008a 19       		.uleb128 0x19
- 712 008b 01       		.uleb128 0x1
- 713 008c 13       		.uleb128 0x13
- 714 008d 00       		.byte	0
- 715 008e 00       		.byte	0
- 716 008f 0A       		.uleb128 0xa
- 717 0090 05       		.uleb128 0x5
- 718 0091 00       		.byte	0
- 719 0092 03       		.uleb128 0x3
- 720 0093 0E       		.uleb128 0xe
- 721 0094 3A       		.uleb128 0x3a
- 722 0095 0B       		.uleb128 0xb
- 723 0096 3B       		.uleb128 0x3b
- 724 0097 0B       		.uleb128 0xb
- 725 0098 49       		.uleb128 0x49
- 726 0099 13       		.uleb128 0x13
- 727 009a 02       		.uleb128 0x2
- 728 009b 17       		.uleb128 0x17
- 729 009c 00       		.byte	0
- 730 009d 00       		.byte	0
- 731 009e 0B       		.uleb128 0xb
- 732 009f 34       		.uleb128 0x34
- 733 00a0 00       		.byte	0
- 734 00a1 03       		.uleb128 0x3
- 735 00a2 08       		.uleb128 0x8
- 736 00a3 3A       		.uleb128 0x3a
- 737 00a4 0B       		.uleb128 0xb
- 738 00a5 3B       		.uleb128 0x3b
- 739 00a6 0B       		.uleb128 0xb
- 740 00a7 49       		.uleb128 0x49
- 741 00a8 13       		.uleb128 0x13
- 742 00a9 02       		.uleb128 0x2
- 743 00aa 17       		.uleb128 0x17
- 744 00ab 00       		.byte	0
- 745 00ac 00       		.byte	0
- 746 00ad 0C       		.uleb128 0xc
- 747 00ae 26       		.uleb128 0x26
- 748 00af 00       		.byte	0
- 749 00b0 49       		.uleb128 0x49
- 750 00b1 13       		.uleb128 0x13
- 751 00b2 00       		.byte	0
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 16
+ 719 0048 01       		.byte	0x1
+ 720 0049 3F       		.uleb128 0x3f
+ 721 004a 19       		.uleb128 0x19
+ 722 004b 03       		.uleb128 0x3
+ 723 004c 0E       		.uleb128 0xe
+ 724 004d 3A       		.uleb128 0x3a
+ 725 004e 0B       		.uleb128 0xb
+ 726 004f 3B       		.uleb128 0x3b
+ 727 0050 0B       		.uleb128 0xb
+ 728 0051 49       		.uleb128 0x49
+ 729 0052 13       		.uleb128 0x13
+ 730 0053 11       		.uleb128 0x11
+ 731 0054 01       		.uleb128 0x1
+ 732 0055 12       		.uleb128 0x12
+ 733 0056 06       		.uleb128 0x6
+ 734 0057 40       		.uleb128 0x40
+ 735 0058 18       		.uleb128 0x18
+ 736 0059 9742     		.uleb128 0x2117
+ 737 005b 19       		.uleb128 0x19
+ 738 005c 01       		.uleb128 0x1
+ 739 005d 13       		.uleb128 0x13
+ 740 005e 00       		.byte	0
+ 741 005f 00       		.byte	0
+ 742 0060 08       		.uleb128 0x8
+ 743 0061 34       		.uleb128 0x34
+ 744 0062 00       		.byte	0
+ 745 0063 03       		.uleb128 0x3
+ 746 0064 0E       		.uleb128 0xe
+ 747 0065 3A       		.uleb128 0x3a
+ 748 0066 0B       		.uleb128 0xb
+ 749 0067 3B       		.uleb128 0x3b
+ 750 0068 0B       		.uleb128 0xb
+ 751 0069 49       		.uleb128 0x49
+ 752 006a 13       		.uleb128 0x13
+ 753 006b 02       		.uleb128 0x2
+ 754 006c 18       		.uleb128 0x18
+ 755 006d 00       		.byte	0
+ 756 006e 00       		.byte	0
+ 757 006f 09       		.uleb128 0x9
+ 758 0070 898201   		.uleb128 0x4109
+ 759 0073 00       		.byte	0
+ 760 0074 11       		.uleb128 0x11
+ 761 0075 01       		.uleb128 0x1
+ 762 0076 31       		.uleb128 0x31
+ 763 0077 13       		.uleb128 0x13
+ 764 0078 00       		.byte	0
+ 765 0079 00       		.byte	0
+ 766 007a 0A       		.uleb128 0xa
+ 767 007b 2E       		.uleb128 0x2e
+ 768 007c 01       		.byte	0x1
+ 769 007d 3F       		.uleb128 0x3f
+ 770 007e 19       		.uleb128 0x19
+ 771 007f 03       		.uleb128 0x3
+ 772 0080 0E       		.uleb128 0xe
+ 773 0081 3A       		.uleb128 0x3a
+ 774 0082 0B       		.uleb128 0xb
+ 775 0083 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 16
 
 
- 752 00b3 00       		.byte	0
- 753 00b4 0D       		.uleb128 0xd
- 754 00b5 2E       		.uleb128 0x2e
- 755 00b6 01       		.byte	0x1
- 756 00b7 3F       		.uleb128 0x3f
- 757 00b8 19       		.uleb128 0x19
- 758 00b9 03       		.uleb128 0x3
- 759 00ba 0E       		.uleb128 0xe
- 760 00bb 3A       		.uleb128 0x3a
- 761 00bc 0B       		.uleb128 0xb
- 762 00bd 3B       		.uleb128 0x3b
- 763 00be 0B       		.uleb128 0xb
- 764 00bf 27       		.uleb128 0x27
- 765 00c0 19       		.uleb128 0x19
- 766 00c1 11       		.uleb128 0x11
- 767 00c2 01       		.uleb128 0x1
- 768 00c3 12       		.uleb128 0x12
- 769 00c4 06       		.uleb128 0x6
- 770 00c5 40       		.uleb128 0x40
- 771 00c6 18       		.uleb128 0x18
- 772 00c7 9742     		.uleb128 0x2117
- 773 00c9 19       		.uleb128 0x19
- 774 00ca 01       		.uleb128 0x1
- 775 00cb 13       		.uleb128 0x13
- 776 00cc 00       		.byte	0
- 777 00cd 00       		.byte	0
- 778 00ce 0E       		.uleb128 0xe
- 779 00cf 898201   		.uleb128 0x4109
- 780 00d2 01       		.byte	0x1
- 781 00d3 11       		.uleb128 0x11
- 782 00d4 01       		.uleb128 0x1
- 783 00d5 31       		.uleb128 0x31
- 784 00d6 13       		.uleb128 0x13
- 785 00d7 01       		.uleb128 0x1
- 786 00d8 13       		.uleb128 0x13
- 787 00d9 00       		.byte	0
- 788 00da 00       		.byte	0
- 789 00db 0F       		.uleb128 0xf
- 790 00dc 8A8201   		.uleb128 0x410a
- 791 00df 00       		.byte	0
- 792 00e0 02       		.uleb128 0x2
- 793 00e1 18       		.uleb128 0x18
- 794 00e2 9142     		.uleb128 0x2111
- 795 00e4 18       		.uleb128 0x18
- 796 00e5 00       		.byte	0
- 797 00e6 00       		.byte	0
- 798 00e7 10       		.uleb128 0x10
- 799 00e8 01       		.uleb128 0x1
- 800 00e9 01       		.byte	0x1
- 801 00ea 49       		.uleb128 0x49
- 802 00eb 13       		.uleb128 0x13
- 803 00ec 01       		.uleb128 0x1
- 804 00ed 13       		.uleb128 0x13
- 805 00ee 00       		.byte	0
- 806 00ef 00       		.byte	0
- 807 00f0 11       		.uleb128 0x11
- 808 00f1 21       		.uleb128 0x21
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 17
+ 776 0084 0B       		.uleb128 0xb
+ 777 0085 27       		.uleb128 0x27
+ 778 0086 19       		.uleb128 0x19
+ 779 0087 11       		.uleb128 0x11
+ 780 0088 01       		.uleb128 0x1
+ 781 0089 12       		.uleb128 0x12
+ 782 008a 06       		.uleb128 0x6
+ 783 008b 40       		.uleb128 0x40
+ 784 008c 18       		.uleb128 0x18
+ 785 008d 9742     		.uleb128 0x2117
+ 786 008f 19       		.uleb128 0x19
+ 787 0090 01       		.uleb128 0x1
+ 788 0091 13       		.uleb128 0x13
+ 789 0092 00       		.byte	0
+ 790 0093 00       		.byte	0
+ 791 0094 0B       		.uleb128 0xb
+ 792 0095 05       		.uleb128 0x5
+ 793 0096 00       		.byte	0
+ 794 0097 03       		.uleb128 0x3
+ 795 0098 0E       		.uleb128 0xe
+ 796 0099 3A       		.uleb128 0x3a
+ 797 009a 0B       		.uleb128 0xb
+ 798 009b 3B       		.uleb128 0x3b
+ 799 009c 0B       		.uleb128 0xb
+ 800 009d 49       		.uleb128 0x49
+ 801 009e 13       		.uleb128 0x13
+ 802 009f 02       		.uleb128 0x2
+ 803 00a0 17       		.uleb128 0x17
+ 804 00a1 00       		.byte	0
+ 805 00a2 00       		.byte	0
+ 806 00a3 0C       		.uleb128 0xc
+ 807 00a4 0B       		.uleb128 0xb
+ 808 00a5 01       		.byte	0x1
+ 809 00a6 11       		.uleb128 0x11
+ 810 00a7 01       		.uleb128 0x1
+ 811 00a8 12       		.uleb128 0x12
+ 812 00a9 06       		.uleb128 0x6
+ 813 00aa 00       		.byte	0
+ 814 00ab 00       		.byte	0
+ 815 00ac 0D       		.uleb128 0xd
+ 816 00ad 34       		.uleb128 0x34
+ 817 00ae 00       		.byte	0
+ 818 00af 03       		.uleb128 0x3
+ 819 00b0 08       		.uleb128 0x8
+ 820 00b1 3A       		.uleb128 0x3a
+ 821 00b2 0B       		.uleb128 0xb
+ 822 00b3 3B       		.uleb128 0x3b
+ 823 00b4 0B       		.uleb128 0xb
+ 824 00b5 49       		.uleb128 0x49
+ 825 00b6 13       		.uleb128 0x13
+ 826 00b7 02       		.uleb128 0x2
+ 827 00b8 17       		.uleb128 0x17
+ 828 00b9 00       		.byte	0
+ 829 00ba 00       		.byte	0
+ 830 00bb 0E       		.uleb128 0xe
+ 831 00bc 898201   		.uleb128 0x4109
+ 832 00bf 01       		.byte	0x1
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 17
 
 
- 809 00f2 00       		.byte	0
- 810 00f3 49       		.uleb128 0x49
- 811 00f4 13       		.uleb128 0x13
- 812 00f5 2F       		.uleb128 0x2f
- 813 00f6 0B       		.uleb128 0xb
- 814 00f7 00       		.byte	0
- 815 00f8 00       		.byte	0
- 816 00f9 12       		.uleb128 0x12
- 817 00fa 34       		.uleb128 0x34
- 818 00fb 00       		.byte	0
- 819 00fc 03       		.uleb128 0x3
- 820 00fd 0E       		.uleb128 0xe
- 821 00fe 3A       		.uleb128 0x3a
- 822 00ff 0B       		.uleb128 0xb
- 823 0100 3B       		.uleb128 0x3b
- 824 0101 0B       		.uleb128 0xb
- 825 0102 49       		.uleb128 0x49
- 826 0103 13       		.uleb128 0x13
- 827 0104 1C       		.uleb128 0x1c
- 828 0105 0B       		.uleb128 0xb
- 829 0106 00       		.byte	0
- 830 0107 00       		.byte	0
- 831 0108 13       		.uleb128 0x13
- 832 0109 2E       		.uleb128 0x2e
- 833 010a 00       		.byte	0
- 834 010b 3F       		.uleb128 0x3f
- 835 010c 19       		.uleb128 0x19
- 836 010d 3C       		.uleb128 0x3c
- 837 010e 19       		.uleb128 0x19
- 838 010f 6E       		.uleb128 0x6e
- 839 0110 0E       		.uleb128 0xe
- 840 0111 03       		.uleb128 0x3
- 841 0112 0E       		.uleb128 0xe
- 842 0113 3A       		.uleb128 0x3a
- 843 0114 0B       		.uleb128 0xb
- 844 0115 3B       		.uleb128 0x3b
- 845 0116 05       		.uleb128 0x5
- 846 0117 00       		.byte	0
- 847 0118 00       		.byte	0
- 848 0119 00       		.byte	0
- 849              		.section	.debug_loc,"",%progbits
- 850              	.Ldebug_loc0:
- 851              	.LLST0:
- 852 0000 00000000 		.4byte	.LVL2
- 853 0004 08000000 		.4byte	.LVL3
- 854 0008 0100     		.2byte	0x1
- 855 000a 50       		.byte	0x50
- 856 000b 08000000 		.4byte	.LVL3
- 857 000f 1A000000 		.4byte	.LVL7
- 858 0013 0100     		.2byte	0x1
- 859 0015 55       		.byte	0x55
- 860 0016 1A000000 		.4byte	.LVL7
- 861 001a 1C000000 		.4byte	.LFE35
- 862 001e 0400     		.2byte	0x4
- 863 0020 F3       		.byte	0xf3
- 864 0021 01       		.uleb128 0x1
- 865 0022 50       		.byte	0x50
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 18
+ 833 00c0 11       		.uleb128 0x11
+ 834 00c1 01       		.uleb128 0x1
+ 835 00c2 31       		.uleb128 0x31
+ 836 00c3 13       		.uleb128 0x13
+ 837 00c4 01       		.uleb128 0x1
+ 838 00c5 13       		.uleb128 0x13
+ 839 00c6 00       		.byte	0
+ 840 00c7 00       		.byte	0
+ 841 00c8 0F       		.uleb128 0xf
+ 842 00c9 8A8201   		.uleb128 0x410a
+ 843 00cc 00       		.byte	0
+ 844 00cd 02       		.uleb128 0x2
+ 845 00ce 18       		.uleb128 0x18
+ 846 00cf 9142     		.uleb128 0x2111
+ 847 00d1 18       		.uleb128 0x18
+ 848 00d2 00       		.byte	0
+ 849 00d3 00       		.byte	0
+ 850 00d4 10       		.uleb128 0x10
+ 851 00d5 01       		.uleb128 0x1
+ 852 00d6 01       		.byte	0x1
+ 853 00d7 49       		.uleb128 0x49
+ 854 00d8 13       		.uleb128 0x13
+ 855 00d9 01       		.uleb128 0x1
+ 856 00da 13       		.uleb128 0x13
+ 857 00db 00       		.byte	0
+ 858 00dc 00       		.byte	0
+ 859 00dd 11       		.uleb128 0x11
+ 860 00de 21       		.uleb128 0x21
+ 861 00df 00       		.byte	0
+ 862 00e0 49       		.uleb128 0x49
+ 863 00e1 13       		.uleb128 0x13
+ 864 00e2 2F       		.uleb128 0x2f
+ 865 00e3 0B       		.uleb128 0xb
+ 866 00e4 00       		.byte	0
+ 867 00e5 00       		.byte	0
+ 868 00e6 12       		.uleb128 0x12
+ 869 00e7 34       		.uleb128 0x34
+ 870 00e8 00       		.byte	0
+ 871 00e9 03       		.uleb128 0x3
+ 872 00ea 0E       		.uleb128 0xe
+ 873 00eb 3A       		.uleb128 0x3a
+ 874 00ec 0B       		.uleb128 0xb
+ 875 00ed 3B       		.uleb128 0x3b
+ 876 00ee 0B       		.uleb128 0xb
+ 877 00ef 49       		.uleb128 0x49
+ 878 00f0 13       		.uleb128 0x13
+ 879 00f1 1C       		.uleb128 0x1c
+ 880 00f2 0B       		.uleb128 0xb
+ 881 00f3 00       		.byte	0
+ 882 00f4 00       		.byte	0
+ 883 00f5 13       		.uleb128 0x13
+ 884 00f6 34       		.uleb128 0x34
+ 885 00f7 00       		.byte	0
+ 886 00f8 03       		.uleb128 0x3
+ 887 00f9 0E       		.uleb128 0xe
+ 888 00fa 3A       		.uleb128 0x3a
+ 889 00fb 0B       		.uleb128 0xb
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 18
 
 
- 866 0023 9F       		.byte	0x9f
- 867 0024 00000000 		.4byte	0
- 868 0028 00000000 		.4byte	0
- 869              	.LLST1:
- 870 002c 00000000 		.4byte	.LVL2
- 871 0030 08000000 		.4byte	.LVL3
- 872 0034 0100     		.2byte	0x1
- 873 0036 51       		.byte	0x51
- 874 0037 08000000 		.4byte	.LVL3
- 875 003b 1C000000 		.4byte	.LFE35
- 876 003f 0400     		.2byte	0x4
- 877 0041 F3       		.byte	0xf3
- 878 0042 01       		.uleb128 0x1
- 879 0043 51       		.byte	0x51
- 880 0044 9F       		.byte	0x9f
- 881 0045 00000000 		.4byte	0
- 882 0049 00000000 		.4byte	0
- 883              	.LLST2:
- 884 004d 00000000 		.4byte	.LVL2
- 885 0051 08000000 		.4byte	.LVL3
- 886 0055 0200     		.2byte	0x2
- 887 0057 30       		.byte	0x30
- 888 0058 9F       		.byte	0x9f
- 889 0059 08000000 		.4byte	.LVL3
- 890 005d 14000000 		.4byte	.LVL4
- 891 0061 0600     		.2byte	0x6
- 892 0063 74       		.byte	0x74
- 893 0064 00       		.sleb128 0
- 894 0065 75       		.byte	0x75
- 895 0066 00       		.sleb128 0
- 896 0067 1C       		.byte	0x1c
- 897 0068 9F       		.byte	0x9f
- 898 0069 14000000 		.4byte	.LVL4
- 899 006d 16000000 		.4byte	.LVL5
- 900 0071 0800     		.2byte	0x8
- 901 0073 74       		.byte	0x74
- 902 0074 00       		.sleb128 0
- 903 0075 75       		.byte	0x75
- 904 0076 00       		.sleb128 0
- 905 0077 1C       		.byte	0x1c
- 906 0078 23       		.byte	0x23
- 907 0079 01       		.uleb128 0x1
- 908 007a 9F       		.byte	0x9f
- 909 007b 16000000 		.4byte	.LVL5
- 910 007f 1A000000 		.4byte	.LVL6
- 911 0083 0600     		.2byte	0x6
- 912 0085 74       		.byte	0x74
- 913 0086 00       		.sleb128 0
- 914 0087 75       		.byte	0x75
- 915 0088 00       		.sleb128 0
- 916 0089 1C       		.byte	0x1c
- 917 008a 9F       		.byte	0x9f
- 918 008b 00000000 		.4byte	0
- 919 008f 00000000 		.4byte	0
- 920              	.LLST3:
- 921 0093 00000000 		.4byte	.LVL8
- 922 0097 08000000 		.4byte	.LVL9
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 19
+ 890 00fc 3B       		.uleb128 0x3b
+ 891 00fd 0B       		.uleb128 0xb
+ 892 00fe 49       		.uleb128 0x49
+ 893 00ff 13       		.uleb128 0x13
+ 894 0100 1C       		.uleb128 0x1c
+ 895 0101 0A       		.uleb128 0xa
+ 896 0102 00       		.byte	0
+ 897 0103 00       		.byte	0
+ 898 0104 14       		.uleb128 0x14
+ 899 0105 2E       		.uleb128 0x2e
+ 900 0106 00       		.byte	0
+ 901 0107 3F       		.uleb128 0x3f
+ 902 0108 19       		.uleb128 0x19
+ 903 0109 3C       		.uleb128 0x3c
+ 904 010a 19       		.uleb128 0x19
+ 905 010b 6E       		.uleb128 0x6e
+ 906 010c 0E       		.uleb128 0xe
+ 907 010d 03       		.uleb128 0x3
+ 908 010e 0E       		.uleb128 0xe
+ 909 010f 3A       		.uleb128 0x3a
+ 910 0110 0B       		.uleb128 0xb
+ 911 0111 3B       		.uleb128 0x3b
+ 912 0112 05       		.uleb128 0x5
+ 913 0113 00       		.byte	0
+ 914 0114 00       		.byte	0
+ 915 0115 00       		.byte	0
+ 916              		.section	.debug_loc,"",%progbits
+ 917              	.Ldebug_loc0:
+ 918              	.LLST0:
+ 919 0000 00000000 		.4byte	.LVL2
+ 920 0004 06000000 		.4byte	.LVL3
+ 921 0008 0100     		.2byte	0x1
+ 922 000a 50       		.byte	0x50
+ 923 000b 06000000 		.4byte	.LVL3
+ 924 000f 16000000 		.4byte	.LFE36
+ 925 0013 0400     		.2byte	0x4
+ 926 0015 F3       		.byte	0xf3
+ 927 0016 01       		.uleb128 0x1
+ 928 0017 50       		.byte	0x50
+ 929 0018 9F       		.byte	0x9f
+ 930 0019 00000000 		.4byte	0
+ 931 001d 00000000 		.4byte	0
+ 932              	.LLST1:
+ 933 0021 00000000 		.4byte	.LVL2
+ 934 0025 06000000 		.4byte	.LVL3
+ 935 0029 0100     		.2byte	0x1
+ 936 002b 51       		.byte	0x51
+ 937 002c 06000000 		.4byte	.LVL3
+ 938 0030 16000000 		.4byte	.LFE36
+ 939 0034 0400     		.2byte	0x4
+ 940 0036 F3       		.byte	0xf3
+ 941 0037 01       		.uleb128 0x1
+ 942 0038 51       		.byte	0x51
+ 943 0039 9F       		.byte	0x9f
+ 944 003a 00000000 		.4byte	0
+ 945 003e 00000000 		.4byte	0
+ 946              	.LLST2:
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 19
 
 
- 923 009b 0100     		.2byte	0x1
- 924 009d 50       		.byte	0x50
- 925 009e 08000000 		.4byte	.LVL9
- 926 00a2 1A000000 		.4byte	.LFE36
- 927 00a6 0400     		.2byte	0x4
- 928 00a8 F3       		.byte	0xf3
- 929 00a9 01       		.uleb128 0x1
- 930 00aa 50       		.byte	0x50
- 931 00ab 9F       		.byte	0x9f
- 932 00ac 00000000 		.4byte	0
- 933 00b0 00000000 		.4byte	0
- 934              	.LLST4:
- 935 00b4 00000000 		.4byte	.LVL8
- 936 00b8 08000000 		.4byte	.LVL9
- 937 00bc 0100     		.2byte	0x1
- 938 00be 51       		.byte	0x51
- 939 00bf 08000000 		.4byte	.LVL9
- 940 00c3 1A000000 		.4byte	.LFE36
- 941 00c7 0400     		.2byte	0x4
- 942 00c9 F3       		.byte	0xf3
- 943 00ca 01       		.uleb128 0x1
- 944 00cb 51       		.byte	0x51
- 945 00cc 9F       		.byte	0x9f
- 946 00cd 00000000 		.4byte	0
- 947 00d1 00000000 		.4byte	0
- 948              	.LLST5:
- 949 00d5 00000000 		.4byte	.LVL8
- 950 00d9 08000000 		.4byte	.LVL9
- 951 00dd 0200     		.2byte	0x2
- 952 00df 30       		.byte	0x30
- 953 00e0 9F       		.byte	0x9f
- 954 00e1 08000000 		.4byte	.LVL9
- 955 00e5 12000000 		.4byte	.LVL11
- 956 00e9 0700     		.2byte	0x7
- 957 00eb 74       		.byte	0x74
- 958 00ec 00       		.sleb128 0
- 959 00ed F3       		.byte	0xf3
- 960 00ee 01       		.uleb128 0x1
- 961 00ef 50       		.byte	0x50
- 962 00f0 1C       		.byte	0x1c
- 963 00f1 9F       		.byte	0x9f
- 964 00f2 12000000 		.4byte	.LVL11
- 965 00f6 14000000 		.4byte	.LVL12
- 966 00fa 0900     		.2byte	0x9
- 967 00fc 74       		.byte	0x74
- 968 00fd 00       		.sleb128 0
- 969 00fe F3       		.byte	0xf3
- 970 00ff 01       		.uleb128 0x1
- 971 0100 50       		.byte	0x50
- 972 0101 1C       		.byte	0x1c
- 973 0102 23       		.byte	0x23
- 974 0103 01       		.uleb128 0x1
- 975 0104 9F       		.byte	0x9f
- 976 0105 16000000 		.4byte	.LVL13
- 977 0109 18000000 		.4byte	.LVL14
- 978 010d 0700     		.2byte	0x7
- 979 010f 74       		.byte	0x74
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 20
+ 947 0042 00000000 		.4byte	.LVL2
+ 948 0046 06000000 		.4byte	.LVL3
+ 949 004a 0200     		.2byte	0x2
+ 950 004c 30       		.byte	0x30
+ 951 004d 9F       		.byte	0x9f
+ 952 004e 06000000 		.4byte	.LVL3
+ 953 0052 10000000 		.4byte	.LVL4
+ 954 0056 0700     		.2byte	0x7
+ 955 0058 74       		.byte	0x74
+ 956 0059 00       		.sleb128 0
+ 957 005a F3       		.byte	0xf3
+ 958 005b 01       		.uleb128 0x1
+ 959 005c 50       		.byte	0x50
+ 960 005d 1C       		.byte	0x1c
+ 961 005e 9F       		.byte	0x9f
+ 962 005f 10000000 		.4byte	.LVL4
+ 963 0063 12000000 		.4byte	.LVL5
+ 964 0067 0900     		.2byte	0x9
+ 965 0069 74       		.byte	0x74
+ 966 006a 00       		.sleb128 0
+ 967 006b F3       		.byte	0xf3
+ 968 006c 01       		.uleb128 0x1
+ 969 006d 50       		.byte	0x50
+ 970 006e 1C       		.byte	0x1c
+ 971 006f 23       		.byte	0x23
+ 972 0070 01       		.uleb128 0x1
+ 973 0071 9F       		.byte	0x9f
+ 974 0072 14000000 		.4byte	.LVL6
+ 975 0076 14000000 		.4byte	.LVL7
+ 976 007a 0700     		.2byte	0x7
+ 977 007c 74       		.byte	0x74
+ 978 007d 00       		.sleb128 0
+ 979 007e F3       		.byte	0xf3
+ 980 007f 01       		.uleb128 0x1
+ 981 0080 50       		.byte	0x50
+ 982 0081 1C       		.byte	0x1c
+ 983 0082 9F       		.byte	0x9f
+ 984 0083 00000000 		.4byte	0
+ 985 0087 00000000 		.4byte	0
+ 986              	.LLST3:
+ 987 008b 00000000 		.4byte	.LVL8
+ 988 008f 06000000 		.4byte	.LVL9
+ 989 0093 0100     		.2byte	0x1
+ 990 0095 50       		.byte	0x50
+ 991 0096 06000000 		.4byte	.LVL9
+ 992 009a 16000000 		.4byte	.LFE37
+ 993 009e 0400     		.2byte	0x4
+ 994 00a0 F3       		.byte	0xf3
+ 995 00a1 01       		.uleb128 0x1
+ 996 00a2 50       		.byte	0x50
+ 997 00a3 9F       		.byte	0x9f
+ 998 00a4 00000000 		.4byte	0
+ 999 00a8 00000000 		.4byte	0
+ 1000              	.LLST4:
+ 1001 00ac 00000000 		.4byte	.LVL8
+ 1002 00b0 06000000 		.4byte	.LVL9
+ 1003 00b4 0100     		.2byte	0x1
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 20
 
 
- 980 0110 00       		.sleb128 0
- 981 0111 F3       		.byte	0xf3
- 982 0112 01       		.uleb128 0x1
- 983 0113 50       		.byte	0x50
- 984 0114 1C       		.byte	0x1c
- 985 0115 9F       		.byte	0x9f
- 986 0116 00000000 		.4byte	0
- 987 011a 00000000 		.4byte	0
- 988              	.LLST6:
- 989 011e 00000000 		.4byte	.LVL15
- 990 0122 04000000 		.4byte	.LVL16
- 991 0126 0100     		.2byte	0x1
- 992 0128 50       		.byte	0x50
- 993 0129 04000000 		.4byte	.LVL16
- 994 012d 52000000 		.4byte	.LVL19
- 995 0131 0100     		.2byte	0x1
- 996 0133 55       		.byte	0x55
- 997 0134 52000000 		.4byte	.LVL19
- 998 0138 58000000 		.4byte	.LFE37
- 999 013c 0400     		.2byte	0x4
- 1000 013e F3       		.byte	0xf3
- 1001 013f 01       		.uleb128 0x1
- 1002 0140 50       		.byte	0x50
- 1003 0141 9F       		.byte	0x9f
- 1004 0142 00000000 		.4byte	0
- 1005 0146 00000000 		.4byte	0
- 1006              		.section	.debug_aranges,"",%progbits
- 1007 0000 34000000 		.4byte	0x34
- 1008 0004 0200     		.2byte	0x2
- 1009 0006 00000000 		.4byte	.Ldebug_info0
- 1010 000a 04       		.byte	0x4
- 1011 000b 00       		.byte	0
- 1012 000c 0000     		.2byte	0
- 1013 000e 0000     		.2byte	0
- 1014 0010 00000000 		.4byte	.LFB34
- 1015 0014 12000000 		.4byte	.LFE34-.LFB34
- 1016 0018 00000000 		.4byte	.LFB35
- 1017 001c 1C000000 		.4byte	.LFE35-.LFB35
- 1018 0020 00000000 		.4byte	.LFB36
- 1019 0024 1A000000 		.4byte	.LFE36-.LFB36
- 1020 0028 00000000 		.4byte	.LFB37
- 1021 002c 58000000 		.4byte	.LFE37-.LFB37
- 1022 0030 00000000 		.4byte	0
- 1023 0034 00000000 		.4byte	0
- 1024              		.section	.debug_ranges,"",%progbits
- 1025              	.Ldebug_ranges0:
- 1026 0000 00000000 		.4byte	.LFB34
- 1027 0004 12000000 		.4byte	.LFE34
- 1028 0008 00000000 		.4byte	.LFB35
- 1029 000c 1C000000 		.4byte	.LFE35
- 1030 0010 00000000 		.4byte	.LFB36
- 1031 0014 1A000000 		.4byte	.LFE36
- 1032 0018 00000000 		.4byte	.LFB37
- 1033 001c 58000000 		.4byte	.LFE37
- 1034 0020 00000000 		.4byte	0
- 1035 0024 00000000 		.4byte	0
- 1036              		.section	.debug_line,"",%progbits
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 21
+ 1004 00b6 51       		.byte	0x51
+ 1005 00b7 06000000 		.4byte	.LVL9
+ 1006 00bb 16000000 		.4byte	.LFE37
+ 1007 00bf 0400     		.2byte	0x4
+ 1008 00c1 F3       		.byte	0xf3
+ 1009 00c2 01       		.uleb128 0x1
+ 1010 00c3 51       		.byte	0x51
+ 1011 00c4 9F       		.byte	0x9f
+ 1012 00c5 00000000 		.4byte	0
+ 1013 00c9 00000000 		.4byte	0
+ 1014              	.LLST5:
+ 1015 00cd 00000000 		.4byte	.LVL8
+ 1016 00d1 06000000 		.4byte	.LVL9
+ 1017 00d5 0200     		.2byte	0x2
+ 1018 00d7 30       		.byte	0x30
+ 1019 00d8 9F       		.byte	0x9f
+ 1020 00d9 06000000 		.4byte	.LVL9
+ 1021 00dd 10000000 		.4byte	.LVL11
+ 1022 00e1 0700     		.2byte	0x7
+ 1023 00e3 74       		.byte	0x74
+ 1024 00e4 00       		.sleb128 0
+ 1025 00e5 F3       		.byte	0xf3
+ 1026 00e6 01       		.uleb128 0x1
+ 1027 00e7 50       		.byte	0x50
+ 1028 00e8 1C       		.byte	0x1c
+ 1029 00e9 9F       		.byte	0x9f
+ 1030 00ea 10000000 		.4byte	.LVL11
+ 1031 00ee 12000000 		.4byte	.LVL12
+ 1032 00f2 0900     		.2byte	0x9
+ 1033 00f4 74       		.byte	0x74
+ 1034 00f5 00       		.sleb128 0
+ 1035 00f6 F3       		.byte	0xf3
+ 1036 00f7 01       		.uleb128 0x1
+ 1037 00f8 50       		.byte	0x50
+ 1038 00f9 1C       		.byte	0x1c
+ 1039 00fa 23       		.byte	0x23
+ 1040 00fb 01       		.uleb128 0x1
+ 1041 00fc 9F       		.byte	0x9f
+ 1042 00fd 14000000 		.4byte	.LVL13
+ 1043 0101 14000000 		.4byte	.LVL14
+ 1044 0105 0700     		.2byte	0x7
+ 1045 0107 74       		.byte	0x74
+ 1046 0108 00       		.sleb128 0
+ 1047 0109 F3       		.byte	0xf3
+ 1048 010a 01       		.uleb128 0x1
+ 1049 010b 50       		.byte	0x50
+ 1050 010c 1C       		.byte	0x1c
+ 1051 010d 9F       		.byte	0x9f
+ 1052 010e 00000000 		.4byte	0
+ 1053 0112 00000000 		.4byte	0
+ 1054              	.LLST6:
+ 1055 0116 00000000 		.4byte	.LVL15
+ 1056 011a 04000000 		.4byte	.LVL16
+ 1057 011e 0100     		.2byte	0x1
+ 1058 0120 50       		.byte	0x50
+ 1059 0121 04000000 		.4byte	.LVL16
+ 1060 0125 52000000 		.4byte	.LVL19
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 21
 
 
- 1037              	.Ldebug_line0:
- 1038 0000 D9000000 		.section	.debug_str,"MS",%progbits,1
- 1038      02006500 
- 1038      00000201 
- 1038      FB0E0D00 
- 1038      01010101 
- 1039              	.LASF25:
- 1040 0000 6D657373 		.ascii	"message\000"
- 1040      61676500 
- 1041              	.LASF31:
- 1042 0008 53594E43 		.ascii	"SYNC_FAILED_PROV\000"
- 1042      5F464149 
- 1042      4C45445F 
- 1042      50524F56 
- 1042      00
- 1043              	.LASF23:
- 1044 0019 73796E63 		.ascii	"syncConnection\000"
- 1044      436F6E6E 
- 1044      65637469 
- 1044      6F6E00
- 1045              	.LASF33:
- 1046 0028 53594E43 		.ascii	"SYNC_TYPE_CARD_N\000"
- 1046      5F545950 
- 1046      455F4341 
- 1046      52445F4E 
- 1046      00
- 1047              	.LASF34:
- 1048 0039 53594E43 		.ascii	"SYNC_TYPE_CARD_P\000"
- 1048      5F545950 
- 1048      455F4341 
- 1048      52445F50 
- 1048      00
- 1049              	.LASF26:
- 1050 004a 53594E43 		.ascii	"SYNC_REQUEST_PROV\000"
- 1050      5F524551 
- 1050      55455354 
- 1050      5F50524F 
- 1050      5600
- 1051              	.LASF3:
- 1052 005c 73686F72 		.ascii	"short unsigned int\000"
- 1052      7420756E 
- 1052      7369676E 
- 1052      65642069 
- 1052      6E7400
- 1053              	.LASF29:
- 1054 006f 53594E43 		.ascii	"SYNC_CONFIRMED_NO_PROV\000"
- 1054      5F434F4E 
- 1054      4649524D 
- 1054      45445F4E 
- 1054      4F5F5052 
- 1055              	.LASF24:
- 1056 0086 70726F76 		.ascii	"prov\000"
- 1056      00
- 1057              	.LASF11:
- 1058 008b 666C6F61 		.ascii	"float\000"
- 1058      7400
- 1059              	.LASF16:
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 22
+ 1061 0129 0100     		.2byte	0x1
+ 1062 012b 55       		.byte	0x55
+ 1063 012c 52000000 		.4byte	.LVL19
+ 1064 0130 58000000 		.4byte	.LFE38
+ 1065 0134 0400     		.2byte	0x4
+ 1066 0136 F3       		.byte	0xf3
+ 1067 0137 01       		.uleb128 0x1
+ 1068 0138 50       		.byte	0x50
+ 1069 0139 9F       		.byte	0x9f
+ 1070 013a 00000000 		.4byte	0
+ 1071 013e 00000000 		.4byte	0
+ 1072              		.section	.debug_aranges,"",%progbits
+ 1073 0000 34000000 		.4byte	0x34
+ 1074 0004 0200     		.2byte	0x2
+ 1075 0006 00000000 		.4byte	.Ldebug_info0
+ 1076 000a 04       		.byte	0x4
+ 1077 000b 00       		.byte	0
+ 1078 000c 0000     		.2byte	0
+ 1079 000e 0000     		.2byte	0
+ 1080 0010 00000000 		.4byte	.LFB35
+ 1081 0014 12000000 		.4byte	.LFE35-.LFB35
+ 1082 0018 00000000 		.4byte	.LFB36
+ 1083 001c 16000000 		.4byte	.LFE36-.LFB36
+ 1084 0020 00000000 		.4byte	.LFB37
+ 1085 0024 16000000 		.4byte	.LFE37-.LFB37
+ 1086 0028 00000000 		.4byte	.LFB38
+ 1087 002c 58000000 		.4byte	.LFE38-.LFB38
+ 1088 0030 00000000 		.4byte	0
+ 1089 0034 00000000 		.4byte	0
+ 1090              		.section	.debug_ranges,"",%progbits
+ 1091              	.Ldebug_ranges0:
+ 1092 0000 00000000 		.4byte	.LFB35
+ 1093 0004 12000000 		.4byte	.LFE35
+ 1094 0008 00000000 		.4byte	.LFB36
+ 1095 000c 16000000 		.4byte	.LFE36
+ 1096 0010 00000000 		.4byte	.LFB37
+ 1097 0014 16000000 		.4byte	.LFE37
+ 1098 0018 00000000 		.4byte	.LFB38
+ 1099 001c 58000000 		.4byte	.LFE38
+ 1100 0020 00000000 		.4byte	0
+ 1101 0024 00000000 		.4byte	0
+ 1102              		.section	.debug_line,"",%progbits
+ 1103              	.Ldebug_line0:
+ 1104 0000 DF000000 		.section	.debug_str,"MS",%progbits,1
+ 1104      02007100 
+ 1104      00000201 
+ 1104      FB0E0D00 
+ 1104      01010101 
+ 1105              	.LASF25:
+ 1106 0000 6D657373 		.ascii	"message\000"
+ 1106      61676500 
+ 1107              	.LASF36:
+ 1108 0008 53594E43 		.ascii	"SYNC_FAILED_PROV\000"
+ 1108      5F464149 
+ 1108      4C45445F 
+ 1108      50524F56 
+ 1108      00
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 22
 
 
- 1060 0091 64617461 		.ascii	"data\000"
- 1060      00
- 1061              	.LASF35:
- 1062 0096 50534F43 		.ascii	"PSOC_DEVICE_REQUEST\000"
- 1062      5F444556 
- 1062      4943455F 
- 1062      52455155 
- 1062      45535400 
- 1063              	.LASF17:
- 1064 00aa 73697A65 		.ascii	"size\000"
- 1064      00
- 1065              	.LASF18:
- 1066 00af 72657476 		.ascii	"retval\000"
- 1066      616C00
- 1067              	.LASF5:
- 1068 00b6 6C6F6E67 		.ascii	"long unsigned int\000"
- 1068      20756E73 
- 1068      69676E65 
- 1068      6420696E 
- 1068      7400
- 1069              	.LASF9:
- 1070 00c8 75696E74 		.ascii	"uint8\000"
- 1070      3800
- 1071              	.LASF1:
- 1072 00ce 756E7369 		.ascii	"unsigned char\000"
- 1072      676E6564 
- 1072      20636861 
- 1072      7200
- 1073              	.LASF12:
- 1074 00dc 646F7562 		.ascii	"double\000"
- 1074      6C6500
- 1075              	.LASF37:
- 1076 00e3 5553425F 		.ascii	"USB_UART_UartGetByte\000"
- 1076      55415254 
- 1076      5F556172 
- 1076      74476574 
- 1076      42797465 
- 1077              	.LASF10:
- 1078 00f8 75696E74 		.ascii	"uint32\000"
- 1078      333200
- 1079              	.LASF8:
- 1080 00ff 756E7369 		.ascii	"unsigned int\000"
- 1080      676E6564 
- 1080      20696E74 
- 1080      00
- 1081              	.LASF7:
- 1082 010c 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1082      206C6F6E 
- 1082      6720756E 
- 1082      7369676E 
- 1082      65642069 
- 1083              	.LASF22:
- 1084 0123 67657456 		.ascii	"getValidByte\000"
- 1084      616C6964 
- 1084      42797465 
- 1084      00
- 1085              	.LASF38:
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 23
+ 1109              	.LASF23:
+ 1110 0019 73796E63 		.ascii	"syncConnection\000"
+ 1110      436F6E6E 
+ 1110      65637469 
+ 1110      6F6E00
+ 1111              	.LASF43:
+ 1112 0028 434F4E54 		.ascii	"CONTEXT\000"
+ 1112      45585400 
+ 1113              	.LASF38:
+ 1114 0030 53594E43 		.ascii	"SYNC_TYPE_CARD_N\000"
+ 1114      5F545950 
+ 1114      455F4341 
+ 1114      52445F4E 
+ 1114      00
+ 1115              	.LASF39:
+ 1116 0041 53594E43 		.ascii	"SYNC_TYPE_CARD_P\000"
+ 1116      5F545950 
+ 1116      455F4341 
+ 1116      52445F50 
+ 1116      00
+ 1117              	.LASF31:
+ 1118 0052 53594E43 		.ascii	"SYNC_REQUEST_PROV\000"
+ 1118      5F524551 
+ 1118      55455354 
+ 1118      5F50524F 
+ 1118      5600
+ 1119              	.LASF3:
+ 1120 0064 73686F72 		.ascii	"short unsigned int\000"
+ 1120      7420756E 
+ 1120      7369676E 
+ 1120      65642069 
+ 1120      6E7400
+ 1121              	.LASF34:
+ 1122 0077 53594E43 		.ascii	"SYNC_CONFIRMED_NO_PROV\000"
+ 1122      5F434F4E 
+ 1122      4649524D 
+ 1122      45445F4E 
+ 1122      4F5F5052 
+ 1123              	.LASF24:
+ 1124 008e 70726F76 		.ascii	"prov\000"
+ 1124      00
+ 1125              	.LASF11:
+ 1126 0093 666C6F61 		.ascii	"float\000"
+ 1126      7400
+ 1127              	.LASF18:
+ 1128 0099 64617461 		.ascii	"data\000"
+ 1128      00
+ 1129              	.LASF42:
+ 1130 009e 50534F43 		.ascii	"PSOC_DEVICE_REQUEST\000"
+ 1130      5F444556 
+ 1130      4943455F 
+ 1130      52455155 
+ 1130      45535400 
+ 1131              	.LASF28:
+ 1132 00b2 52455455 		.ascii	"RETURN_NAME\000"
+ 1132      524E5F4E 
+ 1132      414D4500 
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 23
 
 
- 1086 0130 5553425F 		.ascii	"USB_UART_SpiUartWriteTxData\000"
- 1086      55415254 
- 1086      5F537069 
- 1086      55617274 
- 1086      57726974 
- 1087              	.LASF36:
- 1088 014c 5553425F 		.ascii	"USB_UART_SpiUartGetRxBufferSize\000"
- 1088      55415254 
- 1088      5F537069 
- 1088      55617274 
- 1088      47657452 
- 1089              	.LASF41:
- 1090 016c 433A5C55 		.ascii	"C:\\Users\\ccpow_000\\Desktop\\CPS\\eCTF\\0xBU_SSS_"
- 1090      73657273 
- 1090      5C636370 
- 1090      6F775F30 
- 1090      30305C44 
- 1091 0199 41544D5C 		.ascii	"ATM\\CARD.cydsn\000"
- 1091      43415244 
- 1091      2E637964 
- 1091      736E00
- 1092              	.LASF40:
- 1093 01a8 75736273 		.ascii	"usbserialprotocol.c\000"
- 1093      65726961 
- 1093      6C70726F 
- 1093      746F636F 
- 1093      6C2E6300 
- 1094              	.LASF27:
- 1095 01bc 53594E43 		.ascii	"SYNC_REQUEST_NO_PROV\000"
- 1095      5F524551 
- 1095      55455354 
- 1095      5F4E4F5F 
- 1095      50524F56 
- 1096              	.LASF15:
- 1097 01d1 73697A65 		.ascii	"sizetype\000"
- 1097      74797065 
- 1097      00
- 1098              	.LASF19:
- 1099 01da 70757368 		.ascii	"pushMessage\000"
- 1099      4D657373 
- 1099      61676500 
- 1100              	.LASF6:
- 1101 01e6 6C6F6E67 		.ascii	"long long int\000"
- 1101      206C6F6E 
- 1101      6720696E 
- 1101      7400
- 1102              	.LASF13:
- 1103 01f4 63686172 		.ascii	"char\000"
- 1103      00
- 1104              	.LASF21:
- 1105 01f9 6C656E67 		.ascii	"length\000"
- 1105      746800
- 1106              	.LASF2:
- 1107 0200 73686F72 		.ascii	"short int\000"
- 1107      7420696E 
- 1107      7400
- 1108              	.LASF28:
-ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccrhqouL.s 			page 24
+ 1133              	.LASF20:
+ 1134 00be 72657476 		.ascii	"retval\000"
+ 1134      616C00
+ 1135              	.LASF26:
+ 1136 00c5 41434345 		.ascii	"ACCEPTED\000"
+ 1136      50544544 
+ 1136      00
+ 1137              	.LASF5:
+ 1138 00ce 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1138      20756E73 
+ 1138      69676E65 
+ 1138      6420696E 
+ 1138      7400
+ 1139              	.LASF40:
+ 1140 00e0 53594E43 		.ascii	"SYNC_TYPE_HSM_N\000"
+ 1140      5F545950 
+ 1140      455F4853 
+ 1140      4D5F4E00 
+ 1141              	.LASF9:
+ 1142 00f0 75696E74 		.ascii	"uint8\000"
+ 1142      3800
+ 1143              	.LASF41:
+ 1144 00f6 53594E43 		.ascii	"SYNC_TYPE_HSM_P\000"
+ 1144      5F545950 
+ 1144      455F4853 
+ 1144      4D5F5000 
+ 1145              	.LASF1:
+ 1146 0106 756E7369 		.ascii	"unsigned char\000"
+ 1146      676E6564 
+ 1146      20636861 
+ 1146      7200
+ 1147              	.LASF12:
+ 1148 0114 646F7562 		.ascii	"double\000"
+ 1148      6C6500
+ 1149              	.LASF29:
+ 1150 011b 52455455 		.ascii	"RETURN_CARD_SIGNATURE\000"
+ 1150      524E5F43 
+ 1150      4152445F 
+ 1150      5349474E 
+ 1150      41545552 
+ 1151              	.LASF45:
+ 1152 0131 5553425F 		.ascii	"USB_UART_UartGetByte\000"
+ 1152      55415254 
+ 1152      5F556172 
+ 1152      74476574 
+ 1152      42797465 
+ 1153              	.LASF10:
+ 1154 0146 75696E74 		.ascii	"uint32\000"
+ 1154      333200
+ 1155              	.LASF8:
+ 1156 014d 756E7369 		.ascii	"unsigned int\000"
+ 1156      676E6564 
+ 1156      20696E74 
+ 1156      00
+ 1157              	.LASF27:
+ 1158 015a 52454A45 		.ascii	"REJECTED\000"
+ 1158      43544544 
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 24
 
 
- 1109 020a 53594E43 		.ascii	"SYNC_CONFIRMED_PROV\000"
- 1109      5F434F4E 
- 1109      4649524D 
- 1109      45445F50 
- 1109      524F5600 
- 1110              	.LASF32:
- 1111 021e 53594E43 		.ascii	"SYNCED\000"
- 1111      454400
- 1112              	.LASF30:
- 1113 0225 53594E43 		.ascii	"SYNC_FAILED_NO_PROV\000"
- 1113      5F464149 
- 1113      4C45445F 
- 1113      4E4F5F50 
- 1113      524F5600 
- 1114              	.LASF4:
- 1115 0239 6C6F6E67 		.ascii	"long int\000"
- 1115      20696E74 
- 1115      00
- 1116              	.LASF14:
- 1117 0242 6C6F6E67 		.ascii	"long double\000"
- 1117      20646F75 
- 1117      626C6500 
- 1118              	.LASF0:
- 1119 024e 7369676E 		.ascii	"signed char\000"
- 1119      65642063 
- 1119      68617200 
- 1120              	.LASF39:
- 1121 025a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 1121      43313120 
- 1121      352E342E 
- 1121      31203230 
- 1121      31363036 
- 1122 028d 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
- 1122      20726576 
- 1122      6973696F 
- 1122      6E203233 
- 1122      37373135 
- 1123 02c0 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects\000"
- 1123      66756E63 
- 1123      74696F6E 
- 1123      2D736563 
- 1123      74696F6E 
- 1124              	.LASF20:
- 1125 02e8 70756C6C 		.ascii	"pullMessage\000"
- 1125      4D657373 
- 1125      61676500 
- 1126              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 1158      00
+ 1159              	.LASF7:
+ 1160 0163 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1160      206C6F6E 
+ 1160      6720756E 
+ 1160      7369676E 
+ 1160      65642069 
+ 1161              	.LASF16:
+ 1162 017a 67657456 		.ascii	"getValidByte\000"
+ 1162      616C6964 
+ 1162      42797465 
+ 1162      00
+ 1163              	.LASF46:
+ 1164 0187 5553425F 		.ascii	"USB_UART_SpiUartWriteTxData\000"
+ 1164      55415254 
+ 1164      5F537069 
+ 1164      55617274 
+ 1164      57726974 
+ 1165              	.LASF44:
+ 1166 01a3 5553425F 		.ascii	"USB_UART_SpiUartGetRxBufferSize\000"
+ 1166      55415254 
+ 1166      5F537069 
+ 1166      55617274 
+ 1166      47657452 
+ 1167              	.LASF49:
+ 1168 01c3 433A5C55 		.ascii	"C:\\Users\\ccpow_000\\Desktop\\CPS\\eCTF\\0xBU_SSS_"
+ 1168      73657273 
+ 1168      5C636370 
+ 1168      6F775F30 
+ 1168      30305C44 
+ 1169 01f0 41544D5C 		.ascii	"ATM\\CARD.cydsn\000"
+ 1169      43415244 
+ 1169      2E637964 
+ 1169      736E00
+ 1170              	.LASF48:
+ 1171 01ff 75736273 		.ascii	"usbserialprotocol.c\000"
+ 1171      65726961 
+ 1171      6C70726F 
+ 1171      746F636F 
+ 1171      6C2E6300 
+ 1172              	.LASF32:
+ 1173 0213 53594E43 		.ascii	"SYNC_REQUEST_NO_PROV\000"
+ 1173      5F524551 
+ 1173      55455354 
+ 1173      5F4E4F5F 
+ 1173      50524F56 
+ 1174              	.LASF15:
+ 1175 0228 73697A65 		.ascii	"sizetype\000"
+ 1175      74797065 
+ 1175      00
+ 1176              	.LASF17:
+ 1177 0231 70757368 		.ascii	"pushMessage\000"
+ 1177      4D657373 
+ 1177      61676500 
+ 1178              	.LASF6:
+ 1179 023d 6C6F6E67 		.ascii	"long long int\000"
+ 1179      206C6F6E 
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 25
+
+
+ 1179      6720696E 
+ 1179      7400
+ 1180              	.LASF13:
+ 1181 024b 63686172 		.ascii	"char\000"
+ 1181      00
+ 1182              	.LASF30:
+ 1183 0250 52455455 		.ascii	"RETURN_NEW_PK\000"
+ 1183      524E5F4E 
+ 1183      45575F50 
+ 1183      4B00
+ 1184              	.LASF22:
+ 1185 025e 6C656E67 		.ascii	"length\000"
+ 1185      746800
+ 1186              	.LASF2:
+ 1187 0265 73686F72 		.ascii	"short int\000"
+ 1187      7420696E 
+ 1187      7400
+ 1188              	.LASF33:
+ 1189 026f 53594E43 		.ascii	"SYNC_CONFIRMED_PROV\000"
+ 1189      5F434F4E 
+ 1189      4649524D 
+ 1189      45445F50 
+ 1189      524F5600 
+ 1190              	.LASF37:
+ 1191 0283 53594E43 		.ascii	"SYNCED\000"
+ 1191      454400
+ 1192              	.LASF35:
+ 1193 028a 53594E43 		.ascii	"SYNC_FAILED_NO_PROV\000"
+ 1193      5F464149 
+ 1193      4C45445F 
+ 1193      4E4F5F50 
+ 1193      524F5600 
+ 1194              	.LASF4:
+ 1195 029e 6C6F6E67 		.ascii	"long int\000"
+ 1195      20696E74 
+ 1195      00
+ 1196              	.LASF14:
+ 1197 02a7 6C6F6E67 		.ascii	"long double\000"
+ 1197      20646F75 
+ 1197      626C6500 
+ 1198              	.LASF0:
+ 1199 02b3 7369676E 		.ascii	"signed char\000"
+ 1199      65642063 
+ 1199      68617200 
+ 1200              	.LASF19:
+ 1201 02bf 73697A65 		.ascii	"size\000"
+ 1201      00
+ 1202              	.LASF47:
+ 1203 02c4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1203      43313120 
+ 1203      352E342E 
+ 1203      31203230 
+ 1203      31363036 
+ 1204 02f7 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1204      20726576 
+ 1204      6973696F 
+ 1204      6E203233 
+ARM GAS  C:\Users\CCPOW_~1\AppData\Local\Temp\ccNygItc.s 			page 26
+
+
+ 1204      37373135 
+ 1205 032a 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects\000"
+ 1205      66756E63 
+ 1205      74696F6E 
+ 1205      2D736563 
+ 1205      74696F6E 
+ 1206              	.LASF21:
+ 1207 0352 70756C6C 		.ascii	"pullMessage\000"
+ 1207      4D657373 
+ 1207      61676500 
+ 1208              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
