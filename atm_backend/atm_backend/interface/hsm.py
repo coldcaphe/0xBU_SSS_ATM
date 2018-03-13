@@ -75,7 +75,7 @@ class HSM(Psoc):
             logging.info("Error in handle_balance_check: " + hexlify(ciphertext))
             return None
 
-        balance = struct.unpack(">I", self.read(4))[0]
+        balance = struct.unpack("<I", self.read(4))[0]
         return balance
 
 

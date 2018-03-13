@@ -1,13 +1,13 @@
-Loading plugins phase: Elapsed time ==> 0s.106ms
+Loading plugins phase: Elapsed time ==> 0s.105ms
 <CYPRESSTAG name="CyDsfit arguments...">
 cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\CARD.cyprj -d CY8C4245AXI-483 -s C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\Generated_Source\PSoC4 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
 </CYPRESSTAG>
 <CYPRESSTAG name="Design elaboration results...">
 </CYPRESSTAG>
-Elaboration phase: Elapsed time ==> 1s.064ms
+Elaboration phase: Elapsed time ==> 0s.998ms
 <CYPRESSTAG name="HDL generation results...">
 </CYPRESSTAG>
-HDL generation phase: Elapsed time ==> 0s.056ms
+HDL generation phase: Elapsed time ==> 0s.048ms
 <CYPRESSTAG name="Synthesis results...">
 
      | | | | | | |
@@ -41,7 +41,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\ccpow
 ======================================================================
 
 vlogfe V6.3 IR 41:  Verilog parser
-Fri Mar 09 16:48:42 2018
+Mon Mar 12 21:20:06 2018
 
 
 ======================================================================
@@ -51,7 +51,7 @@ Options  :    -yv2 -q10 CARD.v
 ======================================================================
 
 vpp V6.3 IR 41:  Verilog Pre-Processor
-Fri Mar 09 16:48:42 2018
+Mon Mar 12 21:20:06 2018
 
 Flattening file 'D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_virtualmux_v1_0\cy_virtualmux_v1_0.v'
 Flattening file 'D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\B_UART_v2_50\B_UART_v2_50.v'
@@ -96,7 +96,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\ccpow
 ======================================================================
 
 tovif V6.3 IR 41:  High-level synthesis
-Fri Mar 09 16:48:43 2018
+Mon Mar 12 21:20:06 2018
 
 Linking 'D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -130,7 +130,7 @@ Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\ccpow
 ======================================================================
 
 topld V6.3 IR 41:  Synthesis and optimization
-Fri Mar 09 16:48:43 2018
+Mon Mar 12 21:20:06 2018
 
 Linking 'D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\warp\lib\common\std.vhd'.
 Linking 'D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\warp\lib\common\cypress.vhd'.
@@ -555,14 +555,14 @@ CYPRESS_DIR    : D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\warp
 Warp Program   : D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\warp\bin\warp.exe
 Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\CARD.cyprj -dcpsoc3 CARD.v -verilog
 </CYPRESSTAG>
-Warp synthesis phase: Elapsed time ==> 1s.251ms
+Warp synthesis phase: Elapsed time ==> 1s.204ms
 <CYPRESSTAG name="Fitter results...">
 <CYPRESSTAG name="Fitter startup details...">
-cyp3fit: V4.1.0.3210, Family: PSoC3, Started at: Friday, 09 March 2018 16:48:43
+cyp3fit: V4.1.0.3210, Family: PSoC3, Started at: Monday, 12 March 2018 21:20:07
 Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=C:\Users\ccpow_000\Desktop\CPS\eCTF\0xBU_SSS_ATM\CARD.cydsn\CARD.cyprj -d CY8C4245AXI-483 CARD.v -verilog
 </CYPRESSTAG>
 <CYPRESSTAG name="Design parsing">
-Design parsing phase: Elapsed time ==> 0s.012ms
+Design parsing phase: Elapsed time ==> 0s.011ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Tech Mapping">
 <CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
@@ -1564,8 +1564,8 @@ DAC                           :      :      :      :
   7-bit IDAC                  :    0 :    1 :    1 :  0.00 %
   8-bit IDAC                  :    0 :    1 :    1 :  0.00 %
 </CYPRESSTAG>
-Technology Mapping: Elapsed time ==> 0s.157ms
-Tech Mapping phase: Elapsed time ==> 0s.180ms
+Technology Mapping: Elapsed time ==> 0s.104ms
+Tech Mapping phase: Elapsed time ==> 0s.124ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Placement">
 <CYPRESSTAG name="FFB & IO Pre Placement">
@@ -1584,13 +1584,13 @@ ClockGenBlock                       : CLK_GEN_[FFB(CLK_GEN,0)]
 </CYPRESSTAG>
 </CYPRESSTAG>
 <CYPRESSTAG name="Real Analog Placement">
-Elapsed time ==> 0.1247751s
+Elapsed time ==> 0.1232043s
 </CYPRESSTAG>
-Analog Placement phase: Elapsed time ==> 0s.272ms
+Analog Placement phase: Elapsed time ==> 0s.278ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Analog Routing">
 <CYPRESSTAG name="Analog Routing">
-Route success=True, Iterations=1 Elapsed=0.0007366 secs
+Route success=True, Iterations=1 Elapsed=0.0007168 secs
 </CYPRESSTAG>
 Analog Routing phase: Elapsed time ==> 0s.001ms
 </CYPRESSTAG>
@@ -1603,7 +1603,7 @@ Map of item to net {
 }
 Mux Info {
 }
-Analog Code Generation phase: Elapsed time ==> 0s.017ms
+Analog Code Generation phase: Elapsed time ==> 0s.014ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Placement">
 <CYPRESSTAG name="Detailed placement messages">
@@ -2655,33 +2655,33 @@ Port | Pin | Fixed |      Type |       Drive Mode |             Name | Connectio
 </CYPRESSTAG>
 </CYPRESSTAG>
 </CYPRESSTAG>
-Digital component placer commit/Report: Elapsed time ==> 0s.023ms
-Digital Placement phase: Elapsed time ==> 0s.557ms
+Digital component placer commit/Report: Elapsed time ==> 0s.025ms
+Digital Placement phase: Elapsed time ==> 0s.537ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Digital Routing">
 "D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\bin/sjrouter.exe" --xml-path "D:\Programs\PSoCCreator\PSoC Creator\4.1\PSoC Creator\dev\psoc4/psoc4a/route_arch-rrg.cydata" --vh2-path "CARD_r.vh2" --pcf-path "CARD.pco" --des-name "CARD" --dsf-path "CARD.dsf" --sdc-path "CARD.sdc" --lib-path "CARD_r.lib"
 Routing successful.
-Digital Routing phase: Elapsed time ==> 0s.828ms
+Digital Routing phase: Elapsed time ==> 0s.739ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream Generation">
-Bitstream Generation phase: Elapsed time ==> 0s.155ms
+Bitstream Generation phase: Elapsed time ==> 0s.147ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Bitstream Verification">
-Bitstream Verification phase: Elapsed time ==> 0s.025ms
+Bitstream Verification phase: Elapsed time ==> 0s.022ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Static timing analysis">
 Timing report is in CARD_timing.html.
-Static timing analysis phase: Elapsed time ==> 0s.257ms
+Static timing analysis phase: Elapsed time ==> 0s.235ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Data reporting">
 Data reporting phase: Elapsed time ==> 0s.000ms
 </CYPRESSTAG>
 <CYPRESSTAG name="Database update...">
-Design database save phase: Elapsed time ==> 0s.203ms
+Design database save phase: Elapsed time ==> 0s.182ms
 </CYPRESSTAG>
-cydsfit: Elapsed time ==> 2s.550ms
+cydsfit: Elapsed time ==> 2s.333ms
 </CYPRESSTAG>
-Fitter phase: Elapsed time ==> 2s.551ms
-API generation phase: Elapsed time ==> 1s.360ms
+Fitter phase: Elapsed time ==> 2s.334ms
+API generation phase: Elapsed time ==> 1s.231ms
 Dependency generation phase: Elapsed time ==> 0s.017ms
 Cleanup phase: Elapsed time ==> 0s.000ms

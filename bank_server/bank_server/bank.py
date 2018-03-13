@@ -207,8 +207,9 @@ class Bank(object):
 
         balance = self.db_obj.get_balance(card_id)
 
-        message = struct.pack("s32sI", chr(self.REQUEST_BALANCE), hsm_nonce, balance)
+        message = struct.pack("<1s32sI", chr(self.REQUEST_BALANCE), hsm_nonce, balance)
         ctext = self.encrypt(key, message)
+        print len(ctext)
 
         return xmlrpclib.Binary(ctext)
 

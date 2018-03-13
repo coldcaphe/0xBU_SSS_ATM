@@ -11,7 +11,7 @@
 #define SEED_LEN                        32
 #define HSM_KEY_LEN                     32
 #define BILL_LEN                        16
-#define CHECK_BALANCE_CIPHERTEXT_LEN    76
+#define CHECK_BALANCE_CIPHERTEXT_LEN    73
 #define WITHDRAW_CIPHERTEXT_LEN         70
 #define BALANCE_LEN                     4
 
